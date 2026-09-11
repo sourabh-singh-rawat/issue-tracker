@@ -1,5 +1,5 @@
 ---
-name: pine-events
+name: events
 description: >
   @pine/events NATS JetStream: CloudEvent publish/subscribe, TypeBox payloads,
   defineEvent contracts. Triggers: NATS, Consumer, CloudEvent, publisher.send.
@@ -60,7 +60,7 @@ Consumer: `@injectable()`, `super(broker.client)`, call `start()` from `main.ts`
 4. Durable consumer name inline on the class: `readonly consumer = "<service>-<purpose>"`
 5. Publish via `createCloudEvent` + `publisher.send(event)`
 6. Implement `Consumer` with `subjects = [SomeEvent.type, …]`; DI + `main.ts`
-7. Cluster: `infra/k8s/nats-stream` + `nats-consumer` (`pine-k8s`) if applicable
+7. Cluster: `infra/k8s/nats-stream` + `nats-consumer` (`k8s`) if applicable
 
 ## Durable consumers
 

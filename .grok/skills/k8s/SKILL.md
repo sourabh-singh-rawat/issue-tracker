@@ -1,5 +1,5 @@
 ---
-name: pine-k8s
+name: k8s
 description: >
   Helm/K8s under infra/k8s: microservice chart, PGO Postgres, NATS streams/consumers.
   Triggers: helm, deploy, nats-consumer, GKE, infra/k8s.
@@ -8,7 +8,7 @@ description: >
 # Kubernetes
 
 Playbook: `docs/commands/install-k8s.md`. GKE: `docs/commands/gcloud.md`.  
-Local dev uses Compose (`pine-docker-infra`), not these charts.
+Local dev uses Compose (`docker-infra`), not these charts.
 
 ## Layout
 
@@ -25,7 +25,7 @@ infra/k8s/
 1. Dashboard (optional) → 2. Ingress → 3. Secrets → 4. PGO
 2. Per-service Postgres → 6. NATS + nack → 7. Streams → 8. Consumers → 9. Microservices
 
-Stream/consumer names must match `@pine/events` (`pine-events`).
+Stream/consumer names must match `@pine/events` (`events`).
 
 ## Microservice values
 
@@ -43,7 +43,7 @@ Env secrets come from PGO user secret naming `{release}-postgres-pguser-{release
 
 ## New event on cluster
 
-1. Code: `@pine/events` subject + payload (`pine-events`)
+1. Code: `@pine/events` subject + payload (`events`)
 2. `nats-stream` if new stream
 3. `nats-consumer/values/*.yaml` durable
 4. Names consistent with subjects (`user.registered`, `issue.created`, …)

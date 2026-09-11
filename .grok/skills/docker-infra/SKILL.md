@@ -1,5 +1,5 @@
 ---
-name: pine-docker-infra
+name: docker-infra
 description: >
   Local Docker Compose: Postgres, Ory, NATS, ports, single root env. Triggers: dev:infra,
   Kratos, Hydra, Keto, compose, single-db, multi-db.

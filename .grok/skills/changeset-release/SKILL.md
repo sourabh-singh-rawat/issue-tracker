@@ -1,5 +1,5 @@
 ---
-name: pine-changeset-release
+name: changeset-release
 description: >
   Changesets for development PRs; calver release/* branches and GitHub Release on
   main. Triggers: changeset, skip-changeset, release/YYYY, calver, version.

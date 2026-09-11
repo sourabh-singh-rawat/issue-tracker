@@ -1,5 +1,5 @@
 ---
-name: pine-dev-loop
+name: dev-loop
 description: >
   Run Pine locally: infra, apps, turbo filters, build/test/lint, schema compose.
   Triggers: pnpm dev, build, test, schemas:compose, how do I run X.

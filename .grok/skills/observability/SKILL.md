@@ -1,5 +1,5 @@
 ---
-name: pine-observability
+name: observability
 description: >
   @pine/observability OTEL + local Alloy/Tempo/Loki/Grafana. Triggers: OTEL,
   tracing, Alloy, OTEL_EXPORTER_OTLP_ENDPOINT, observability profile.
