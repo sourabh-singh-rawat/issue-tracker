@@ -16,6 +16,7 @@ export interface ITenantRepository {
   ): Promise<Tenant>;
   findById(id: string): Promise<Tenant | null>;
   findByIds(ids: string[]): Promise<Tenant[]>;
+  findBySlug(slug: string, options?: TenantRepositoryOptions): Promise<Tenant | null>;
   existsBySlug(slug: string): Promise<boolean>;
   existsByName(name: string): Promise<boolean>;
   findAll(): Promise<Tenant[]>;
