@@ -1,3 +1,4 @@
+export * from "./CreateProfileForm";
 export * from "./GenderBlock";
 export * from "./GenderRadioGroup";
 export * from "./Home";

@@ -3,7 +3,7 @@ import {
   requirePermission,
   type IAuthorizationClient,
 } from "@pine/authorization";
-import { UserProfileNotFoundError } from "@pine/common";
+import { UserProfileAlreadyExistsError, UserProfileNotFoundError } from "@pine/common";
 import {
   createCloudEvent,
   ProfileCreatedEvent,
@@ -13,7 +13,7 @@ import {
 import type { IOutboxService } from "@pine/outbox";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@/bootstrap/container-types";
-import type { Profile } from "@/db";
+import type { Database, DbClient, Profile } from "@/db";
 import type { IProfilePhotoUploadRequestRepository } from "@/features/profiles/repositories/IProfilePhotoUploadRequestRepository";
 import type { IProfileRepository } from "@/features/profiles/repositories/IProfileRepository";
 import type {
@@ -40,39 +40,63 @@ export class ProfileService implements IProfileService {
     private readonly attachmentClient: IAttachmentClient,
     @inject(TYPES.OutboxService)
     private readonly outboxService: IOutboxService,
+    @inject(TYPES.Database)
+    private readonly db: Database,
   ) {}
 
-  async create(options: CreateProfileOptions) {
-    const { tx, firstName, middleName, lastName, identityId, description } = options;
+  async create(options: CreateProfileOptions): Promise<Profile> {
+    const { firstName, middleName, lastName, identityId, description, gender } = options;
+    const ownsTransaction = options.tx === undefined;
 
-    const profile = await this.profileRepository.save(
-      { firstName, middleName, lastName, identityId, description },
-      { tx },
-    );
+    const run = async (tx: DbClient) => {
+      const existing = await this.profileRepository.findByIdentityId(identityId, { tx });
+      if (existing) throw new UserProfileAlreadyExistsError();
 
-    const event = createCloudEvent({
-      type: ProfileCreatedEvent.type,
-      version: ProfileCreatedEvent.version,
-      schema: ProfileCreatedEvent.schema,
-      source: "pine/identity-service",
-      subject: profile.id,
-      data: {
-        id: profile.id,
-        identityId,
-      },
-    });
+      const profile = await this.profileRepository.save(
+        { firstName, middleName, lastName, identityId, description, gender },
+        { tx },
+      );
 
-    await this.outboxService.schedule(
-      {
-        eventId: event.id,
-        eventType: event.type,
-        eventVersion: ProfileCreatedEvent.version,
-        aggregateType: "profile",
-        aggregateId: profile.id,
-        payload: event,
-      },
-      { tx },
-    );
+      const event = createCloudEvent({
+        type: ProfileCreatedEvent.type,
+        version: ProfileCreatedEvent.version,
+        schema: ProfileCreatedEvent.schema,
+        source: "pine/identity-service",
+        subject: profile.id,
+        data: {
+          id: profile.id,
+          identityId,
+        },
+      });
+
+      await this.outboxService.schedule(
+        {
+          eventId: event.id,
+          eventType: event.type,
+          eventVersion: ProfileCreatedEvent.version,
+          aggregateType: "profile",
+          aggregateId: profile.id,
+          payload: event,
+        },
+        { tx },
+      );
+
+      return profile;
+    };
+
+    const profile = options.tx
+      ? await run(options.tx)
+      : await this.db.transaction(async (tx) => run(tx));
+
+    if (ownsTransaction) {
+      await this.authorizationClient.ensureRelationship({
+        object: { namespace: "profile", id: profile.id },
+        relation: "identity",
+        subject: { namespace: "identity", id: identityId },
+      });
+    }
+
+    return profile;
   }
 
   async getByIdentityId(identityId: string) {
@@ -141,14 +165,11 @@ export class ProfileService implements IProfileService {
 
   async updatePhoto(options: UpdatePhotoOptions): Promise<Profile> {
     const { identityId, photoUrl, uploadRequestId, attachmentId, tx } = options;
-    const profile = await this.profileRepository.findByIdentityId(identityId, { tx });
+    const repoOptions = tx === undefined ? undefined : { tx };
+    const profile = await this.profileRepository.findByIdentityId(identityId, repoOptions);
     if (!profile) throw new UserProfileNotFoundError();
 
-    const updated = await this.profileRepository.update(
-      profile.id,
-      { photoUrl },
-      { tx },
-    );
+    const updated = await this.profileRepository.update(profile.id, { photoUrl }, repoOptions);
 
     if (uploadRequestId) {
       await this.photoUploadRequestRepository.update(
@@ -158,7 +179,7 @@ export class ProfileService implements IProfileService {
           attachmentId,
           completedAt: new Date(),
         },
-        { tx },
+        repoOptions,
       );
     }
 
