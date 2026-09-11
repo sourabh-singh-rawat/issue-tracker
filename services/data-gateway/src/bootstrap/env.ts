@@ -9,7 +9,7 @@ export const EnvSchema = Type.Object({
   CA_CERT_PATH: Type.String({ minLength: 1 }),
   ATTACHMENT_SERVICE_URL: Type.String({ default: "https://127.0.0.1:5003" }),
   IDENTITY_WEB_URL: Type.String({ default: "https://localhost:3000" }),
-  ERP_WEB_URL: Type.String({ default: "https://localhost:3001" }),
+  PINE_WEB_URL: Type.String({ default: "https://localhost:3001" }),
   VITE_PLATFORM_WEB_URL: Type.String({ default: "https://localhost:3002" }),
 });
 

@@ -101,7 +101,7 @@ export const bindHttpServer = async (): Promise<void> => {
       cookie: { secret: env.JWT_SECRET },
       cors: {
         credentials: true,
-        origin: [env.ERP_WEB_URL, env.IDENTITY_WEB_URL, env.VITE_PLATFORM_WEB_URL],
+        origin: [env.PINE_WEB_URL, env.IDENTITY_WEB_URL, env.VITE_PLATFORM_WEB_URL],
         methods: ["GET", "HEAD", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
       },
       multipart: { fileSize: 32000000 },

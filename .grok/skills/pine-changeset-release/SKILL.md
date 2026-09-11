@@ -27,10 +27,10 @@ pnpm changeset-required   # base: origin/dev
 
 ```md
 ---
-"@pine/erp-web": minor
+"@pine/pine-web": minor
 ---
 
-feat(erp-web): one-line summary
+feat(pine-web): one-line summary
 ```
 
 - More than one new `.changeset/*.md` → fail

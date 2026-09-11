@@ -63,8 +63,8 @@ export const startOidcSignIn = async (): Promise<string> => {
 
   const authorizeUrl = new URL("/identity/oauth/authorize", import.meta.env.VITE_API_BASE_URL);
   authorizeUrl.searchParams.set("response_type", "code");
-  authorizeUrl.searchParams.set("client_id", import.meta.env.VITE_ERP_WEB_OIDC_CLIENT_ID);
-  authorizeUrl.searchParams.set("redirect_uri", import.meta.env.VITE_ERP_WEB_OIDC_REDIRECT_URI);
+  authorizeUrl.searchParams.set("client_id", import.meta.env.VITE_PINE_WEB_OIDC_CLIENT_ID);
+  authorizeUrl.searchParams.set("redirect_uri", import.meta.env.VITE_PINE_WEB_OIDC_REDIRECT_URI);
   authorizeUrl.searchParams.set("scope", import.meta.env.VITE_OIDC_SCOPES ?? "openid email");
   authorizeUrl.searchParams.set("state", state);
   authorizeUrl.searchParams.set("code_challenge", codeChallenge);

@@ -1,4 +1,4 @@
-# @pine/erp-web
+# @pine/pine-web
 
 ## 0.6.0
 

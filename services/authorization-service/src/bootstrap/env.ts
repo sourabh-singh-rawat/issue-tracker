@@ -17,7 +17,7 @@ export const EnvSchema = Type.Object({
   CA_CERT_PATH: Type.String({ minLength: 1 }),
   NATS_URL: Type.String({ default: "nats://localhost:4222" }),
   JWT_SECRET: Type.String({ minLength: 1 }),
-  ERP_WEB_URL: Type.String({ default: "https://localhost:3001" }),
+  PINE_WEB_URL: Type.String({ default: "https://localhost:3001" }),
   IDENTITY_WEB_URL: Type.String({ default: "https://localhost:3000" }),
   VITE_PLATFORM_WEB_URL: Type.String({ default: "https://localhost:3002" }),
   KETO_READ_URL: Type.String({ default: "http://127.0.0.1:4466" }),

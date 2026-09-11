@@ -3,8 +3,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const { oauthClients } = vi.hoisted(() => ({
   oauthClients: [
     {
-      clientId: "erp-web",
-      name: "ERP Web",
+      clientId: "pine-web",
+      name: "Pine",
       redirectUris: ["https://localhost:3001/callback"],
       grantTypes: ["authorization_code", "refresh_token"],
       scopes: ["openid", "offline", "email"],
@@ -43,12 +43,12 @@ describe("ClientSeederService.seed", () => {
 
     expect(registerClient).toHaveBeenCalledWith(oauthClients[0]);
     expect(updateClient).not.toHaveBeenCalled();
-    expect(logger.info).toHaveBeenCalledWith("oauth client registered client_id=erp-web");
+    expect(logger.info).toHaveBeenCalledWith("oauth client registered client_id=pine-web");
   });
 
   it("updates oauth clients when redirect uris change", async () => {
     const getClient = vi.fn().mockResolvedValue({
-      clientId: "erp-web",
+      clientId: "pine-web",
       redirectUris: ["http://localhost:3001/callback"],
     });
     const registerClient = vi.fn();
@@ -63,12 +63,12 @@ describe("ClientSeederService.seed", () => {
 
     expect(updateClient).toHaveBeenCalledWith(oauthClients[0]);
     expect(registerClient).not.toHaveBeenCalled();
-    expect(logger.info).toHaveBeenCalledWith("oauth client updated client_id=erp-web");
+    expect(logger.info).toHaveBeenCalledWith("oauth client updated client_id=pine-web");
   });
 
   it("skips oauth clients that already match", async () => {
     const getClient = vi.fn().mockResolvedValue({
-      clientId: "erp-web",
+      clientId: "pine-web",
       redirectUris: ["https://localhost:3001/callback"],
     });
     const registerClient = vi.fn();
@@ -83,6 +83,6 @@ describe("ClientSeederService.seed", () => {
 
     expect(registerClient).not.toHaveBeenCalled();
     expect(updateClient).not.toHaveBeenCalled();
-    expect(logger.info).toHaveBeenCalledWith("oauth client exists client_id=erp-web");
+    expect(logger.info).toHaveBeenCalledWith("oauth client exists client_id=pine-web");
   });
 });

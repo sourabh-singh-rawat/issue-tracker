@@ -54,7 +54,7 @@ export default defineConfig({
   server: {
     host: "localhost",
     port: 3001,
-    https: readDevTls("erp-web"),
+    https: readDevTls("pine-web"),
   },
   optimizeDeps: {
     include: ["@pine/common"],
