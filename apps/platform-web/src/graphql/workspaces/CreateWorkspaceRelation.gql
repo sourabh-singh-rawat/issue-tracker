@@ -1,0 +1,8 @@
+mutation CreateWorkspaceRelation($input: CreateWorkspaceRelationInput!) {
+  createWorkspaceRelation(input: $input) {
+    id
+    workspaceId
+    identityId
+    relation
+  }
+}

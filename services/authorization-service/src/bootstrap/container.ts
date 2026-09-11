@@ -17,8 +17,8 @@ import { AuthorizationService, type IAuthorizationService } from "@/features/aut
 import { AuthorizationProfileSyncConsumer } from "@/features/identity";
 
 import {
-  AuthorizationOrganizationRelationSyncConsumer,
-  AuthorizationOrganizationSyncConsumer,
+  AuthorizationWorkspaceRelationSyncConsumer,
+  AuthorizationWorkspaceSyncConsumer,
   AuthorizationPlatformRelationSyncConsumer,
   AuthorizationTenantRelationSyncConsumer,
   AuthorizationTenantSyncConsumer,
@@ -37,10 +37,10 @@ container.bind<IAuthorizationGraphProvider>(TYPES.AuthorizationGraphProvider).to
 container.bind<IAuthorizationService>(TYPES.AuthorizationService).to(AuthorizationService);
 container.bind<IAuthorizationClient>(TYPES.AuthorizationClient).toConstantValue(new HttpAuthorizationClient({ baseUrl: env.AUTHORIZATION_SERVICE_URL }));
 container.bind<AuthorizationTenantSyncConsumer>(TYPES.AuthorizationTenantSyncConsumer).to(AuthorizationTenantSyncConsumer);
-container.bind<AuthorizationOrganizationSyncConsumer>(TYPES.AuthorizationOrganizationSyncConsumer).to(AuthorizationOrganizationSyncConsumer);
+container.bind<AuthorizationWorkspaceSyncConsumer>(TYPES.AuthorizationWorkspaceSyncConsumer).to(AuthorizationWorkspaceSyncConsumer);
 container
-  .bind<AuthorizationOrganizationRelationSyncConsumer>(TYPES.AuthorizationOrganizationRelationSyncConsumer)
-  .to(AuthorizationOrganizationRelationSyncConsumer);
+  .bind<AuthorizationWorkspaceRelationSyncConsumer>(TYPES.AuthorizationWorkspaceRelationSyncConsumer)
+  .to(AuthorizationWorkspaceRelationSyncConsumer);
 container.bind<AuthorizationTenantRelationSyncConsumer>(TYPES.AuthorizationTenantRelationSyncConsumer).to(AuthorizationTenantRelationSyncConsumer);
 container.bind<AuthorizationPlatformRelationSyncConsumer>(TYPES.AuthorizationPlatformRelationSyncConsumer).to(AuthorizationPlatformRelationSyncConsumer);
 container.bind<AuthorizationProfileSyncConsumer>(TYPES.AuthorizationProfileSyncConsumer).to(AuthorizationProfileSyncConsumer);

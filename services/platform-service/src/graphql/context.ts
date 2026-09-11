@@ -7,5 +7,5 @@ export const createContext = async (request: HttpRequest): Promise<AuthContext> 
   headers: request.headers,
   ...(request.identity ? { identity: request.identity } : {}),
   ...(request.tenantId ? { tenantId: request.tenantId } : {}),
-  ...(request.organizationId ? { organizationId: request.organizationId } : {}),
+  ...(request.workspaceId ? { workspaceId: request.workspaceId } : {}),
 });

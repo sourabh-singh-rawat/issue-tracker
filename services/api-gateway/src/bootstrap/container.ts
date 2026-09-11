@@ -42,19 +42,19 @@ container.bind<IHttpServer>(TYPES.HttpServer).toConstantValue(
       gateway: graphqlGateway,
       context: async (req) => {
         const tenantHeader = req.headers["x-tenant-id"];
-        const organizationHeader = req.headers["x-organization-id"];
+        const workspaceHeader = req.headers["x-workspace-id"];
         const tenantId =
           typeof tenantHeader === "string" && tenantHeader.length > 0 ? tenantHeader : undefined;
-        const organizationId =
-          typeof organizationHeader === "string" && organizationHeader.length > 0
-            ? organizationHeader
+        const workspaceId =
+          typeof workspaceHeader === "string" && workspaceHeader.length > 0
+            ? workspaceHeader
             : undefined;
 
         return {
           identityId: req.identity?.id,
           authMethod: req.identity?.authMethod,
           ...(tenantId ? { tenantId } : {}),
-          ...(organizationId ? { organizationId } : {}),
+          ...(workspaceId ? { workspaceId } : {}),
         };
       },
     }),

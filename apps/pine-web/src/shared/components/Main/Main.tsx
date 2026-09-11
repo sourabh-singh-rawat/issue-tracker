@@ -4,12 +4,12 @@ import { useRouterState } from "@tanstack/react-router";
 import MuiBox from "@mui/material/Box";
 import {
   useFindProjectsQuery,
-  useGetMyOrganizationPreferenceQuery,
-  useGetMyOrganizationsQuery,
+  useGetMyWorkspacePreferenceQuery,
+  useGetMyWorkspacesQuery,
 } from "@generated/gql";
 import { useGetCurrentUserQuery } from "@generated/api/@tanstack/react-query.gen";
 import { useAuthStore } from "@features/auth";
-import { useOrganizationStore } from "@features/organization";
+import { useWorkspaceStore } from "@features/workspace";
 import { useProjectStore } from "@features/project";
 import { redirectToOidcSignIn } from "../../../lib/auth";
 import { AppLoader } from "../AppLoader";
@@ -50,19 +50,19 @@ export function Main({ children }: MainProps) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const setCurrentUser = useAuthStore((s) => s.setCurrentUser);
   const setProjects = useProjectStore((s) => s.setProjects);
-  const syncOrganizations = useOrganizationStore((s) => s.syncOrganizations);
+  const syncWorkspaces = useWorkspaceStore((s) => s.syncWorkspaces);
 
   const userQuery = useGetCurrentUserQuery();
   const projectsQuery = useFindProjectsQuery(undefined, {
     select: (data) => data.findProjects,
     enabled: userQuery.isSuccess,
   });
-  const organizationsQuery = useGetMyOrganizationsQuery(undefined, {
-    select: (data) => data.getMyOrganizations ?? [],
+  const workspacesQuery = useGetMyWorkspacesQuery(undefined, {
+    select: (data) => data.getMyWorkspaces ?? [],
     enabled: userQuery.isSuccess,
   });
-  const organizationPreferenceQuery = useGetMyOrganizationPreferenceQuery(undefined, {
-    select: (data) => data.getMyOrganizationPreference ?? null,
+  const workspacePreferenceQuery = useGetMyWorkspacePreferenceQuery(undefined, {
+    select: (data) => data.getMyWorkspacePreference ?? null,
     enabled: userQuery.isSuccess,
   });
 
@@ -94,30 +94,30 @@ export function Main({ children }: MainProps) {
 
   useLayoutEffect(() => {
     const preferenceReady =
-      organizationPreferenceQuery.isSuccess || organizationPreferenceQuery.isError;
+      workspacePreferenceQuery.isSuccess || workspacePreferenceQuery.isError;
     if (!preferenceReady) {
       return;
     }
 
-    const preferredOrganizationId = organizationPreferenceQuery.isSuccess
-      ? organizationPreferenceQuery.data?.organizationId
+    const preferredWorkspaceId = workspacePreferenceQuery.isSuccess
+      ? workspacePreferenceQuery.data?.workspaceId
       : null;
 
-    if (organizationsQuery.isSuccess) {
-      syncOrganizations(organizationsQuery.data, { preferredOrganizationId });
+    if (workspacesQuery.isSuccess) {
+      syncWorkspaces(workspacesQuery.data, { preferredWorkspaceId });
       return;
     }
-    if (organizationsQuery.isError) {
-      syncOrganizations([], { preferredOrganizationId });
+    if (workspacesQuery.isError) {
+      syncWorkspaces([], { preferredWorkspaceId });
     }
   }, [
-    organizationPreferenceQuery.data,
-    organizationPreferenceQuery.isError,
-    organizationPreferenceQuery.isSuccess,
-    organizationsQuery.data,
-    organizationsQuery.isError,
-    organizationsQuery.isSuccess,
-    syncOrganizations,
+    workspacePreferenceQuery.data,
+    workspacePreferenceQuery.isError,
+    workspacePreferenceQuery.isSuccess,
+    workspacesQuery.data,
+    workspacesQuery.isError,
+    workspacesQuery.isSuccess,
+    syncWorkspaces,
   ]);
 
   useEffect(() => {
@@ -130,8 +130,8 @@ export function Main({ children }: MainProps) {
     userQuery.isPending ||
     (userQuery.isSuccess &&
       (projectsQuery.isPending ||
-        organizationsQuery.isPending ||
-        organizationPreferenceQuery.isPending));
+        workspacesQuery.isPending ||
+        workspacePreferenceQuery.isPending));
 
   return (
     <MuiBox width="100vw" height="100vh">

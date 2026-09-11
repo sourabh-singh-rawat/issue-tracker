@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { boolean, pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { auditColumns, idColumn } from "@/db/columns";
-import { Organizations } from "@/db/tables/Organizations";
+import { Workspaces } from "@/db/tables/Workspaces";
 
 export const Tenants = pgTable("tenants", {
   ...idColumn,
@@ -13,7 +13,7 @@ export const Tenants = pgTable("tenants", {
 });
 
 export const TenantsRelations = relations(Tenants, ({ many }) => ({
-  organizations: many(Organizations),
+  workspaces: many(Workspaces),
 }));
 
 export type Tenant = typeof Tenants.$inferSelect;

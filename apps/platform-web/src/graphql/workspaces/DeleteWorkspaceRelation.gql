@@ -1,0 +1,3 @@
+mutation DeleteWorkspaceRelation($id: String!) {
+  deleteWorkspaceRelation(id: $id)
+}

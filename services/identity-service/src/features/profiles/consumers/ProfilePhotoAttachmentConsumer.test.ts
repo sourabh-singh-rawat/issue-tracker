@@ -85,7 +85,7 @@ describe("ProfilePhotoAttachmentConsumer", () => {
       subject: "att-2",
       data: {
         id: "att-2",
-        scopeType: "ORGANIZATION",
+        scopeType: "WORKSPACE",
         scopeId: "org-1",
         status: "AVAILABLE",
         securityStatus: "CLEAN",
