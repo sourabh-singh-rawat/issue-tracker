@@ -3,7 +3,7 @@
   "task.quickOpen.skip": false,
   "debug.openDebug": "openOnDebugBreak",
   "debug.internalConsoleOptions": "neverOpen",
-  "debug.javascript.autoAttachFilter": "smart",
+  "debug.javascript.autoAttachFilter": "disabled",
   "debug.javascript.terminalOptions": {
     "outFiles": [],
     "sourceMaps": true,
@@ -14,10 +14,12 @@
       "${workspaceFolder}/tools/**",
       "!**/node_modules/**"
     ],
-    "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+    "skipFiles": [
+      "<node_internals>/**",
+      "**/node_modules/**"
+    ]
   },
   "terminal.integrated.tabs.hideCondition": "never",
-
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
@@ -42,10 +44,8 @@
     "**/.turbo": true,
     "**/infra/data": true
   },
-
   "typescript.tsserver.maxTsServerMemory": 4096,
   "typescript.disableAutomaticTypeAcquisition": true,
-
   "oxc.enable.oxfmt": true,
   "oxc.fmt.configPath": ".oxfmtrc.json",
   "editor.formatOnSave": true,

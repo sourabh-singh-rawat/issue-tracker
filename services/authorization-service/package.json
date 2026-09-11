@@ -21,7 +21,7 @@
   "scripts": {
     "clean": "node ../../tools/scripts/setup/rm-rf.mjs dist",
     "start": "tsx --env-file=../../.env src/main.ts",
-    "dev": "tsx watch --env-file=../../.env src/main.ts",
+    "dev": "tsx watch --inspect=9236 --env-file=../../.env src/main.ts",
     "build": "pnpm clean && tsc -p tsconfig.build.json",
     "test": "vitest run --config vitest.config.ts",
     "test:watch": "vitest --config vitest.config.ts"

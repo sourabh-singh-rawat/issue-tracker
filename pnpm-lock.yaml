@@ -558,12 +558,18 @@ importers:
       '@apollo/server':
         specifier: ^5.5.1
         version: 5.5.1(graphql@16.14.2)(supports-color@7.2.0)
+      '@fastify/ajv-compiler':
+        specifier: ^4.0.5
+        version: 4.0.5
       '@fastify/cookie':
         specifier: ^11.1.2
         version: 11.1.2
       '@fastify/cors':
         specifier: ^11.3.0
         version: 11.3.0
+      '@fastify/fast-json-stringify-compiler':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@fastify/http-proxy':
         specifier: ^11.6.0
         version: 11.6.0
