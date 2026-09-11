@@ -1,4 +1,5 @@
 export * from "./CreateProfileForm";
+export * from "./EmailBlock";
 export * from "./GenderBlock";
 export * from "./GenderRadioGroup";
 export * from "./Home";

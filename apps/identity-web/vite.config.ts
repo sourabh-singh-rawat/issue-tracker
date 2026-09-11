@@ -48,4 +48,10 @@ export default defineConfig({
     port: 3000,
     https: readDevTls("identity-web"),
   },
+  optimizeDeps: {
+    include: [
+      "@mui/icons-material/MarkEmailUnreadOutlined",
+      "@mui/icons-material/Verified",
+    ],
+  },
 });
