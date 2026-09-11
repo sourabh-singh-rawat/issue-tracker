@@ -9,11 +9,6 @@
       },
       "stopAll": true,
       "configurations": [
-        "schemas:watch",
-        "codegen: supergraph",
-        "erp-web",
-        "identity-web",
-        "platform-web",
         "api-gateway",
         "data-gateway",
         "notification-service",
@@ -26,56 +21,129 @@
       ]
     },
     {
-      "name": "dev + browser",
+      "name": "flow: issues",
       "presentation": {
-        "group": "dev",
+        "group": "flow",
+        "order": 1
+      },
+      "stopAll": true,
+      "configurations": [
+        "pine-web",
+        "identity-web",
+        "api-gateway",
+        "data-gateway",
+        "issues-service",
+        "identity-service",
+        "authorization-service"
+      ]
+    },
+    {
+      "name": "flow: identity",
+      "presentation": {
+        "group": "flow",
         "order": 2
       },
       "stopAll": true,
       "configurations": [
-        "schemas:watch",
-        "client (browser)",
-        "codegen: supergraph",
-        "erp-web",
         "identity-web",
-        "platform-web",
-        "api-gateway",
-        "data-gateway",
-        "notification-service",
-        "attachment-service",
-        "attachment-scanner-service",
-        "issues-service",
-        "platform-service",
+        "identity-service",
         "authorization-service",
-        "identity-service"
+        "api-gateway",
+        "data-gateway"
       ]
     },
     {
-      "name": "dev (linux + browser)",
+      "name": "flow: attachments",
       "presentation": {
-        "group": "dev",
+        "group": "flow",
         "order": 3
       },
       "stopAll": true,
       "configurations": [
-        "schemas:watch",
-        "brave (debug)",
-        "codegen: supergraph",
-        "erp-web",
+        "pine-web",
         "identity-web",
+        "api-gateway",
+        "data-gateway",
+        "issues-service",
+        "identity-service",
+        "authorization-service",
+        "attachment-service",
+        "attachment-scanner-service"
+      ]
+    },
+    {
+      "name": "flow: platform",
+      "presentation": {
+        "group": "flow",
+        "order": 4
+      },
+      "stopAll": true,
+      "configurations": [
         "platform-web",
+        "identity-web",
+        "api-gateway",
+        "data-gateway",
+        "platform-service",
+        "identity-service",
+        "authorization-service"
+      ]
+    },
+    {
+      "name": "flow: notifications",
+      "presentation": {
+        "group": "flow",
+        "order": 5
+      },
+      "stopAll": true,
+      "configurations": [
+        "pine-web",
+        "identity-web",
         "api-gateway",
         "data-gateway",
         "notification-service",
-        "attachment-service",
-        "attachment-scanner-service",
-        "issues-service",
-        "platform-service",
+        "identity-service",
         "authorization-service",
-        "identity-service"
+        "issues-service"
+      ]
+    },
+    {
+      "name": "flow: issues + browser",
+      "presentation": {
+        "group": "flow",
+        "order": 6
+      },
+      "stopAll": true,
+      "configurations": [
+        "client (browser)",
+        "pine-web",
+        "identity-web",
+        "api-gateway",
+        "data-gateway",
+        "issues-service",
+        "identity-service",
+        "authorization-service"
+      ]
+    },
+    {
+      "name": "flow: issues + browser (linux)",
+      "presentation": {
+        "group": "flow",
+        "order": 7
+      },
+      "stopAll": true,
+      "configurations": [
+        "brave (debug)",
+        "pine-web",
+        "identity-web",
+        "api-gateway",
+        "data-gateway",
+        "issues-service",
+        "identity-service",
+        "authorization-service"
       ]
     }
   ],
+
   "configurations": [
     {
       "name": "identity-service",
@@ -258,12 +326,12 @@
       "presentation": { "group": "2-web", "order": 1 }
     },
     {
-      "name": "erp-web",
+      "name": "pine-web",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["erp-web"],
+      "runtimeArgs": ["pine-web"],
       "console": "integratedTerminal",
       "outFiles": [],
       "sourceMaps": true,
@@ -294,12 +362,12 @@
       "presentation": { "group": "2-web", "order": 3 }
     },
     {
-      "name": "erp-web + browser",
+      "name": "pine-web + browser",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["erp-web"],
+      "runtimeArgs": ["pine-web"],
       "console": "integratedTerminal",
       "outFiles": [],
       "sourceMaps": true,
@@ -315,7 +383,7 @@
         "uriFormat": "%s",
         "action": "debugWithChrome",
         "killOnServerStop": true,
-        "webRoot": "${workspaceFolder}/apps/erp-web"
+        "webRoot": "${workspaceFolder}/apps/pine-web"
       }
     },
     {
@@ -376,7 +444,7 @@
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3001",
-      "webRoot": "${workspaceFolder}/apps/erp-web",
+      "webRoot": "${workspaceFolder}/apps/pine-web",
       "sourceMaps": true,
       "userDataDir": true,
       "presentation": { "group": "4-browser", "order": 1 },
@@ -397,7 +465,7 @@
       "type": "msedge",
       "request": "launch",
       "url": "http://localhost:3001",
-      "webRoot": "${workspaceFolder}/apps/erp-web",
+      "webRoot": "${workspaceFolder}/apps/pine-web",
       "sourceMaps": true,
       "userDataDir": true,
       "presentation": { "group": "4-browser", "order": 2 },
@@ -420,7 +488,7 @@
       "runtimeExecutable": "C:\\Users\\Soura\\scoop\\apps\\brave\\current\\brave.exe",
       "userDataDir": true,
       "url": "http://localhost:3001",
-      "webRoot": "${workspaceFolder}/apps/erp-web",
+      "webRoot": "${workspaceFolder}/apps/pine-web",
       "runtimeArgs": ["--remote-debugging-port=9222"],
       "sourceMaps": true,
       "presentation": { "group": "4-browser", "order": 3 }
@@ -432,7 +500,7 @@
       "runtimeExecutable": "/usr/bin/brave",
       "userDataDir": true,
       "url": "http://localhost:3001",
-      "webRoot": "${workspaceFolder}/apps/erp-web",
+      "webRoot": "${workspaceFolder}/apps/pine-web",
       "runtimeArgs": ["--remote-debugging-port=9222"],
       "sourceMaps": true,
       "presentation": { "group": "4-browser", "order": 4 }

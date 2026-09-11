@@ -1,9 +1,9 @@
 import { Box, IconButton, Stack, Toolbar, Tooltip, useTheme } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ERP_APPS, type ErpAppId } from "../../../apps";
+import { PINE_APPS, type PineAppId } from "../../../apps";
 
-const APP_ICONS: Record<ErpAppId, typeof AssignmentOutlinedIcon> = {
+const APP_ICONS: Record<PineAppId, typeof AssignmentOutlinedIcon> = {
   issues: AssignmentOutlinedIcon,
 };
 
@@ -28,7 +28,7 @@ export const AppRail = () => {
     >
       <Toolbar variant="dense" disableGutters />
       <Stack spacing={0.5} sx={{ py: 1, width: "100%", alignItems: "center" }}>
-        {ERP_APPS.map((app) => {
+        {PINE_APPS.map((app) => {
           const Icon = APP_ICONS[app.id];
           const active = app.isActive(pathname);
 

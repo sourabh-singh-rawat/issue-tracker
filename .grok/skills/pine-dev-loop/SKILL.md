@@ -37,7 +37,7 @@ pnpm exec turbo run dev --filter=@pine/issues-service
 pnpm exec turbo run build test --filter=@pine/<name>...   # ... = dependents
 ```
 
-Shortcuts: `pnpm erp-web`, `identity-service`, `issues-service`, `api-gateway`, …
+Shortcuts: `pnpm pine-web`, `identity-service`, `issues-service`, `api-gateway`, …
 
 ## Verify
 
@@ -50,7 +50,7 @@ Shortcuts: `pnpm erp-web`, `identity-service`, `issues-service`, `api-gateway`, 
 
 Also: `pnpm build`, `build:server`, `build:affected`, `test`, `test:affected`, `check:knip`.
 
-Schema: `pnpm schemas:compose` · Client: `pnpm gen` (erp-web). Supergraph path: `services/api-gateway/dist/supergraph.graphql`.
+Schema: `pnpm schemas:compose` · Client: `pnpm gen` (pine-web). Supergraph path: `services/api-gateway/dist/supergraph.graphql`.
 
 ## Guardrails
 

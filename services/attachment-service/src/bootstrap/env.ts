@@ -19,7 +19,7 @@ export const EnvSchema = Type.Object({
   ATTACHMENT_DATABASE_URL: Type.String({ minLength: 1 }),
   NATS_URL: Type.String({ default: "nats://localhost:4222" }),
   JWT_SECRET: Type.String({ minLength: 1 }),
-  ERP_WEB_URL: Type.String({ default: "https://localhost:3001" }),
+  PINE_WEB_URL: Type.String({ default: "https://localhost:3001" }),
   IDENTITY_WEB_URL: Type.String({ default: "https://localhost:3000" }),
   VITE_PLATFORM_WEB_URL: Type.String({ default: "https://localhost:3002" }),
   REDIS_URL: Type.String({ default: "redis://localhost:6380" }),

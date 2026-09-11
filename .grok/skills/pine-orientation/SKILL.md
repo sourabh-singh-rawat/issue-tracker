@@ -29,7 +29,7 @@ Extract to `packages/*` only when **two** services need the same logic.
 | Domain                                    | Owner                                                               |
 | ----------------------------------------- | ------------------------------------------------------------------- |
 | Auth / IdP / OAuth                        | `identity-service` + Ory (Kratos/Hydra)                             |
-| Workspaces / projects / issues / statuses | `issues-service` + `erp-web`                                        |
+| Workspaces / projects / issues / statuses | `issues-service` + `pine-web`                                       |
 | Attachments                               | `attachment-service`                                                |
 | Transactional email / notifications       | `notification-service` (`integrations/email`, not a shared package) |
 | Federated GraphQL supergraph              | `api-gateway` (`dist/supergraph.graphql`)                           |
@@ -37,7 +37,7 @@ Extract to `packages/*` only when **two** services need the same logic.
 
 ## Apps / services / packages
 
-**Apps:** `erp-web` (primary product UI — issues-focused), `identity-web` (sign-in/registration/consent)
+**Apps:** `pine-web` (primary product UI — issues-focused), `identity-web` (sign-in/registration/consent), `platform-web` (platform admin)
 
 **Services:** `identity-service`, `issues-service`, `attachment-service`, `notification-service`, `api-gateway`
 

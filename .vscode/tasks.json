@@ -162,7 +162,7 @@
     },
     {
       "label": "dev:apps",
-      "detail": "Turbo run dev for erp-web, identity-web, platform-web, and backend services (no debugger, no Docker).",
+      "detail": "Turbo run dev for pine-web, identity-web, platform-web, and backend services (no debugger, no Docker).",
       "type": "shell",
       "command": "pnpm dev:apps",
       "options": {
@@ -173,10 +173,10 @@
       "group": "none"
     },
     {
-      "label": "erp-web",
-      "detail": "Start ERP web only (issues UI on :3001).",
+      "label": "pine-web",
+      "detail": "Start Pine web only (issues UI on :3001).",
       "type": "shell",
-      "command": "pnpm erp-web",
+      "command": "pnpm pine-web",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -210,7 +210,7 @@
     },
     {
       "label": "gen",
-      "detail": "Regenerate erp-web GraphQL + OpenAPI clients.",
+      "detail": "Regenerate pine-web GraphQL + OpenAPI clients.",
       "type": "shell",
       "command": "pnpm gen",
       "options": {
