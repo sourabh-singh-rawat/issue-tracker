@@ -1,7 +1,7 @@
 # Pine agent rules
 
 Canonical project instructions for coding agents (Grok, Claude Code, Cursor, Copilot, etc.).
-Skills with deeper recipes live under `tools/ai/*/SKILL.md` (loaded via `.grok/config.toml`).
+Skills with deeper recipes live under `.grok/skills/*/SKILL.md`.
 
 ## Database migrations — do not generate
 
@@ -69,7 +69,7 @@ EOF
 - Never hand-edit `**/__generated__/**` or `api-gateway/dist/*`.
 - Do not search or edit `infra/data/` or `node_modules/` for product work.
 - Use current packages only: `@pine/server`, `@pine/events` — not `server-core` / `event-bus`.
-- Load the matching skill under `tools/ai/` for orientation, features, events, GraphQL, web, release, docker, k8s, or observability.
+- Load the matching skill under `.grok/skills/` for orientation, features, events, GraphQL, web, release, docker, k8s, or observability.
 - **No comments in code.** Do not add `//`, `/* */`, or JSDoc unless the user explicitly asks. Prefer clear names and structure over explanatory comments.
 - **Standalone functions are arrows; class methods are not.** Module-level and other standalone functions use `const name = (…) => { … }` / `const name = async (…) => { … }` — never `function` declarations. Inside classes, use normal methods (`method(…) { … }` / `async method(…) { … }`), not arrow property methods. Constructors stay as `constructor`. Interfaces/types express callables as properties (`name: (arg: T) => R`), not method syntax.
 - **Public members first.** In classes and modules, put the constructor and public methods/functions above private/protected helpers. Keep the public surface at the top of the type or file.

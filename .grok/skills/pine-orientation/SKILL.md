@@ -20,7 +20,7 @@ pnpm + Turborepo monorepo. Workspace: `apps/**`, `packages/**`, `services/**`.
 | HTTP server / GraphQL / logger       | `@pine/server`                                        |
 | Local stack                          | `infra/docker` + root `pnpm dev:infra*`             |
 | Repo tooling scripts                 | `tools/scripts/` (`release/`, `changelog/`, `schemas/`, `setup/`, `concat/`) |
-| Agent skills                         | `tools/ai/*/SKILL.md`                               |
+| Agent skills                         | `.grok/skills/*/SKILL.md`                           |
 
 Extract to `packages/*` only when **two** services need the same logic.
 
