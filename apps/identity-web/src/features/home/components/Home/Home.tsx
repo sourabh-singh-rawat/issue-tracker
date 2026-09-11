@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useGetCurrentUserQuery } from "@generated/api/@tanstack/react-query.gen";
 import { LocationBreadcrumbs } from "../LocationBreadcrumbs";
 import { CreateProfileForm } from "../CreateProfileForm";
+import { EmailBlock } from "../EmailBlock";
 import { GenderBlock } from "../GenderBlock";
 import { NameBlock } from "../NameBlock";
 import { ProfilePhotoBlock } from "../ProfilePhotoBlock";
@@ -53,10 +54,11 @@ export const Home = () => {
               Personal info
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Set up your personal info. {identity.email}
+              Set up your personal info.
             </Typography>
           </Box>
 
+          <EmailBlock email={identity.email} emailVerified={identity.emailVerified} />
           <CreateProfileForm />
         </Stack>
       </Container>
@@ -72,7 +74,7 @@ export const Home = () => {
             Personal info
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Info on your account, like your name. {identity.email}
+            Info on your account, like your name and email.
           </Typography>
         </Box>
 
@@ -80,6 +82,7 @@ export const Home = () => {
           <ProfilePhotoBlock photoUrl={profile.photoUrl} fullName={profile.fullName} />
           <NameBlock fullName={profile.fullName} to="/name" />
           <GenderBlock gender={profile.gender} to="/gender" />
+          <EmailBlock email={identity.email} emailVerified={identity.emailVerified} />
         </Stack>
       </Stack>
     </Container>
