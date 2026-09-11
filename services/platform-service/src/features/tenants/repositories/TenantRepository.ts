@@ -62,6 +62,17 @@ export class TenantRepository implements ITenantRepository {
       .orderBy(desc(Tenants.createdAt));
   }
 
+  async findBySlug(slug: string, options?: TenantRepositoryOptions): Promise<Tenant | null> {
+    const client = this.client(options);
+    const [row] = await client
+      .select()
+      .from(Tenants)
+      .where(and(eq(Tenants.slug, slug), isNull(Tenants.deletedAt)))
+      .limit(1);
+
+    return row ?? null;
+  }
+
   async existsBySlug(slug: string): Promise<boolean> {
     const row = await this.db
       .select({ id: Tenants.id })

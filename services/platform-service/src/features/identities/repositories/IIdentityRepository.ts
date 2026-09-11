@@ -9,6 +9,7 @@ export type CreateIdentityEntity = {
 
 export interface IIdentityRepository {
   save: (entity: CreateIdentityEntity, options?: IdentityRepositoryOptions) => Promise<Identity>;
+  upsert: (entity: CreateIdentityEntity, options?: IdentityRepositoryOptions) => Promise<Identity>;
   update: (
     id: string,
     entity: Partial<Pick<Identity, "displayName" | "deletedAt">>,
