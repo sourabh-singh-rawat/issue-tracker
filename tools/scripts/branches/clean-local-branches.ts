@@ -6,7 +6,7 @@ import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
 
-const PROTECTED = new Set(["main", "dev", "development"]);
+const PROTECTED = new Set(["main", "dev"]);
 
 const run = async (
   command: string,
@@ -45,10 +45,10 @@ const listLocalBranches = async (cwd: string): Promise<string[]> =>
 const printHelp = (): void => {
   console.log(`Usage: branch:clean
 
-Deletes local Git branches only. Keeps main, dev, and development.
+Deletes local Git branches only. Keeps main and dev.
 Does not touch remotes.
 
-Switches to dev, development, or main first if you are on another local branch.
+Switches to dev or main first if you are on another local branch.
 
 Examples:
   pnpm branch:clean
@@ -85,14 +85,12 @@ export const main = async (argv: readonly string[] = process.argv.slice(2)): Pro
   if (!PROTECTED.has(current)) {
     const switchTo = locals.includes("dev")
       ? "dev"
-      : locals.includes("development")
-        ? "development"
-        : locals.includes("main")
-          ? "main"
-          : null;
+      : locals.includes("main")
+        ? "main"
+        : null;
     if (switchTo === null) {
       console.error(
-        "Need a local main, dev, or development branch to switch to before deleting others.",
+        "Need a local main or dev branch to switch to before deleting others.",
       );
       return 1;
     }
@@ -121,7 +119,8 @@ const isMainModule = (): boolean => {
   try {
     return import.meta.url === pathToFileURL(entry).href;
   } catch {
-    return entry.replace(/\\/g, "/").endsWith("/tools/scripts/branches/clean-local-branches.ts");
+    const normalized = entry.replace(/\\/g, "/").toLowerCase();
+    return normalized.endsWith("/tools/scripts/branches/clean-local-branches.ts");
   }
 };
 
