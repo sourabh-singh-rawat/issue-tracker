@@ -50,7 +50,8 @@ export const UpdateGender = () => {
             Gender
           </Typography>
           <Typography color="text.secondary">
-            Could not load a profile for this identity.
+            No profile yet.{" "}
+            <Link to="/">Create your profile</Link>
           </Typography>
         </Stack>
       </Container>

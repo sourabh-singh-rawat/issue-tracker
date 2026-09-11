@@ -10,6 +10,7 @@ export * from "./standard.error";
 export * from "./transaction-execution.error";
 export * from "./user-already-exists.error";
 export * from "./user-not-found.error";
+export * from "./user-profile-already-exists.error";
 export * from "./user-profile-not-found.error";
 export * from "./utility.error";
 export * from "./validation";

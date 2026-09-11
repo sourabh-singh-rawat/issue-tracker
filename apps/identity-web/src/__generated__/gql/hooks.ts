@@ -15,6 +15,13 @@ export type CreatePhotoUploadRequestMutationVariables = Exact<{
 
 export type CreatePhotoUploadRequestMutation = { createPhotoUploadRequest: { uploadRequestId: string | null, url: string | null, expiresAt: string | null, headers: Array<{ key: string | null, value: string | null }> | null } | null };
 
+export type CreateProfileMutationVariables = Exact<{
+  input: Types.CreateProfileInput;
+}>;
+
+
+export type CreateProfileMutation = { createProfile: { id: string | null, identityId: string | null, firstName: string | null, middleName: string | null, lastName: string | null, gender: Types.ProfileGender | null } | null };
+
 export type UpdateProfileGenderMutationVariables = Exact<{
   input: Types.UpdateProfileGenderInput;
 }>;
@@ -82,6 +89,34 @@ export const useCreatePhotoUploadRequestMutation = <
     )};
 
 useCreatePhotoUploadRequestMutation.getKey = () => ['CreatePhotoUploadRequest'];
+
+export const CreateProfileDocument = new TypedDocumentString(`
+    mutation CreateProfile($input: CreateProfileInput!) {
+  createProfile(input: $input) {
+    id
+    identityId
+    firstName
+    middleName
+    lastName
+    gender
+  }
+}
+    `);
+
+export const useCreateProfileMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateProfileMutation, TError, CreateProfileMutationVariables, TContext>) => {
+    
+    return useMutation<CreateProfileMutation, TError, CreateProfileMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateProfile'],
+    mutationFn: (variables?: CreateProfileMutationVariables) => graphQLFetcher<CreateProfileMutation, CreateProfileMutationVariables>(CreateProfileDocument, variables)(),
+    ...options
+  }
+    )};
+
+useCreateProfileMutation.getKey = () => ['CreateProfile'];
 
 export const UpdateProfileGenderDocument = new TypedDocumentString(`
     mutation UpdateProfileGender($input: UpdateProfileGenderInput!) {

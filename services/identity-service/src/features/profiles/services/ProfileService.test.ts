@@ -1,6 +1,6 @@
 import { ATTACHMENT_SCOPE_TYPE } from "@pine/attachment";
 import { InsufficientPermissionError } from "@pine/authorization";
-import { UserProfileNotFoundError } from "@pine/common";
+import { UserProfileAlreadyExistsError, UserProfileNotFoundError } from "@pine/common";
 import { ProfileCreatedEvent, ProfileDeletedEvent, ProfileGenderUpdatedEvent } from "@pine/events";
 import { describe, expect, it, vi } from "vitest";
 import { ProfileGender } from "@/features/profiles/constants";
@@ -8,7 +8,7 @@ import { ProfileService } from "@/features/profiles/services/ProfileService";
 
 const allowAuthorizationClient = () => ({
   checkRelationship: vi.fn().mockResolvedValue(true),
-  ensureRelationship: vi.fn().mockResolvedValue(undefined),
+  ensureRelationship: vi.fn().mockResolvedValue({ created: true }),
   deleteRelationship: vi.fn().mockResolvedValue(undefined),
   listRelationships: vi.fn().mockResolvedValue([]),
 });
@@ -39,6 +39,10 @@ const createPhotoUploadRequestRepo = () => ({
   update: vi.fn().mockResolvedValue({}),
 });
 
+const createDb = () => ({
+  transaction: vi.fn(async (fn: (tx: object) => Promise<unknown>) => fn({})),
+});
+
 const existingProfile = {
   id: "profile-1",
   identityId: "identity-1",
@@ -49,11 +53,11 @@ const existingProfile = {
 };
 
 describe("ProfileService", () => {
-  it("saves a profile", async () => {
+  it("saves a profile when a transaction is provided", async () => {
     const tx = {};
     const profileRepository = {
       save: vi.fn().mockResolvedValue(existingProfile),
-      findByIdentityId: vi.fn(),
+      findByIdentityId: vi.fn().mockResolvedValue(null),
       update: vi.fn(),
       softDelete: vi.fn(),
       existsById: vi.fn(),
@@ -63,6 +67,7 @@ describe("ProfileService", () => {
     const outboxService = createOutbox();
     const photoUploadRequestRepo = createPhotoUploadRequestRepo();
     const attachmentClient = createAttachmentClient();
+    const db = createDb();
 
     const service = new ProfileService(
       profileRepository,
@@ -70,15 +75,19 @@ describe("ProfileService", () => {
       authorizationClient,
       attachmentClient,
       outboxService,
+      db,
     );
 
-    await service.create({
+    const result = await service.create({
       tx,
       identityId: "identity-1",
       firstName: "Ada",
       lastName: "Lovelace",
     });
 
+    expect(result).toEqual(existingProfile);
+    expect(db.transaction).not.toHaveBeenCalled();
+    expect(profileRepository.findByIdentityId).toHaveBeenCalledWith("identity-1", { tx });
     expect(profileRepository.save).toHaveBeenCalledWith(
       {
         firstName: "Ada",
@@ -86,6 +95,7 @@ describe("ProfileService", () => {
         lastName: "Lovelace",
         identityId: "identity-1",
         description: undefined,
+        gender: undefined,
       },
       { tx },
     );
@@ -109,6 +119,95 @@ describe("ProfileService", () => {
     );
   });
 
+  it("creates a profile in its own transaction and syncs authz", async () => {
+    const created = { ...existingProfile, gender: ProfileGender.FEMALE };
+    const profileRepository = {
+      save: vi.fn().mockResolvedValue(created),
+      findByIdentityId: vi.fn().mockResolvedValue(null),
+      update: vi.fn(),
+      softDelete: vi.fn(),
+      existsById: vi.fn(),
+      findById: vi.fn(),
+    };
+    const authorizationClient = allowAuthorizationClient();
+    const outboxService = createOutbox();
+    const db = createDb();
+
+    const service = new ProfileService(
+      profileRepository,
+      createPhotoUploadRequestRepo(),
+      authorizationClient,
+      createAttachmentClient(),
+      outboxService,
+      db,
+    );
+
+    const result = await service.create({
+      identityId: "identity-1",
+      firstName: "Ada",
+      lastName: "Lovelace",
+      gender: ProfileGender.FEMALE,
+    });
+
+    expect(result).toEqual(created);
+    expect(db.transaction).toHaveBeenCalledOnce();
+    expect(profileRepository.save).toHaveBeenCalledWith(
+      {
+        firstName: "Ada",
+        middleName: undefined,
+        lastName: "Lovelace",
+        identityId: "identity-1",
+        description: undefined,
+        gender: ProfileGender.FEMALE,
+      },
+      { tx: {} },
+    );
+    expect(authorizationClient.ensureRelationship).toHaveBeenCalledWith({
+      object: { namespace: "profile", id: "profile-1" },
+      relation: "identity",
+      subject: { namespace: "identity", id: "identity-1" },
+    });
+    expect(outboxService.schedule).toHaveBeenCalledWith(
+      expect.objectContaining({
+        eventType: ProfileCreatedEvent.type,
+        aggregateId: "profile-1",
+      }),
+      { tx: {} },
+    );
+  });
+
+  it("throws when a profile already exists for the identity", async () => {
+    const profileRepository = {
+      save: vi.fn(),
+      findByIdentityId: vi.fn().mockResolvedValue(existingProfile),
+      update: vi.fn(),
+      softDelete: vi.fn(),
+      existsById: vi.fn(),
+      findById: vi.fn(),
+    };
+    const authorizationClient = allowAuthorizationClient();
+    const outboxService = createOutbox();
+
+    const service = new ProfileService(
+      profileRepository,
+      createPhotoUploadRequestRepo(),
+      authorizationClient,
+      createAttachmentClient(),
+      outboxService,
+      createDb(),
+    );
+
+    await expect(
+      service.create({
+        identityId: "identity-1",
+        firstName: "Ada",
+      }),
+    ).rejects.toBeInstanceOf(UserProfileAlreadyExistsError);
+    expect(profileRepository.save).not.toHaveBeenCalled();
+    expect(outboxService.schedule).not.toHaveBeenCalled();
+    expect(authorizationClient.ensureRelationship).not.toHaveBeenCalled();
+  });
+
   it("returns the profile by identity id", async () => {
     const profileRepository = {
       save: vi.fn(),
@@ -125,6 +224,7 @@ describe("ProfileService", () => {
       allowAuthorizationClient(),
       createAttachmentClient(),
       createOutbox(),
+      createDb(),
     );
 
     await expect(service.getByIdentityId("identity-1")).resolves.toEqual(existingProfile);
@@ -146,6 +246,7 @@ describe("ProfileService", () => {
       allowAuthorizationClient(),
       createAttachmentClient(),
       createOutbox(),
+      createDb(),
     );
 
     await expect(service.getByIdentityId("missing")).rejects.toBeInstanceOf(UserProfileNotFoundError);
@@ -169,6 +270,7 @@ describe("ProfileService", () => {
       authorizationClient,
       createAttachmentClient(),
       createOutbox(),
+      createDb(),
     );
 
     const result = await service.updateName({
@@ -212,6 +314,7 @@ describe("ProfileService", () => {
       authorizationClient,
       createAttachmentClient(),
       createOutbox(),
+      createDb(),
     );
 
     await expect(
@@ -236,6 +339,7 @@ describe("ProfileService", () => {
       allowAuthorizationClient(),
       createAttachmentClient(),
       createOutbox(),
+      createDb(),
     );
 
     await expect(
@@ -263,6 +367,7 @@ describe("ProfileService", () => {
       authorizationClient,
       createAttachmentClient(),
       outboxService,
+      createDb(),
     );
 
     const result = await service.updateGender({
@@ -319,6 +424,7 @@ describe("ProfileService", () => {
       authorizationClient,
       createAttachmentClient(),
       outboxService,
+      createDb(),
     );
 
     await expect(
@@ -345,6 +451,7 @@ describe("ProfileService", () => {
       allowAuthorizationClient(),
       createAttachmentClient(),
       outboxService,
+      createDb(),
     );
 
     await expect(
@@ -373,6 +480,7 @@ describe("ProfileService", () => {
       authorizationClient,
       createAttachmentClient(),
       outboxService,
+      createDb(),
     );
 
     await service.delete({ tx, identityId: "identity-1" });
@@ -418,6 +526,7 @@ describe("ProfileService", () => {
       authorizationClient,
       createAttachmentClient(),
       outboxService,
+      createDb(),
     );
 
     await service.delete({ tx, identityId: "missing" });
@@ -447,6 +556,7 @@ describe("ProfileService", () => {
       authorizationClient,
       attachmentClient,
       outboxService,
+      createDb(),
     );
 
     const result = await service.createPhotoUploadRequest({
@@ -511,6 +621,7 @@ describe("ProfileService", () => {
       authorizationClient,
       attachmentClient,
       outboxService,
+      createDb(),
     );
 
     const result = await service.updatePhoto({
@@ -520,11 +631,11 @@ describe("ProfileService", () => {
       attachmentId: "att-1",
     });
 
-    expect(profileRepository.findByIdentityId).toHaveBeenCalledWith("identity-1", { tx: undefined });
+    expect(profileRepository.findByIdentityId).toHaveBeenCalledWith("identity-1", undefined);
     expect(profileRepository.update).toHaveBeenCalledWith(
       "profile-1",
       { photoUrl: "/attachments/att-1" },
-      { tx: undefined },
+      undefined,
     );
     expect(photoUploadRequestRepo.update).toHaveBeenCalledWith(
       "req-1",
@@ -532,7 +643,7 @@ describe("ProfileService", () => {
         status: "completed",
         attachmentId: "att-1",
       }),
-      { tx: undefined },
+      undefined,
     );
     expect(result).toEqual(updated);
   });
