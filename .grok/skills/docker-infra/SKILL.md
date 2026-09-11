@@ -47,8 +47,16 @@ Files under `infra/docker/`: `compose.yaml`, `compose.single-db.yaml` (default),
 | 4466 / 4467 | Keto read / write             |
 | 5555        | pgAdmin                       |
 | 4317        | Alloy OTLP (obs profile only) |
+| 8333 / 8888 | SeaweedFS S3 / filer UI       |
 
 Confirm in active compose + root `.env.example`.
+
+## Object storage (SeaweedFS S3)
+
+- Compose: `infra/docker/storage.compose.yaml` (included by `pnpm dev:infra*`)
+- Env: `S3_ENDPOINT=http://127.0.0.1:8333`, `S3_BUCKET=attachments`, `S3_ACCESS_KEY` / `S3_SECRET_KEY` (defaults `seaweed`)
+- `seaweedfs-init` CreateBuckets `S3_BUCKET` after S3 is healthy
+- Upload “completed” but `NoSuchBucket` on read usually means a broken/partial bucket under `infra/data/docker/seaweedfs-data`. Fix locally by deleting and recreating the bucket (S3 `DeleteBucket` + `CreateBucket` on `attachments`), or wipe the Seaweed data dir and re-run `pnpm dev:infra` (confirm with user before deleting data)
 
 ## Ory (Kratos, Hydra, Keto)
 
