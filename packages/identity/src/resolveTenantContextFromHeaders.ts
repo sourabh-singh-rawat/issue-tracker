@@ -1,6 +1,6 @@
 import type { HttpRequest } from "@pine/server";
 import {
-  X_ORGANIZATION_ID_HEADER,
+  X_WORKSPACE_ID_HEADER,
   X_TENANT_ID_HEADER,
 } from "./tenantContextHeaders";
 
@@ -13,12 +13,12 @@ const readHeaderValue = (value: string | string[] | undefined): string | undefin
 
 export const resolveTenantContextFromHeaders = (request: HttpRequest): void => {
   const tenantId = readHeaderValue(request.headers[X_TENANT_ID_HEADER]);
-  const organizationId = readHeaderValue(request.headers[X_ORGANIZATION_ID_HEADER]);
+  const workspaceId = readHeaderValue(request.headers[X_WORKSPACE_ID_HEADER]);
 
-  if (!tenantId || !organizationId) {
+  if (!tenantId || !workspaceId) {
     return;
   }
 
   request.tenantId = tenantId;
-  request.organizationId = organizationId;
+  request.workspaceId = workspaceId;
 };

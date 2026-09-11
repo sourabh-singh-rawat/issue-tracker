@@ -7,7 +7,7 @@ description: >
 
 # Service
 
-Domain / application layer. Canonical: `platform-service` `features/organizations/services`.
+Domain / application layer. Canonical: `platform-service` `features/workspaces/services`.
 
 Persistence: `repository`. Transport: `graphql` / `http-route`. Slice wiring: `service-feature`. Events: `events`. Naming: `AGENTS.md`.
 
@@ -36,12 +36,12 @@ Drop the noun already on the type. Domain verbs — not repository `save` / `fin
 | `update` / `delete` | mutate |
 
 ```ts
-export interface IOrganizationService {
-  create: (input: CreateOrganizationInput, identityId: string) => Promise<Organization>;
-  getById: (id: string, identityId: string) => Promise<Organization>;
-  list: (input: ListOrganizationsInput, identityId: string) => Promise<Organization[]>;
-  listMine: (identityId: string) => Promise<OrganizationNode[]>;
-  update: (id: string, input: UpdateOrganizationInput, identityId: string) => Promise<Organization>;
+export interface IWorkspaceService {
+  create: (input: CreateWorkspaceInput, identityId: string) => Promise<Workspace>;
+  getById: (id: string, identityId: string) => Promise<Workspace>;
+  list: (input: ListWorkspacesInput, identityId: string) => Promise<Workspace[]>;
+  listMine: (identityId: string) => Promise<WorkspaceNode[]>;
+  update: (id: string, input: UpdateWorkspaceInput, identityId: string) => Promise<Workspace>;
   delete: (id: string, identityId: string) => Promise<void>;
 }
 ```
@@ -68,10 +68,10 @@ export interface IOrganizationService {
 
 ```ts
 @injectable()
-export class OrganizationService implements IOrganizationService {
+export class WorkspaceService implements IWorkspaceService {
   constructor(
-    @inject(TYPES.OrganizationRepository)
-    private readonly organizationRepository: IOrganizationRepository,
+    @inject(TYPES.WorkspaceRepository)
+    private readonly workspaceRepository: IWorkspaceRepository,
     @inject(TYPES.AuthorizationClient)
     private readonly authorizationClient: IAuthorizationClient,
     @inject(TYPES.OutboxService)
@@ -80,13 +80,13 @@ export class OrganizationService implements IOrganizationService {
     private readonly db: Database,
   ) {}
 
-  async getById(id: string, identityId: string): Promise<Organization> {
-    await requirePermission(this.authorizationClient, identityId, "read", `organization:${id}`);
-    const organization = await this.organizationRepository.findById(id);
-    if (!organization) {
-      throw new OrganizationNotFoundError(`Organization not found: ${id}`);
+  async getById(id: string, identityId: string): Promise<Workspace> {
+    await requirePermission(this.authorizationClient, identityId, "read", `workspace:${id}`);
+    const workspace = await this.workspaceRepository.findById(id);
+    if (!workspace) {
+      throw new WorkspaceNotFoundError(`Workspace not found: ${id}`);
     }
-    return organization;
+    return workspace;
   }
 }
 ```
@@ -96,9 +96,9 @@ Public members first (constructor + public methods above private helpers). Class
 ## Errors
 
 ```ts
-export class OrganizationNotFoundError extends ApplicationError {
-  constructor(message = "Organization not found") {
-    super("ORGANIZATION_NOT_FOUND", message, true);
+export class WorkspaceNotFoundError extends ApplicationError {
+  constructor(message = "Workspace not found") {
+    super("WORKSPACE_NOT_FOUND", message, true);
   }
 }
 ```
@@ -108,16 +108,16 @@ Keep the noun on error class names (flat namespace).
 ## DI
 
 ```ts
-TYPES.OrganizationService = Symbol.for("IOrganizationService");
-container.bind<IOrganizationService>(TYPES.OrganizationService).to(OrganizationService);
+TYPES.WorkspaceService = Symbol.for("IWorkspaceService");
+container.bind<IWorkspaceService>(TYPES.WorkspaceService).to(WorkspaceService);
 ```
 
 ## Call sites
 
 | Transport | Call |
 | --------- | ---- |
-| GraphQL `createOrganization` | `organizationService.create(...)` |
-| GraphQL `getOrganization` | `organizationService.getById(...)` |
+| GraphQL `createWorkspace` | `workspaceService.create(...)` |
+| GraphQL `getWorkspace` | `workspaceService.getById(...)` |
 | HTTP handler | same short verbs |
 
 Resolvers and routes stay thin — one service call after mapping args.

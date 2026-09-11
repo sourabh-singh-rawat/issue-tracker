@@ -49,7 +49,7 @@ export const PlatformRelations = () => {
           </Typography>
           <Typography color="text.secondary">
             Identities on this platform. Open an identity to inspect its platform, tenant, and
-            organization relations.
+            workspace relations.
           </Typography>
         </Box>
         <CreatePlatformRelationModal />

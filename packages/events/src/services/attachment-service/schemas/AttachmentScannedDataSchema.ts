@@ -5,7 +5,7 @@ export const AttachmentScannedDataSchema = Type.Object(
     scanId: Type.String(),
     attachmentId: Type.String(),
     versionId: Type.String(),
-    scopeType: Type.Union([Type.Literal("IDENTITY"), Type.Literal("ORGANIZATION")]),
+    scopeType: Type.Union([Type.Literal("IDENTITY"), Type.Literal("WORKSPACE")]),
     scopeId: Type.String(),
     tenantId: Type.Optional(Type.String()),
     type: Type.String(),

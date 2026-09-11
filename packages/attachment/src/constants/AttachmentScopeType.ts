@@ -1,6 +1,6 @@
 export const ATTACHMENT_SCOPE_TYPE = {
   IDENTITY: "IDENTITY",
-  ORGANIZATION: "ORGANIZATION",
+  WORKSPACE: "WORKSPACE",
 } as const;
 
 export type AttachmentScopeType =

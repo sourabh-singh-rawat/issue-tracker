@@ -2,10 +2,10 @@
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@pine/platform-service",
   "version": "0.4.0",
-  "description": "Platform service — tenants, organizations, and memberships",
+  "description": "Platform service — tenants, workspaces, and memberships",
   "keywords": [
     "membership",
-    "organization",
+    "workspace",
     "platform",
     "tenant"
   ],

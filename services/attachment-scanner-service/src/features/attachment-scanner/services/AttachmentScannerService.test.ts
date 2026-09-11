@@ -162,7 +162,7 @@ describe("AttachmentScannerService", () => {
       id: "scan-2",
       attachmentId: "att-2",
       versionId: "ver-2",
-      scopeType: "ORGANIZATION",
+      scopeType: "WORKSPACE",
       scopeId: "org-1",
       tenantId: "tenant-1",
       type: ATTACHMENT_SCAN_TYPE.MALWARE,
@@ -243,7 +243,7 @@ describe("AttachmentScannerService", () => {
     const result = await service.scan({
       attachmentId: "att-2",
       versionId: "ver-2",
-      scopeType: "ORGANIZATION",
+      scopeType: "WORKSPACE",
       scopeId: "org-1",
       tenantId: "tenant-1",
     });

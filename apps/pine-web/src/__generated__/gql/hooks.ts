@@ -50,23 +50,6 @@ export type UpdateIssueMutationVariables = Exact<{
 
 export type UpdateIssueMutation = { updateIssue: string | null };
 
-export type GetMyOrganizationPreferenceQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetMyOrganizationPreferenceQuery = { getMyOrganizationPreference: { organizationId: string | null, tenantId: string | null, updatedAt: unknown } | null };
-
-export type GetMyOrganizationsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetMyOrganizationsQuery = { getMyOrganizations: Array<{ id: string | null, tenantId: string | null, parentOrganizationId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentOrganizationId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentOrganizationId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentOrganizationId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentOrganizationId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentOrganizationId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown }> | null }> | null }> | null }> | null }> | null }> | null };
-
-export type SetMyOrganizationPreferenceMutationVariables = Exact<{
-  organizationId: string;
-}>;
-
-
-export type SetMyOrganizationPreferenceMutation = { setMyOrganizationPreference: { organizationId: string | null, tenantId: string | null, updatedAt: unknown } | null };
-
 export type CreateProjectMutationVariables = Exact<{
   input: Types.CreateProjectInput;
 }>;
@@ -92,6 +75,23 @@ export type FindStatusesQueryVariables = Exact<{
 
 
 export type FindStatusesQuery = { findStatuses: Array<{ id: string | null, name: string | null }> | null };
+
+export type GetMyWorkspacePreferenceQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyWorkspacePreferenceQuery = { getMyWorkspacePreference: { workspaceId: string | null, tenantId: string | null, updatedAt: unknown } | null };
+
+export type GetMyWorkspacesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyWorkspacesQuery = { getMyWorkspaces: Array<{ id: string | null, tenantId: string | null, parentWorkspaceId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentWorkspaceId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentWorkspaceId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentWorkspaceId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentWorkspaceId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown, children: Array<{ id: string | null, tenantId: string | null, parentWorkspaceId: string | null, name: string | null, slug: string | null, description: string | null, isActive: boolean | null, createdAt: unknown }> | null }> | null }> | null }> | null }> | null }> | null };
+
+export type SetMyWorkspacePreferenceMutationVariables = Exact<{
+  workspaceId: string;
+}>;
+
+
+export type SetMyWorkspacePreferenceMutation = { setMyWorkspacePreference: { workspaceId: string | null, tenantId: string | null, updatedAt: unknown } | null };
 
 
 export class TypedDocumentString<TResult, TVariables>
@@ -278,146 +278,6 @@ export const useUpdateIssueMutation = <
 
 useUpdateIssueMutation.getKey = () => ['UpdateIssue'];
 
-export const GetMyOrganizationPreferenceDocument = new TypedDocumentString(`
-    query GetMyOrganizationPreference {
-  getMyOrganizationPreference {
-    organizationId
-    tenantId
-    updatedAt
-  }
-}
-    `);
-
-export const useGetMyOrganizationPreferenceQuery = <
-      TData = GetMyOrganizationPreferenceQuery,
-      TError = unknown
-    >(
-      variables?: GetMyOrganizationPreferenceQueryVariables,
-      options?: Omit<UseQueryOptions<GetMyOrganizationPreferenceQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMyOrganizationPreferenceQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<GetMyOrganizationPreferenceQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['GetMyOrganizationPreference'] : ['GetMyOrganizationPreference', variables],
-    queryFn: graphQLFetcher<GetMyOrganizationPreferenceQuery, GetMyOrganizationPreferenceQueryVariables>(GetMyOrganizationPreferenceDocument, variables),
-    ...options
-  }
-    )};
-
-useGetMyOrganizationPreferenceQuery.document = GetMyOrganizationPreferenceDocument;
-
-useGetMyOrganizationPreferenceQuery.getKey = (variables?: GetMyOrganizationPreferenceQueryVariables) => variables === undefined ? ['GetMyOrganizationPreference'] : ['GetMyOrganizationPreference', variables];
-
-export const GetMyOrganizationsDocument = new TypedDocumentString(`
-    query GetMyOrganizations {
-  getMyOrganizations {
-    id
-    tenantId
-    parentOrganizationId
-    name
-    slug
-    description
-    isActive
-    createdAt
-    children {
-      id
-      tenantId
-      parentOrganizationId
-      name
-      slug
-      description
-      isActive
-      createdAt
-      children {
-        id
-        tenantId
-        parentOrganizationId
-        name
-        slug
-        description
-        isActive
-        createdAt
-        children {
-          id
-          tenantId
-          parentOrganizationId
-          name
-          slug
-          description
-          isActive
-          createdAt
-          children {
-            id
-            tenantId
-            parentOrganizationId
-            name
-            slug
-            description
-            isActive
-            createdAt
-            children {
-              id
-              tenantId
-              parentOrganizationId
-              name
-              slug
-              description
-              isActive
-              createdAt
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `);
-
-export const useGetMyOrganizationsQuery = <
-      TData = GetMyOrganizationsQuery,
-      TError = unknown
-    >(
-      variables?: GetMyOrganizationsQueryVariables,
-      options?: Omit<UseQueryOptions<GetMyOrganizationsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMyOrganizationsQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<GetMyOrganizationsQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['GetMyOrganizations'] : ['GetMyOrganizations', variables],
-    queryFn: graphQLFetcher<GetMyOrganizationsQuery, GetMyOrganizationsQueryVariables>(GetMyOrganizationsDocument, variables),
-    ...options
-  }
-    )};
-
-useGetMyOrganizationsQuery.document = GetMyOrganizationsDocument;
-
-useGetMyOrganizationsQuery.getKey = (variables?: GetMyOrganizationsQueryVariables) => variables === undefined ? ['GetMyOrganizations'] : ['GetMyOrganizations', variables];
-
-export const SetMyOrganizationPreferenceDocument = new TypedDocumentString(`
-    mutation SetMyOrganizationPreference($organizationId: String!) {
-  setMyOrganizationPreference(organizationId: $organizationId) {
-    organizationId
-    tenantId
-    updatedAt
-  }
-}
-    `);
-
-export const useSetMyOrganizationPreferenceMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetMyOrganizationPreferenceMutation, TError, SetMyOrganizationPreferenceMutationVariables, TContext>) => {
-    
-    return useMutation<SetMyOrganizationPreferenceMutation, TError, SetMyOrganizationPreferenceMutationVariables, TContext>(
-      {
-    mutationKey: ['SetMyOrganizationPreference'],
-    mutationFn: (variables?: SetMyOrganizationPreferenceMutationVariables) => graphQLFetcher<SetMyOrganizationPreferenceMutation, SetMyOrganizationPreferenceMutationVariables>(SetMyOrganizationPreferenceDocument, variables)(),
-    ...options
-  }
-    )};
-
-useSetMyOrganizationPreferenceMutation.getKey = () => ['SetMyOrganizationPreference'];
-
 export const CreateProjectDocument = new TypedDocumentString(`
     mutation CreateProject($input: CreateProjectInput!) {
   createProject(input: $input)
@@ -528,3 +388,143 @@ export const useFindStatusesQuery = <
 useFindStatusesQuery.document = FindStatusesDocument;
 
 useFindStatusesQuery.getKey = (variables: FindStatusesQueryVariables) => ['FindStatuses', variables];
+
+export const GetMyWorkspacePreferenceDocument = new TypedDocumentString(`
+    query GetMyWorkspacePreference {
+  getMyWorkspacePreference {
+    workspaceId
+    tenantId
+    updatedAt
+  }
+}
+    `);
+
+export const useGetMyWorkspacePreferenceQuery = <
+      TData = GetMyWorkspacePreferenceQuery,
+      TError = unknown
+    >(
+      variables?: GetMyWorkspacePreferenceQueryVariables,
+      options?: Omit<UseQueryOptions<GetMyWorkspacePreferenceQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMyWorkspacePreferenceQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetMyWorkspacePreferenceQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetMyWorkspacePreference'] : ['GetMyWorkspacePreference', variables],
+    queryFn: graphQLFetcher<GetMyWorkspacePreferenceQuery, GetMyWorkspacePreferenceQueryVariables>(GetMyWorkspacePreferenceDocument, variables),
+    ...options
+  }
+    )};
+
+useGetMyWorkspacePreferenceQuery.document = GetMyWorkspacePreferenceDocument;
+
+useGetMyWorkspacePreferenceQuery.getKey = (variables?: GetMyWorkspacePreferenceQueryVariables) => variables === undefined ? ['GetMyWorkspacePreference'] : ['GetMyWorkspacePreference', variables];
+
+export const GetMyWorkspacesDocument = new TypedDocumentString(`
+    query GetMyWorkspaces {
+  getMyWorkspaces {
+    id
+    tenantId
+    parentWorkspaceId
+    name
+    slug
+    description
+    isActive
+    createdAt
+    children {
+      id
+      tenantId
+      parentWorkspaceId
+      name
+      slug
+      description
+      isActive
+      createdAt
+      children {
+        id
+        tenantId
+        parentWorkspaceId
+        name
+        slug
+        description
+        isActive
+        createdAt
+        children {
+          id
+          tenantId
+          parentWorkspaceId
+          name
+          slug
+          description
+          isActive
+          createdAt
+          children {
+            id
+            tenantId
+            parentWorkspaceId
+            name
+            slug
+            description
+            isActive
+            createdAt
+            children {
+              id
+              tenantId
+              parentWorkspaceId
+              name
+              slug
+              description
+              isActive
+              createdAt
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `);
+
+export const useGetMyWorkspacesQuery = <
+      TData = GetMyWorkspacesQuery,
+      TError = unknown
+    >(
+      variables?: GetMyWorkspacesQueryVariables,
+      options?: Omit<UseQueryOptions<GetMyWorkspacesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMyWorkspacesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetMyWorkspacesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['GetMyWorkspaces'] : ['GetMyWorkspaces', variables],
+    queryFn: graphQLFetcher<GetMyWorkspacesQuery, GetMyWorkspacesQueryVariables>(GetMyWorkspacesDocument, variables),
+    ...options
+  }
+    )};
+
+useGetMyWorkspacesQuery.document = GetMyWorkspacesDocument;
+
+useGetMyWorkspacesQuery.getKey = (variables?: GetMyWorkspacesQueryVariables) => variables === undefined ? ['GetMyWorkspaces'] : ['GetMyWorkspaces', variables];
+
+export const SetMyWorkspacePreferenceDocument = new TypedDocumentString(`
+    mutation SetMyWorkspacePreference($workspaceId: String!) {
+  setMyWorkspacePreference(workspaceId: $workspaceId) {
+    workspaceId
+    tenantId
+    updatedAt
+  }
+}
+    `);
+
+export const useSetMyWorkspacePreferenceMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetMyWorkspacePreferenceMutation, TError, SetMyWorkspacePreferenceMutationVariables, TContext>) => {
+    
+    return useMutation<SetMyWorkspacePreferenceMutation, TError, SetMyWorkspacePreferenceMutationVariables, TContext>(
+      {
+    mutationKey: ['SetMyWorkspacePreference'],
+    mutationFn: (variables?: SetMyWorkspacePreferenceMutationVariables) => graphQLFetcher<SetMyWorkspacePreferenceMutation, SetMyWorkspacePreferenceMutationVariables>(SetMyWorkspacePreferenceDocument, variables)(),
+    ...options
+  }
+    )};
+
+useSetMyWorkspacePreferenceMutation.getKey = () => ['SetMyWorkspacePreference'];

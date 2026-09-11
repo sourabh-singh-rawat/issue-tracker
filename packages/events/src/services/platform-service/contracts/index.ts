@@ -1,5 +1,5 @@
-export { OrganizationCreatedEvent } from "./OrganizationCreatedEvent";
-export { OrganizationRelationCreatedEvent } from "./OrganizationRelationCreatedEvent";
+export { WorkspaceCreatedEvent } from "./WorkspaceCreatedEvent";
+export { WorkspaceRelationCreatedEvent } from "./WorkspaceRelationCreatedEvent";
 export { PlatformRelationCreatedEvent } from "./PlatformRelationCreatedEvent";
 export { PlatformRelationDeletedEvent } from "./PlatformRelationDeletedEvent";
 export { PlatformRolePermissionsUpdatedEvent } from "./PlatformRolePermissionsUpdatedEvent";

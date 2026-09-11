@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useOrganizationStore } from "../features/organization/store";
+import { useWorkspaceStore } from "../features/workspace/store";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -15,13 +15,13 @@ export const httpClient = axios.create({
 });
 
 httpClient.interceptors.request.use((config) => {
-  const currentOrganization = useOrganizationStore.getState().currentOrganization;
-  if (!currentOrganization) {
+  const currentWorkspace = useWorkspaceStore.getState().currentWorkspace;
+  if (!currentWorkspace) {
     return config;
   }
 
   const headers = config.headers;
-  headers.set("X-Tenant-Id", currentOrganization.tenantId);
-  headers.set("X-Organization-Id", currentOrganization.id);
+  headers.set("X-Tenant-Id", currentWorkspace.tenantId);
+  headers.set("X-Workspace-Id", currentWorkspace.id);
   return config;
 });

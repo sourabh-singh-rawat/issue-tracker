@@ -13,7 +13,7 @@ description: >
 - Clients: `apps/*/src/graphql/**/*.gql` + app `gen:gql` (`web-feature`)
 - Layers: `repository`, `service`, slice wiring `service-feature`, HTTP counterpart `http-route`, naming `AGENTS.md`
 
-Canonical field naming: `platform-service` `features/organizations`.
+Canonical field naming: `platform-service` `features/workspaces`.
 
 ## Feature layout
 
@@ -34,31 +34,31 @@ Field name = filename. Keep the resource (flat schema namespace). New reads use 
 
 | Thing | Style | Example |
 | ----- | ----- | ------- |
-| Query (one) | `get{Resource}` | `getOrganization` |
-| Query (many) | `get{Resources}` | `getOrganizations` |
-| Query (caller) | `getMy{Resources}` | `getMyOrganizations` |
-| Mutation | `create` / `update` / `delete{Resource}` | `createOrganization` |
-| GraphQL type | PascalCase | `CreateOrganizationInput` |
-| Input/object files | PascalCase | `CreateOrganizationInput.ts` |
-| Query / mutation modules | camelCase, one field per file | `getOrganization.ts` |
+| Query (one) | `get{Resource}` | `getWorkspace` |
+| Query (many) | `get{Resources}` | `getWorkspaces` |
+| Query (caller) | `getMy{Resources}` | `getMyWorkspaces` |
+| Mutation | `create` / `update` / `delete{Resource}` | `createWorkspace` |
+| GraphQL type | PascalCase | `CreateWorkspaceInput` |
+| Input/object files | PascalCase | `CreateWorkspaceInput.ts` |
+| Query / mutation modules | camelCase, one field per file | `getWorkspace.ts` |
 
 Resolver calls the **short** service method:
 
 | Field | Service |
 | ----- | ------- |
-| `createOrganization` | `organizationService.create(...)` |
-| `getOrganization` | `organizationService.getById(...)` |
-| `getOrganizations` | `organizationService.list(...)` |
-| `getMyOrganizations` | `organizationService.listMine(...)` |
-| `updateOrganization` | `organizationService.update(...)` |
-| `deleteOrganization` | `organizationService.delete(...)` |
+| `createWorkspace` | `workspaceService.create(...)` |
+| `getWorkspace` | `workspaceService.getById(...)` |
+| `getWorkspaces` | `workspaceService.list(...)` |
+| `getMyWorkspaces` | `workspaceService.listMine(...)` |
+| `updateWorkspace` | `workspaceService.update(...)` |
+| `deleteWorkspace` | `workspaceService.delete(...)` |
 
 Do not add `createIssue` on `IIssueService` because the field is `createIssue`. Existing `findIssue` / `findProjects` / `findIdentities` stay until a dedicated schema rename — do not mix `get` and `find` on the same resource.
 
 ## Recipe (mutation)
 
 ```ts
-export const CreateOrganizationInput = builder.inputType("CreateOrganizationInput", {
+export const CreateWorkspaceInput = builder.inputType("CreateWorkspaceInput", {
   fields: (t) => ({
     tenantId: t.string({ required: true }),
     name: t.string({ required: true }),
@@ -69,11 +69,11 @@ export const CreateOrganizationInput = builder.inputType("CreateOrganizationInpu
 
 ```ts
 builder.mutationFields((t) => ({
-  createOrganization: t.field({
-    type: OrganizationObject,
-    args: { input: t.arg({ type: CreateOrganizationInput, required: true }) },
+  createWorkspace: t.field({
+    type: WorkspaceObject,
+    args: { input: t.arg({ type: CreateWorkspaceInput, required: true }) },
     resolve: async (_root, { input }, ctx) => {
-      const service = container.get<IOrganizationService>(TYPES.OrganizationService);
+      const service = container.get<IWorkspaceService>(TYPES.WorkspaceService);
       return service.create(
         {
           tenantId: input.tenantId,

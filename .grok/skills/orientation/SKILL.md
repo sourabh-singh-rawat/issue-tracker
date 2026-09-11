@@ -24,14 +24,14 @@ pnpm + Turborepo monorepo. Workspace: `apps/**`, `packages/**`, `services/**`.
 
 Extract to `packages/*` only when **two** services need the same logic.
 
-Feature folders: **one problem per folder** (`service-feature`). Layers: `repository`, `service`, `graphql` / `http-route`. Plural resource (`organizations`) or use-case (`signin`). Do not edit across unrelated features to “finish” a slice.
+Feature folders: **one problem per folder** (`service-feature`). Layers: `repository`, `service`, `graphql` / `http-route`. Plural resource (`workspaces`) or use-case (`signin`). Do not edit across unrelated features to “finish” a slice.
 
 ## Ownership
 
 | Domain                                    | Owner                                                               |
 | ----------------------------------------- | ------------------------------------------------------------------- |
 | Auth / IdP / OAuth                        | `identity-service` + Ory (Kratos/Hydra) + `identity-web`            |
-| Platform / tenants / organizations        | `platform-service` + `platform-web`                                 |
+| Platform / tenants / workspaces        | `platform-service` + `platform-web`                                 |
 | Graph authorization (Keto)                | `authorization-service`                                             |
 | Workspaces / projects / issues / statuses | `issues-service` + `pine-web`                                       |
 | Attachments                               | `attachment-service`                                                |

@@ -18,7 +18,7 @@ One **feature folder** = one **problem**. Wire the layers; do not re-implement t
 | NATS publish / consumers | `events` |
 | Naming (all layers) | `AGENTS.md` |
 
-Canonical slice: `platform-service` `features/organizations`. Canonical HTTP feature: `authorization-service` `features/authorization`.
+Canonical slice: `platform-service` `features/workspaces`. Canonical HTTP feature: `authorization-service` `features/authorization`.
 
 ## Layout
 
@@ -35,7 +35,7 @@ services/<svc>/src/
 
 | Kind | Folder | Examples |
 | ---- | ------ | -------- |
-| Entity aggregate | plural kebab-case | `organizations`, `identities`, `tenants` |
+| Entity aggregate | plural kebab-case | `workspaces`, `identities`, `tenants` |
 | Use-case / protocol | the problem | `signin`, `oauth`, `verification`, `attachment-upload` |
 | Foreign projection | source entity name | `identities`, `tenants` in a consuming service |
 
@@ -51,7 +51,7 @@ services/<svc>/src/
 | ----- | --- | ---- | ------ | ------ | ------ |
 | Repository | `findById` → null | `findMany` | `save` | `update` | `softDelete` |
 | Service | `getById` throws | `list` | `create` | `update` | `delete` |
-| GraphQL / HTTP | `getOrganization` | `getOrganizations` | `createOrganization` | `updateOrganization` | `deleteOrganization` |
+| GraphQL / HTTP | `getWorkspace` | `getWorkspaces` | `createWorkspace` | `updateWorkspace` | `deleteWorkspace` |
 
 Public operation: filename = field or `operationId` = client `.gql` / OpenAPI name. Details in `repository`, `service`, `graphql`, `http-route`.
 
@@ -67,10 +67,10 @@ Public operation: filename = field or `operationId` = client `.gql` / OpenAPI na
 6. Colocated `*.test.ts` for non-trivial service logic
 
 ```ts
-TYPES.OrganizationRepository = Symbol.for("IOrganizationRepository");
-TYPES.OrganizationService = Symbol.for("IOrganizationService");
-container.bind<IOrganizationRepository>(TYPES.OrganizationRepository).to(OrganizationRepository);
-container.bind<IOrganizationService>(TYPES.OrganizationService).to(OrganizationService);
+TYPES.WorkspaceRepository = Symbol.for("IWorkspaceRepository");
+TYPES.WorkspaceService = Symbol.for("IWorkspaceService");
+container.bind<IWorkspaceRepository>(TYPES.WorkspaceRepository).to(WorkspaceRepository);
+container.bind<IWorkspaceService>(TYPES.WorkspaceService).to(WorkspaceService);
 ```
 
 ## Imports

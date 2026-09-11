@@ -16,8 +16,8 @@ import { logger } from "@/bootstrap/logger";
 import { AuthorizationProfileSyncConsumer } from "@/features/identity";
 
 import {
-  AuthorizationOrganizationRelationSyncConsumer,
-  AuthorizationOrganizationSyncConsumer,
+  AuthorizationWorkspaceRelationSyncConsumer,
+  AuthorizationWorkspaceSyncConsumer,
   AuthorizationPlatformRelationSyncConsumer,
   AuthorizationTenantRelationSyncConsumer,
   AuthorizationTenantSyncConsumer,
@@ -47,11 +47,11 @@ const main = async () => {
     .get<AuthorizationTenantSyncConsumer>(TYPES.AuthorizationTenantSyncConsumer)
     .start();
   void container
-    .get<AuthorizationOrganizationSyncConsumer>(TYPES.AuthorizationOrganizationSyncConsumer)
+    .get<AuthorizationWorkspaceSyncConsumer>(TYPES.AuthorizationWorkspaceSyncConsumer)
     .start();
   void container
-    .get<AuthorizationOrganizationRelationSyncConsumer>(
-      TYPES.AuthorizationOrganizationRelationSyncConsumer,
+    .get<AuthorizationWorkspaceRelationSyncConsumer>(
+      TYPES.AuthorizationWorkspaceRelationSyncConsumer,
     )
     .start();
   void container

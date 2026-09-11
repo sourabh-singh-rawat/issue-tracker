@@ -24,7 +24,7 @@ src/
   shared/  bootstrap/
 ```
 
-`src/graphql/<domain>/` uses the same name as the owning server feature (`organizations`, `tenants`, `identities`). Prefer plural resource folders for new entity ops. Legacy singular folders (`issue`, `project`) stay until a dedicated rename.
+`src/graphql/<domain>/` uses the same name as the owning server feature (`workspaces`, `tenants`, `identities`). Prefer plural resource folders for new entity ops. Legacy singular folders (`issue`, `project`) stay until a dedicated rename.
 
 ## Slice
 
@@ -41,11 +41,11 @@ export const Route = createFileRoute("/_authenticated/i/$issueId")({
 
 | Server field | Client file | Operation |
 | ------------ | ----------- | --------- |
-| `getOrganization` | `GetOrganization.gql` | `query GetOrganization` |
-| `getOrganizations` | `GetOrganizations.gql` | `query GetOrganizations` |
-| `createOrganization` | `CreateOrganization.gql` | `mutation CreateOrganization` |
+| `getWorkspace` | `GetWorkspace.gql` | `query GetWorkspace` |
+| `getWorkspaces` | `GetWorkspaces.gql` | `query GetWorkspaces` |
+| `createWorkspace` | `CreateWorkspace.gql` | `mutation CreateWorkspace` |
 
-Do not invent a parallel client name (`query FindOrganization` over field `getOrganization`). Existing `FindIssue` / `FindProjects` match current `find*` server fields — leave them until the schema is renamed.
+Do not invent a parallel client name (`query FindWorkspace` over field `getWorkspace`). Existing `FindIssue` / `FindProjects` match current `find*` server fields — leave them until the schema is renamed.
 
 Import hooks from `__generated__/gql/*`.
 

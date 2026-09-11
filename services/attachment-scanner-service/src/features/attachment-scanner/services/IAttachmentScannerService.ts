@@ -3,7 +3,7 @@ import type { AttachmentScan } from "@/db";
 export type ScanAttachmentInput = {
   attachmentId: string;
   versionId: string;
-  scopeType: "IDENTITY" | "ORGANIZATION";
+  scopeType: "IDENTITY" | "WORKSPACE";
   scopeId: string;
   tenantId?: string;
 };

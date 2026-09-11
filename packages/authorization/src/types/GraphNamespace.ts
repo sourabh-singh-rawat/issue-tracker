@@ -3,7 +3,7 @@ export type GraphNamespace =
   | "profile"
   | "platform"
   | "tenant"
-  | "organization"
+  | "workspace"
   | "role"
   | "permission";
 
@@ -12,7 +12,7 @@ export const GRAPH_NAMESPACES: readonly GraphNamespace[] = [
   "profile",
   "platform",
   "tenant",
-  "organization",
+  "workspace",
   "role",
   "permission",
 ];
