@@ -6,7 +6,6 @@ packages:
 allowBuilds:
   "@apollo/protobufjs": true
   "@apollo/rover": true
-  "@firebase/util": true
   "@parcel/watcher": true
   "@swc/core": false
   core-js: true
