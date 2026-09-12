@@ -1,5 +1,21 @@
 # @pine/platform-web
 
+## 0.5.0
+
+### Minor Changes
+
+- 198f930: refactor(platform): rename organization to workspace
+
+### Patch Changes
+
+- f272fa5: feat(ui): add M3 foundation tokens for shape, color, type, motion
+- Updated dependencies [f272fa5]
+- Updated dependencies [e5726cc]
+- Updated dependencies [198f930]
+- Updated dependencies [03c9cf5]
+  - @pine/ui@0.1.1
+  - @pine/authorization@0.5.0
+
 ## 0.4.0
 
 ### Minor Changes

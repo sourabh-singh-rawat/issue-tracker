@@ -1,5 +1,16 @@
 # @pine/data-gateway
 
+## 0.1.1
+
+### Patch Changes
+
+- 9b1b265: chore(web): rename erp-web to pine-web
+- Updated dependencies [47e114e]
+- Updated dependencies [44ebe40]
+- Updated dependencies [198f930]
+  - @pine/server@1.1.1
+  - @pine/common@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

@@ -1,5 +1,19 @@
 # @pine/identity
 
+## 0.3.0
+
+### Minor Changes
+
+- 198f930: refactor(platform): rename organization to workspace
+
+### Patch Changes
+
+- Updated dependencies [47e114e]
+- Updated dependencies [44ebe40]
+- Updated dependencies [198f930]
+  - @pine/server@1.1.1
+  - @pine/common@0.1.1
+
 ## 0.2.0
 
 ### Minor Changes
