@@ -1,3 +1,4 @@
+import { HttpAuthorizationClient, type IAuthorizationClient } from "@pine/authorization";
 import { NatsPublisher, type IPublisher } from "@pine/events";
 import {
   resolveIdentityFromHeaders,
@@ -21,17 +22,16 @@ import {
 } from "@pine/outbox";
 import { Container } from "inversify";
 import { readFileSync } from "node:fs";
-import path from "node:path";
 import { broker } from "@/bootstrap/broker";
 import { TYPES } from "@/bootstrap/container-types";
 import { db } from "@/bootstrap/db";
 import { env } from "@/bootstrap/env";
 import { logger } from "@/bootstrap/logger";
 import { createContext } from "@/graphql";
-import { schema } from "@/graphql/schema";
 import { IIdentityRepository, IdentityRepository, IssuesIdentitySyncConsumer } from "@/features/identities";
 import { IIssueAssigneeRepository, IIssueRepository, IIssueService, IssueAssigneeRepository, IssueRepository, IssueService } from "@/features/issue";
 import { IProjectRepository, IProjectService, ProjectRepository, ProjectService } from "@/features/project";
+import { ISpaceRepository, ISpaceService, SpaceRepository, SpaceService } from "@/features/spaces";
 import { IStatusRepository, IStatusService, StatusRepository, StatusService } from "@/features/status";
 
 export const container = new Container({ defaultScope: "Singleton" });
@@ -63,32 +63,41 @@ container.bind<IStatusRepository>(TYPES.StatusRepository).to(StatusRepository);
 container.bind<IStatusService>(TYPES.StatusService).to(StatusService);
 container.bind<IProjectRepository>(TYPES.ProjectRepository).to(ProjectRepository);
 container.bind<IProjectService>(TYPES.ProjectService).to(ProjectService);
+container.bind<ISpaceRepository>(TYPES.SpaceRepository).to(SpaceRepository);
+container.bind<ISpaceService>(TYPES.SpaceService).to(SpaceService);
+container
+  .bind<IAuthorizationClient>(TYPES.AuthorizationClient)
+  .toConstantValue(new HttpAuthorizationClient({ baseUrl: env.AUTHORIZATION_SERVICE_URL }));
 container.bind<IssuesIdentitySyncConsumer>(TYPES.IssuesIdentitySyncConsumer).to(IssuesIdentitySyncConsumer);
 
-container.bind<IHttpServer>(TYPES.HttpServer).toConstantValue(
-  createHttpServer({
-    config: {
-      host: "0.0.0.0",
-      port: 5001,
-      environment: env.NODE_ENV,
-      version: 1,
-    },
-    https: {
-      key: readFileSync(env.ISSUES_SERVICE_TLS_KEY_PATH),
-      cert: readFileSync(env.ISSUES_SERVICE_TLS_CERT_PATH),
-      ca: readFileSync(env.CA_CERT_PATH),
-      requestCert: true,
-      rejectUnauthorized: true,
-    },
-    cookie: { secret: env.JWT_SECRET },
-    hooks: {
-      onRequest: [resolveIdentityFromHeaders, resolveTenantContextFromHeaders],
-    },
-    graphql: createGraphQLServer({
-      schema,
-      context: createContext,
+export const bindHttpServer = async (): Promise<void> => {
+  const { schema } = await import("@/graphql/schema");
+
+  container.bind<IHttpServer>(TYPES.HttpServer).toConstantValue(
+    createHttpServer({
+      config: {
+        host: "0.0.0.0",
+        port: 5001,
+        environment: env.NODE_ENV,
+        version: 1,
+      },
+      https: {
+        key: readFileSync(env.ISSUES_SERVICE_TLS_KEY_PATH),
+        cert: readFileSync(env.ISSUES_SERVICE_TLS_CERT_PATH),
+        ca: readFileSync(env.CA_CERT_PATH),
+        requestCert: true,
+        rejectUnauthorized: true,
+      },
+      cookie: { secret: env.JWT_SECRET },
+      hooks: {
+        onRequest: [resolveIdentityFromHeaders, resolveTenantContextFromHeaders],
+      },
+      graphql: createGraphQLServer({
+        schema,
+        context: createContext,
+      }),
+      routes: [],
     }),
-    routes: [],
-  }),
-);
+  );
+};
 

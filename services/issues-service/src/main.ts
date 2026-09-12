@@ -10,7 +10,7 @@ configureTls({
 
 import type { IHttpServer } from "@pine/server";
 import type { IOutboxCleanupWorker, IOutboxWorker } from "@pine/outbox";
-import { broker, container, initializeDb, TYPES } from "@/bootstrap";
+import { bindHttpServer, broker, container, initializeDb, TYPES } from "@/bootstrap";
 import { writeSchemaToDist } from "@/bootstrap/graphql";
 import { logger } from "@/bootstrap/logger";
 import { IssuesIdentitySyncConsumer } from "@/features/identities";
@@ -22,6 +22,7 @@ export { schema } from "@/graphql/schema";
 
 const main = async () => {
   await initializeDb();
+  await bindHttpServer();
 
   writeSchemaToDist();
 

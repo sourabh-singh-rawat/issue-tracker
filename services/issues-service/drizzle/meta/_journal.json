@@ -8,6 +8,13 @@
       "when": 1786559493588,
       "tag": "0000_productive_echo",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789201161552,
+      "tag": "0001_sweet_leopardon",
+      "breakpoints": true
     }
   ]
 }
