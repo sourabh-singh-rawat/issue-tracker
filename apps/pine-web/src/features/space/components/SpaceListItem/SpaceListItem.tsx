@@ -4,13 +4,13 @@ import {
   Box,
   Collapse,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Skeleton,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouterState } from "@tanstack/react-router";
 import { useFindProjectsQuery } from "@generated/gql";
 import { CreateProjectModal, ProjectListItem } from "@features/project";
 import { useSpaceStore } from "../../store";
@@ -26,24 +26,58 @@ export const SpaceListItem = ({ spaceId, name, workspaceId }: SpaceListItemProps
   const setCurrentSpace = useSpaceStore((s) => s.setCurrentSpace);
   const selected = currentSpace?.id === spaceId;
   const [expanded, setExpanded] = useState(false);
+  const activeViewId = useRouterState({
+    select: (s) => s.location.pathname.split("/").pop(),
+  });
 
   const projectsQuery = useFindProjectsQuery(
     { spaceId },
-    { enabled: expanded },
+    { enabled: expanded || Boolean(activeViewId) },
   );
 
-  const projects = projectsQuery.data?.findProjects?.rows ?? [];
+  const projectRows = projectsQuery.data?.findProjects?.rows;
+  const projects = projectRows ?? [];
   const isLoading = expanded && projectsQuery.isPending;
 
+  useEffect(() => {
+    if (!activeViewId || projectsQuery.isPending || !projectRows) {
+      return;
+    }
+    const matchesActiveProject = projectRows.some(
+      (project) => project?.id === activeViewId,
+    );
+    if (!matchesActiveProject) {
+      return;
+    }
+    if (!expanded) {
+      setExpanded(true);
+    }
+    if (currentSpace?.id !== spaceId) {
+      setCurrentSpace({
+        id: spaceId,
+        name,
+        workspaceId,
+      });
+    }
+  }, [
+    activeViewId,
+    currentSpace?.id,
+    expanded,
+    name,
+    projectRows,
+    projectsQuery.isPending,
+    setCurrentSpace,
+    spaceId,
+    workspaceId,
+  ]);
+
   return (
-    <>
-      <ListItem
-        disablePadding
-        secondaryAction={<CreateProjectModal spaceId={spaceId} />}
-      >
+    <Box>
+      <Box sx={{ display: "flex", alignItems: "center", pr: 0.5 }}>
         <ListItemButton
           dense
           selected={selected}
+          sx={{ flex: 1, minWidth: 0 }}
           onClick={() => {
             setCurrentSpace({
               id: spaceId,
@@ -73,15 +107,16 @@ export const SpaceListItem = ({ spaceId, name, workspaceId }: SpaceListItemProps
           </ListItemIcon>
           <ListItemText primary={name} />
         </ListItemButton>
-      </ListItem>
+        <CreateProjectModal spaceId={spaceId} />
+      </Box>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {isLoading ? (
-            <ListItem dense sx={{ pl: 4 }}>
+            <ListItemButton dense disabled sx={{ pl: 4 }}>
               <ListItemText>
                 <Skeleton />
               </ListItemText>
-            </ListItem>
+            </ListItemButton>
           ) : (
             projects
               .filter(
@@ -108,6 +143,6 @@ export const SpaceListItem = ({ spaceId, name, workspaceId }: SpaceListItemProps
           )}
         </List>
       </Collapse>
-    </>
+    </Box>
   );
 };
