@@ -1,5 +1,9 @@
 # Changelog
 
+## v2026.09.12.2
+
+- (no pending changesets)
+
 ## v2026.09.12.1
 
 ### Minor
