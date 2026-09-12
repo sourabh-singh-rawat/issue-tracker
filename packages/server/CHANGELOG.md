@@ -1,5 +1,14 @@
 # @pine/server
 
+## 1.1.1
+
+### Patch Changes
+
+- 47e114e: chore(dev): attach debug workflow and fix Fastify ajv-compiler
+- 198f930: refactor(platform): rename organization to workspace
+- Updated dependencies [44ebe40]
+  - @pine/common@0.1.1
+
 ## 1.1.0
 
 ### Minor Changes
