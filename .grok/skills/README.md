@@ -24,6 +24,7 @@ Repo-wide agent rules (migrations, changesets, **feature / repository / service 
 | [orientation](./orientation/SKILL.md)                 | Where does X live / ownership   |
 | [dev-loop](./dev-loop/SKILL.md)                       | Run, build, test, compose       |
 | [web-feature](./web-feature/SKILL.md)                 | React routes / `.gql` / codegen |
+| [material-design-3](./material-design-3/SKILL.md)     | M3 Expressive UI / theme / MUI  |
 | [changeset-release](./changeset-release/SKILL.md)     | Changeset / calver release      |
 | [docker-infra](./docker-infra/SKILL.md)               | Local compose / Ory             |
 | [k8s](./k8s/SKILL.md)                                 | Helm / cluster                  |

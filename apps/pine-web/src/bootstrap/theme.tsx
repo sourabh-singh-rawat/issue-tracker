@@ -2,6 +2,7 @@ import type { PropsWithChildren } from "react";
 import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
 import { CssBaseline, type ThemeOptions } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { pineShape } from "@pine/ui";
 import { SnackbarProvider } from "notistack";
 
 import { SnackbarContent } from "@shared/components/Snackbar";
@@ -14,13 +15,6 @@ declare module "@mui/system" {
     borderWidthMarked: string;
     borderWidthSpinner: string;
     borderWidthTag: string;
-    borderRadiusNone: string;
-    borderRadiusSmall: string;
-    borderRadiusMedium: string;
-    borderRadiusLarge: string;
-    borderRadiusExtraLarge: string;
-    borderRadiusExtraExtraLarge: string;
-    borderRadiusRounded: string;
   }
 }
 
@@ -32,33 +26,26 @@ declare module "@mui/material/styles" {
     borderWidthMarked: string;
     borderWidthSpinner: string;
     borderWidthTag: string;
-    borderRadiusNone: string;
-    borderRadiusSmall: string;
-    borderRadiusMedium: string;
-    borderRadiusLarge: string;
-    borderRadiusExtraLarge: string;
-    borderRadiusExtraExtraLarge: string;
-    borderRadiusRounded: string;
   }
 }
 
-const mode = "dark" as "dark" | "light";
+type ThemeMode = "dark" | "light";
 
-const shape = {
+const mode: ThemeMode = "dark";
+
+const borderWidths = {
   borderWidthDefault: "1px",
   borderWidthInput: "2px",
   borderWidthInputOverlayUnfocused: "1px",
   borderWidthMarked: "3px",
   borderWidthSpinner: "2px",
   borderWidthTag: "2px",
-  borderRadiusNone: "0",
-  borderRadiusSmall: "0.2rem",
-  borderRadiusMedium: "0.4rem",
-  borderRadiusLarge: "0.6rem",
-  borderRadiusExtraLarge: "1rem",
-  borderRadiusExtraExtraLarge: "1.6rem",
-  borderRadiusRounded: "9000px",
-} as const;
+};
+
+const shape = {
+  ...pineShape,
+  ...borderWidths,
+};
 
 const typography: ThemeOptions["typography"] = {
   fontFamily: "inter",
@@ -73,53 +60,60 @@ const typography: ThemeOptions["typography"] = {
   body2: { fontSize: "0.8125rem" },
 };
 
+const lightPalette = {
+  primary: {
+    main: "#9147ff",
+  },
+  secondary: {
+    main: "#f7f7f8",
+  },
+  error: {
+    main: "#bb1411",
+    dark: "#530a09",
+    light: "#eb0400",
+  },
+  success: { main: "#4df498" },
+  warning: {
+    main: "#7c570e",
+    dark: "#372706",
+    light: "#9e6900",
+  },
+  grey: {
+    100: "#f7f7f8",
+    200: "#e6e6ea",
+    300: "#d3d3d9",
+    400: "#dedee3",
+    500: "#adadb8",
+    600: "#53535f",
+    700: "#323239",
+    800: "#1f1f23",
+    900: "#0e0e10",
+  },
+  text: { primary: "#191919", secondary: "#686868" },
+  divider: "#d3d3d9",
+  background: { default: "#ffffff", paper: "#f9fafb" },
+};
+
+const darkPalette = {
+  primary: { main: "#9147ff" },
+  text: { primary: "#adbac7", secondary: "#9898a2" },
+  background: { default: "#18181b", paper: "#1f1f23" },
+  divider: "#444c56",
+  success: { main: "#4df498" },
+};
+
+const paletteByMode: Record<ThemeMode, typeof lightPalette | typeof darkPalette> = {
+  light: lightPalette,
+  dark: darkPalette,
+};
+
 const theme = createTheme({
   spacing: 8,
   palette: {
     mode,
-    ...(mode === "light"
-      ? {
-          primary: {
-            main: "#9147ff",
-          },
-          secondary: {
-            main: "#f7f7f8",
-          },
-          error: {
-            main: "#bb1411",
-            dark: "#530a09",
-            light: "#eb0400",
-          },
-          success: { main: "#4df498" },
-          warning: {
-            main: "#7c570e",
-            dark: "#372706",
-            light: "#9e6900",
-          },
-          grey: {
-            100: "#f7f7f8",
-            200: "#e6e6ea",
-            300: "#d3d3d9",
-            400: "#dedee3",
-            500: "#adadb8",
-            600: "#53535f",
-            700: "#323239",
-            800: "#1f1f23",
-            900: "#0e0e10",
-          },
-          text: { primary: "#191919", secondary: "#686868" },
-          divider: "#d3d3d9",
-          background: { default: "#ffffff", paper: "#f9fafb" },
-        }
-      : {
-          primary: { main: "#9147ff" },
-          text: { primary: "#adbac7", secondary: "#9898a2" },
-          background: { default: "#18181b", paper: "#1f1f23" },
-          divider: "#444c56",
-          success: { main: "#4df498" },
-        }),
+    ...paletteByMode[mode],
   },
-  shape: shape as ThemeOptions["shape"],
+  shape,
   shadows: [
     "none",
     "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
