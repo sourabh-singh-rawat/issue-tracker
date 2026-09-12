@@ -1,0 +1,10 @@
+query GetSpaces($workspaceId: String!) {
+  getSpaces(workspaceId: $workspaceId) {
+    id
+    workspaceId
+    name
+    createdById
+    createdAt
+    updatedAt
+  }
+}

@@ -96,6 +96,11 @@ export class workspace implements Namespace { // NOSONAR typescript:S101
       this.related.admin.includes(ctx.subject) ||
       this.related.owner.includes(ctx.subject) ||
       this.related.tenant.traverse((item) => item.permits.administer(ctx)),
+    create_space: (ctx: Context): boolean =>
+      this.related.member.includes(ctx.subject) ||
+      this.related.admin.includes(ctx.subject) ||
+      this.related.owner.includes(ctx.subject) ||
+      this.related.tenant.traverse((item) => item.permits.administer(ctx)),
     delete: (ctx: Context): boolean =>
       this.related.owner.includes(ctx.subject) ||
       this.related.tenant.traverse((item) => item.related.owner.includes(ctx.subject)),

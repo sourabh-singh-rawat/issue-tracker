@@ -68,8 +68,20 @@ export type CreatePlatformRelationInput = {
   relation: Scalars['String']['input'];
 };
 
+export type CreateProfileInput = {
+  firstName: Scalars['String']['input'];
+  gender?: InputMaybe<ProfileGender>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  middleName?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type CreateProjectInput = {
   name: Scalars['String']['input'];
+};
+
+export type CreateSpaceInput = {
+  name: Scalars['String']['input'];
+  workspaceId: Scalars['String']['input'];
 };
 
 export type CreateTenantInput = {
@@ -155,7 +167,9 @@ export type Mutation = {
   createIssue?: Maybe<Scalars['String']['output']>;
   createPhotoUploadRequest?: Maybe<PhotoUploadTargetObject>;
   createPlatformRelation?: Maybe<PlatformRelationObject>;
+  createProfile?: Maybe<ProfileObject>;
   createProject?: Maybe<Scalars['String']['output']>;
+  createSpace?: Maybe<SpaceObject>;
   createTenant?: Maybe<TenantObject>;
   createTenantRelation?: Maybe<TenantRelationObject>;
   createWorkspace?: Maybe<WorkspaceObject>;
@@ -203,8 +217,18 @@ export type MutationCreatePlatformRelationArgs = {
 };
 
 
+export type MutationCreateProfileArgs = {
+  input: CreateProfileInput;
+};
+
+
 export type MutationCreateProjectArgs = {
   input: CreateProjectInput;
+};
+
+
+export type MutationCreateSpaceArgs = {
+  input: CreateSpaceInput;
 };
 
 
@@ -378,6 +402,8 @@ export type Query = {
   getMyWorkspaces?: Maybe<Array<WorkspaceObject>>;
   getPlatformRelation?: Maybe<PlatformRelationObject>;
   getPlatformRelations?: Maybe<Array<PlatformRelationObject>>;
+  getSpace?: Maybe<SpaceObject>;
+  getSpaces?: Maybe<Array<SpaceObject>>;
   getTenant?: Maybe<TenantObject>;
   getTenantRelation?: Maybe<TenantRelationObject>;
   getTenantRelations?: Maybe<Array<TenantRelationObject>>;
@@ -442,6 +468,16 @@ export type QueryGetPlatformRelationsArgs = {
 };
 
 
+export type QueryGetSpaceArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryGetSpacesArgs = {
+  workspaceId: Scalars['String']['input'];
+};
+
+
 export type QueryGetTenantArgs = {
   id: Scalars['String']['input'];
 };
@@ -484,6 +520,16 @@ export type QueryGetWorkspaceRelationsArgs = {
 export type QueryGetWorkspacesArgs = {
   parentWorkspaceId?: InputMaybe<Scalars['String']['input']>;
   tenantId: Scalars['String']['input'];
+};
+
+export type SpaceObject = {
+  __typename?: 'SpaceObject';
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
+  createdById?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
+  workspaceId?: Maybe<Scalars['String']['output']>;
 };
 
 export type StatusObject = {

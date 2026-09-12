@@ -19,6 +19,7 @@ export type WorkspacePermission =
   | "read"
   | "update"
   | "manage_members"
+  | "create_space"
   | "delete";
 
 export type RolePermission = "read" | "create" | "update" | "delete";
@@ -65,6 +66,7 @@ export const WORKSPACE_PERMISSIONS: readonly WorkspacePermission[] = [
   "read",
   "update",
   "manage_members",
+  "create_space",
   "delete",
 ];
 

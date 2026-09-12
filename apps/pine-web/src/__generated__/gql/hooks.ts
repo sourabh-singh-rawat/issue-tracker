@@ -76,6 +76,20 @@ export type FindStatusesQueryVariables = Exact<{
 
 export type FindStatusesQuery = { findStatuses: Array<{ id: string | null, name: string | null }> | null };
 
+export type CreateSpaceMutationVariables = Exact<{
+  input: Types.CreateSpaceInput;
+}>;
+
+
+export type CreateSpaceMutation = { createSpace: { id: string | null, workspaceId: string | null, name: string | null, createdById: string | null, createdAt: unknown, updatedAt: unknown } | null };
+
+export type GetSpacesQueryVariables = Exact<{
+  workspaceId: string;
+}>;
+
+
+export type GetSpacesQuery = { getSpaces: Array<{ id: string | null, workspaceId: string | null, name: string | null, createdById: string | null, createdAt: unknown, updatedAt: unknown }> | null };
+
 export type GetMyWorkspacePreferenceQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -388,6 +402,67 @@ export const useFindStatusesQuery = <
 useFindStatusesQuery.document = FindStatusesDocument;
 
 useFindStatusesQuery.getKey = (variables: FindStatusesQueryVariables) => ['FindStatuses', variables];
+
+export const CreateSpaceDocument = new TypedDocumentString(`
+    mutation CreateSpace($input: CreateSpaceInput!) {
+  createSpace(input: $input) {
+    id
+    workspaceId
+    name
+    createdById
+    createdAt
+    updatedAt
+  }
+}
+    `);
+
+export const useCreateSpaceMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateSpaceMutation, TError, CreateSpaceMutationVariables, TContext>) => {
+    
+    return useMutation<CreateSpaceMutation, TError, CreateSpaceMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateSpace'],
+    mutationFn: (variables?: CreateSpaceMutationVariables) => graphQLFetcher<CreateSpaceMutation, CreateSpaceMutationVariables>(CreateSpaceDocument, variables)(),
+    ...options
+  }
+    )};
+
+useCreateSpaceMutation.getKey = () => ['CreateSpace'];
+
+export const GetSpacesDocument = new TypedDocumentString(`
+    query GetSpaces($workspaceId: String!) {
+  getSpaces(workspaceId: $workspaceId) {
+    id
+    workspaceId
+    name
+    createdById
+    createdAt
+    updatedAt
+  }
+}
+    `);
+
+export const useGetSpacesQuery = <
+      TData = GetSpacesQuery,
+      TError = unknown
+    >(
+      variables: GetSpacesQueryVariables,
+      options?: Omit<UseQueryOptions<GetSpacesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetSpacesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetSpacesQuery, TError, TData>(
+      {
+    queryKey: ['GetSpaces', variables],
+    queryFn: graphQLFetcher<GetSpacesQuery, GetSpacesQueryVariables>(GetSpacesDocument, variables),
+    ...options
+  }
+    )};
+
+useGetSpacesQuery.document = GetSpacesDocument;
+
+useGetSpacesQuery.getKey = (variables: GetSpacesQueryVariables) => ['GetSpaces', variables];
 
 export const GetMyWorkspacePreferenceDocument = new TypedDocumentString(`
     query GetMyWorkspacePreference {

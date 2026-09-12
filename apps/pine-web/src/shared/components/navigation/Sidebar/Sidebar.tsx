@@ -8,6 +8,7 @@ import List from "@mui/material/List";
 import MuiToolbar from "@mui/material/Toolbar";
 
 import { ProjectList } from "@features/project";
+import { SpaceList } from "@features/space";
 
 const Drawer = styled(MuiDrawer)(({ open, theme }) => {
   const openDrawerWidth = theme.spacing(32);
@@ -57,6 +58,8 @@ export const Sidebar = () => {
     <Drawer open={open} variant="permanent">
       <MuiToolbar variant="dense" disableGutters />
       <List disablePadding />
+      <MuiDivider />
+      <SpaceList />
       <MuiDivider />
       <ProjectList />
       <MuiDivider />
