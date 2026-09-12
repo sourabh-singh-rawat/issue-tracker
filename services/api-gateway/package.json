@@ -22,7 +22,7 @@
     "@pine/identity": "workspace:*",
     "@pine/observability": "workspace:*",
     "@pine/server": "workspace:*",
-    "fastify": "^5.10.0",
+    "fastify": "^5.12.4",
     "graphql": "16.14.2",
     "inversify": "8.2.2",
     "make-fetch-happen": "^15.0.6",

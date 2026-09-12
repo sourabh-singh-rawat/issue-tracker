@@ -404,8 +404,8 @@ importers:
   packages/common:
     dependencies:
       fastify:
-        specifier: ^5.10.0
-        version: 5.10.0
+        specifier: ^5.12.4
+        version: 5.12.4
       http-status-codes:
         specifier: ^2.3.0
         version: 2.3.0
@@ -590,8 +590,8 @@ importers:
         specifier: ^4.1.7
         version: 4.1.7(@pothos/core@4.13.1(graphql@16.14.2))(graphql@16.14.2)
       fastify:
-        specifier: ^5.10.0
-        version: 5.10.0
+        specifier: ^5.12.4
+        version: 5.12.4
       graphql:
         specifier: 16.14.2
         version: 16.14.2
@@ -658,7 +658,7 @@ importers:
         version: 5.5.1(graphql@16.14.2)(supports-color@7.2.0)
       '@as-integrations/fastify':
         specifier: ^3.1.0
-        version: 3.1.0(@apollo/server@5.5.1(graphql@16.14.2)(supports-color@7.2.0))(fastify@5.10.0)
+        version: 3.1.0(@apollo/server@5.5.1(graphql@16.14.2)(supports-color@7.2.0))(fastify@5.12.4)
       '@fastify/http-proxy':
         specifier: ^11.6.0
         version: 11.6.0
@@ -681,8 +681,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/server
       fastify:
-        specifier: ^5.10.0
-        version: 5.10.0
+        specifier: ^5.12.4
+        version: 5.12.4
       graphql:
         specifier: 16.14.2
         version: 16.14.2
@@ -951,8 +951,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/server
       fastify:
-        specifier: ^5.10.0
-        version: 5.10.0
+        specifier: ^5.12.4
+        version: 5.12.4
       inversify:
         specifier: 8.2.2
         version: 8.2.2(reflect-metadata@0.2.2)
@@ -5966,8 +5966,8 @@ packages:
   fastify-plugin@6.0.0:
     resolution: {integrity: sha512-fZOty7z3O7vOliF6d8bHE3wiEh1KcNnKEQensSgTk9C1DvN6nRLS++XVd86v33Hw/8u9Un8A1zDrQ8ujcQDHEg==}
 
-  fastify@5.10.0:
-    resolution: {integrity: sha512-A9L0ziuWGQHgEEVgF3davQ9vbD93IuX+lo2IsxapQmu5b/Y/ynn9m9K5JHt9dvyJXOFc5iN0Zk5GHEOqnzhWjg==}
+  fastify@5.12.4:
+    resolution: {integrity: sha512-zATD676fP6tBMsn+jQ7Q5/cO/Qo+149TXH0dUqUKel+1/hcZxwIbnflqtPa9EjlrvpY8eCZcL3M1UYrMc31Y7g==}
 
   fastq@1.20.1:
     resolution: {integrity: sha512-GGToxJ/w1x32s/D2EKND7kTil4n8OVk/9mycTc4VDza13lOvpUZTGX3mFSCtV9ksdGBVzvsyAVLM6mHFThxXxw==}
@@ -7264,6 +7264,9 @@ packages:
   process-warning@5.0.0:
     resolution: {integrity: sha512-a39t9ApHNx2L4+HBnQKqxxHNs1r7KF+Intd8Q/g1bUh6q0WIp9voPXJ/x0j+ZL45KF1pJd9+q2jLIRMfvEshkA==}
 
+  process-warning@5.1.0:
+    resolution: {integrity: sha512-jQSaVHsPgtyw60e1rQ/A+/ArPEj/S8pS/vFnyGa/gYFXrKk/6RuDkoqVDQ5NI5MmS01698ltlAk0NoDBNLujRw==}
+
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
 
@@ -8470,10 +8473,10 @@ snapshots:
       immutable: 5.1.9
       invariant: 2.2.4
 
-  '@as-integrations/fastify@3.1.0(@apollo/server@5.5.1(graphql@16.14.2)(supports-color@7.2.0))(fastify@5.10.0)':
+  '@as-integrations/fastify@3.1.0(@apollo/server@5.5.1(graphql@16.14.2)(supports-color@7.2.0))(fastify@5.12.4)':
     dependencies:
       '@apollo/server': 5.5.1(graphql@16.14.2)(supports-color@7.2.0)
-      fastify: 5.10.0
+      fastify: 5.12.4
       fastify-plugin: 5.1.0
 
   '@aws-sdk/checksums@3.1000.28':
@@ -11602,7 +11605,7 @@ snapshots:
   '@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@7.2.0))(@babel/runtime@8.0.0)(rolldown@1.1.5)(vite@8.1.5(@types/node@20.19.43)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))':
     dependencies:
       '@babel/core': 7.29.7(supports-color@7.2.0)
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       rolldown: 1.1.5
     optionalDependencies:
       '@babel/runtime': 8.0.0
@@ -11612,7 +11615,7 @@ snapshots:
   '@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@7.2.0))(@babel/runtime@8.0.0)(rolldown@1.1.5)(vite@8.1.5(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))':
     dependencies:
       '@babel/core': 7.29.7(supports-color@7.2.0)
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       rolldown: 1.1.5
     optionalDependencies:
       '@babel/runtime': 8.0.0
@@ -13178,7 +13181,7 @@ snapshots:
 
   fastify-plugin@6.0.0: {}
 
-  fastify@5.10.0:
+  fastify@5.12.4:
     dependencies:
       '@fastify/ajv-compiler': 4.0.5
       '@fastify/error': 4.2.0
@@ -13190,7 +13193,7 @@ snapshots:
       find-my-way: 9.7.0
       light-my-request: 6.6.0
       pino: 10.3.1
-      process-warning: 5.0.0
+      process-warning: 5.1.0
       rfdc: 1.4.1
       secure-json-parse: 4.1.0
       semver: 7.8.5
@@ -14591,6 +14594,8 @@ snapshots:
   process-warning@4.0.1: {}
 
   process-warning@5.0.0: {}
+
+  process-warning@5.1.0: {}
 
   prop-types@15.8.1:
     dependencies:
