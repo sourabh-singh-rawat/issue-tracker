@@ -1,6 +1,7 @@
 query FindProject($findProjectId: String!) {
   findProject(id: $findProjectId) {
     id
+    spaceId
     name
   }
 }

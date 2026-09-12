@@ -1,26 +1,41 @@
 import FolderOutlined from "@mui/icons-material/FolderOutlined";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { useProjectStore } from "../../store";
 
-interface ProjectListItemProps {
+type ProjectListItemProps = {
   projectId: string;
   name: string;
-}
+  spaceId: string;
+  nested?: boolean;
+};
 
-export const ProjectListItem = ({ projectId, name }: ProjectListItemProps) => {
+export const ProjectListItem = ({
+  projectId,
+  name,
+  spaceId,
+  nested = false,
+}: ProjectListItemProps) => {
   const navigate = useNavigate();
+  const viewId = useRouterState({ select: (s) => s.location.pathname.split("/").pop() });
   const setCurrentProject = useProjectStore((s) => s.setCurrentProject);
+  const selected = viewId === projectId;
 
   return (
     <ListItemButton
       dense
+      selected={selected}
+      sx={nested ? { pl: 4 } : undefined}
       onClick={() => {
         setCurrentProject({
           id: projectId,
           name,
-        } as any);
-        localStorage.setItem("currentProject", JSON.stringify({ id: projectId, name }));
+          spaceId,
+        });
+        localStorage.setItem(
+          "currentProject",
+          JSON.stringify({ id: projectId, name, spaceId }),
+        );
         navigate({
           to: "/v/l/$viewId",
           params: { viewId: projectId },

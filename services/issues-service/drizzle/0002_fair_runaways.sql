@@ -1,0 +1,1 @@
+ALTER TABLE "lists" ADD COLUMN "space_id" uuid NOT NULL;

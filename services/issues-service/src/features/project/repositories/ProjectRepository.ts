@@ -14,10 +14,6 @@ import type {
 export class ProjectRepository implements IProjectRepository {
   constructor(@inject(TYPES.Database) private readonly db: Database) {}
 
-  private client(options?: ProjectRepositoryOptions) {
-    return options?.tx ?? this.db;
-  }
-
   async save(entity: CreateProjectEntity, options?: ProjectRepositoryOptions): Promise<Project> {
     const client = this.client(options);
     const now = new Date();
@@ -26,6 +22,7 @@ export class ProjectRepository implements IProjectRepository {
       .insert(Projects)
       .values({
         id: entity.id ?? uuidv7(),
+        spaceId: entity.spaceId,
         name: entity.name,
         createdById: entity.createdById,
         createdAt: now,
@@ -72,29 +69,14 @@ export class ProjectRepository implements IProjectRepository {
     return row ?? null;
   }
 
-  async findByIdForUser(
-    id: string,
-    userId: string,
-    options?: ProjectRepositoryOptions,
-  ): Promise<Project | null> {
-    const client = this.client(options);
-    const [row] = await client
-      .select()
-      .from(Projects)
-      .where(and(eq(Projects.id, id), eq(Projects.createdById, userId), isNull(Projects.deletedAt)))
-      .limit(1);
-
-    return row ?? null;
-  }
-
-  async findByCreatedById(
-    createdById: string,
+  async findBySpaceId(
+    spaceId: string,
     page?: number | null,
     pageSize?: number | null,
     options?: ProjectRepositoryOptions,
   ): Promise<{ rows: Project[]; rowCount: number }> {
     const client = this.client(options);
-    const where = and(eq(Projects.createdById, createdById), isNull(Projects.deletedAt));
+    const where = and(eq(Projects.spaceId, spaceId), isNull(Projects.deletedAt));
 
     const [countRow] = await client.select({ value: count() }).from(Projects).where(where);
     const rowCount = Number(countRow?.value ?? 0);
@@ -107,5 +89,9 @@ export class ProjectRepository implements IProjectRepository {
 
     const rows = await query;
     return { rows, rowCount };
+  }
+
+  private client(options?: ProjectRepositoryOptions) {
+    return options?.tx ?? this.db;
   }
 }

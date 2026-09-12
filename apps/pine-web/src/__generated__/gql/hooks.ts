@@ -62,12 +62,14 @@ export type FindProjectQueryVariables = Exact<{
 }>;
 
 
-export type FindProjectQuery = { findProject: { id: string | null, name: string | null } | null };
+export type FindProjectQuery = { findProject: { id: string | null, spaceId: string | null, name: string | null } | null };
 
-export type FindProjectsQueryVariables = Exact<{ [key: string]: never; }>;
+export type FindProjectsQueryVariables = Exact<{
+  spaceId: string;
+}>;
 
 
-export type FindProjectsQuery = { findProjects: { rowCount: number | null, rows: Array<{ id: string | null, name: string | null }> | null } | null };
+export type FindProjectsQuery = { findProjects: { rowCount: number | null, rows: Array<{ id: string | null, spaceId: string | null, name: string | null }> | null } | null };
 
 export type FindStatusesQueryVariables = Exact<{
   input: Types.FindStatusesOptions;
@@ -317,6 +319,7 @@ export const FindProjectDocument = new TypedDocumentString(`
     query FindProject($findProjectId: String!) {
   findProject(id: $findProjectId) {
     id
+    spaceId
     name
   }
 }
@@ -343,10 +346,11 @@ useFindProjectQuery.document = FindProjectDocument;
 useFindProjectQuery.getKey = (variables: FindProjectQueryVariables) => ['FindProject', variables];
 
 export const FindProjectsDocument = new TypedDocumentString(`
-    query FindProjects {
-  findProjects {
+    query FindProjects($spaceId: String!) {
+  findProjects(spaceId: $spaceId) {
     rows {
       id
+      spaceId
       name
     }
     rowCount
@@ -358,13 +362,13 @@ export const useFindProjectsQuery = <
       TData = FindProjectsQuery,
       TError = unknown
     >(
-      variables?: FindProjectsQueryVariables,
+      variables: FindProjectsQueryVariables,
       options?: Omit<UseQueryOptions<FindProjectsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<FindProjectsQuery, TError, TData>['queryKey'] }
     ) => {
     
     return useQuery<FindProjectsQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['FindProjects'] : ['FindProjects', variables],
+    queryKey: ['FindProjects', variables],
     queryFn: graphQLFetcher<FindProjectsQuery, FindProjectsQueryVariables>(FindProjectsDocument, variables),
     ...options
   }
@@ -372,7 +376,7 @@ export const useFindProjectsQuery = <
 
 useFindProjectsQuery.document = FindProjectsDocument;
 
-useFindProjectsQuery.getKey = (variables?: FindProjectsQueryVariables) => variables === undefined ? ['FindProjects'] : ['FindProjects', variables];
+useFindProjectsQuery.getKey = (variables: FindProjectsQueryVariables) => ['FindProjects', variables];
 
 export const FindStatusesDocument = new TypedDocumentString(`
     query FindStatuses($input: FindStatusesOptions!) {

@@ -3,14 +3,12 @@ import { useRouterState } from "@tanstack/react-router";
 
 import MuiBox from "@mui/material/Box";
 import {
-  useFindProjectsQuery,
   useGetMyWorkspacePreferenceQuery,
   useGetMyWorkspacesQuery,
 } from "@generated/gql";
 import { useGetCurrentUserQuery } from "@generated/api/@tanstack/react-query.gen";
 import { useAuthStore } from "@features/auth";
 import { useWorkspaceStore } from "@features/workspace";
-import { useProjectStore } from "@features/project";
 import { redirectToOidcSignIn } from "../../../lib/auth";
 import { AppLoader } from "../AppLoader";
 
@@ -49,14 +47,9 @@ function getIdentityFromMeResponse(data: unknown): {
 export function Main({ children }: MainProps) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const setCurrentUser = useAuthStore((s) => s.setCurrentUser);
-  const setProjects = useProjectStore((s) => s.setProjects);
   const syncWorkspaces = useWorkspaceStore((s) => s.syncWorkspaces);
 
   const userQuery = useGetCurrentUserQuery();
-  const projectsQuery = useFindProjectsQuery(undefined, {
-    select: (data) => data.findProjects,
-    enabled: userQuery.isSuccess,
-  });
   const workspacesQuery = useGetMyWorkspacesQuery(undefined, {
     select: (data) => data.getMyWorkspaces ?? [],
     enabled: userQuery.isSuccess,
@@ -85,12 +78,6 @@ export function Main({ children }: MainProps) {
       setCurrentUser({ current: null, isLoading: false });
     }
   }, [userQuery.data, userQuery.isError, userQuery.isSuccess, setCurrentUser]);
-
-  useEffect(() => {
-    if (projectsQuery.data?.rows) {
-      setProjects(projectsQuery.data.rows);
-    }
-  }, [projectsQuery.data, setProjects]);
 
   useLayoutEffect(() => {
     const preferenceReady =
@@ -126,16 +113,14 @@ export function Main({ children }: MainProps) {
     redirectToOidcSignIn();
   }, [userQuery.isError, pathname]);
 
-  const loading =
+  const isBootstrapping =
     userQuery.isPending ||
     (userQuery.isSuccess &&
-      (projectsQuery.isPending ||
-        workspacesQuery.isPending ||
-        workspacePreferenceQuery.isPending));
+      (workspacesQuery.isPending || workspacePreferenceQuery.isPending));
 
   return (
     <MuiBox width="100vw" height="100vh">
-      {loading ? <AppLoader /> : children}
+      {isBootstrapping ? <AppLoader /> : children}
     </MuiBox>
   );
 }

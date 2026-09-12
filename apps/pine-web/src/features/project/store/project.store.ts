@@ -1,23 +1,17 @@
 import { create } from "zustand";
-import type { FindProjectsQuery } from "@generated/gql";
-import type { ProjectObject } from "@generated/gql/graphql";
 
-type FindProjectsResult = NonNullable<FindProjectsQuery["findProjects"]>;
-type ProjectRows = NonNullable<FindProjectsResult["rows"]>;
-export type ProjectFromQuery = ProjectRows[number];
+export type CurrentProject = {
+  id: string;
+  name: string;
+  spaceId?: string;
+};
 
 interface ProjectState {
-  projects: ProjectFromQuery[];
-  currentProject: ProjectObject | null;
-  isLoading: boolean;
-  setCurrentProject: (project: ProjectObject | null) => void;
-  setProjects: (projects: ProjectFromQuery[]) => void;
+  currentProject: CurrentProject | null;
+  setCurrentProject: (project: CurrentProject | null) => void;
 }
 
 export const useProjectStore = create<ProjectState>((set) => ({
-  projects: [],
   currentProject: null,
-  isLoading: true,
   setCurrentProject: (project) => set({ currentProject: project }),
-  setProjects: (projects) => set({ projects, isLoading: false }),
 }));

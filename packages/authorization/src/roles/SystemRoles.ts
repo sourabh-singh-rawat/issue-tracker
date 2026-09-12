@@ -113,10 +113,10 @@ export const WORKSPACE_ROLES: Record<string, RoleDefinition> = {
     id: "01900000-0000-7000-8000-000000000004",
     key: "workspace.member",
     name: "Workspace Member",
-    description: "Read access to workspace resources and roles; can create spaces",
+    description: "Read access to workspace resources and roles; can create spaces and projects",
     relation: "member",
     permissionKeys: [
-      ...permissionKeys("workspace", ["read", "create_space"]),
+      ...permissionKeys("workspace", ["read", "create_space", "create_project"]),
       ...permissionKeys("role", ["read"]),
     ],
   },

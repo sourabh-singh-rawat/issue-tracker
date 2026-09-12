@@ -4,6 +4,7 @@ export type ProjectRepositoryOptions = { tx?: DbClient };
 
 export type CreateProjectEntity = {
   id?: string;
+  spaceId: string;
   name: string;
   createdById: string;
 };
@@ -20,13 +21,8 @@ export interface IProjectRepository {
     options?: ProjectRepositoryOptions,
   ): Promise<Project>;
   findById(id: string, options?: ProjectRepositoryOptions): Promise<Project | null>;
-  findByIdForUser(
-    id: string,
-    userId: string,
-    options?: ProjectRepositoryOptions,
-  ): Promise<Project | null>;
-  findByCreatedById(
-    createdById: string,
+  findBySpaceId(
+    spaceId: string,
     page?: number | null,
     pageSize?: number | null,
     options?: ProjectRepositoryOptions,

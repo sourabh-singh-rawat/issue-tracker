@@ -7,7 +7,6 @@ import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import MuiToolbar from "@mui/material/Toolbar";
 
-import { ProjectList } from "@features/project";
 import { SpaceList } from "@features/space";
 
 const Drawer = styled(MuiDrawer)(({ open, theme }) => {
@@ -60,8 +59,6 @@ export const Sidebar = () => {
       <List disablePadding />
       <MuiDivider />
       <SpaceList />
-      <MuiDivider />
-      <ProjectList />
       <MuiDivider />
     </Drawer>
   );
