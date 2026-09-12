@@ -1,5 +1,18 @@
 # @pine/api-gateway
 
+## 0.4.1
+
+### Patch Changes
+
+- 9b1b265: chore(web): rename erp-web to pine-web
+- 198f930: refactor(platform): rename organization to workspace
+- Updated dependencies [47e114e]
+- Updated dependencies [44ebe40]
+- Updated dependencies [198f930]
+  - @pine/server@1.1.1
+  - @pine/common@0.1.1
+  - @pine/identity@0.3.0
+
 ## 0.4.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @pine/common
 
+## 0.1.1
+
+### Patch Changes
+
+- 44ebe40: feat(identity): allow creating a profile from Personal info
+
 ## 0.1.0
 
 ### Minor Changes

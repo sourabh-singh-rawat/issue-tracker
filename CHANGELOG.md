@@ -1,5 +1,48 @@
 # Changelog
 
+## v2026.09.12.1
+
+### Minor
+
+- 44ebe40c: feat(identity): allow creating a profile from Personal info — Sourabh Singh Rawat (`@pine/common`, `@pine/identity-service`, `@pine/identity-web`)
+- e1f5abf1: feat(identity-web): show email and verification status on Personal info — Sourabh Singh Rawat (`@pine/identity-web`)
+- 48e508cf: feat(platform): provision personal workspace on user registration — Sourabh Singh Rawat (`@pine/platform-service`)
+- e5726cc1: feat(spaces): nest projects under spaces with required spaceId — Sourabh Singh Rawat (`@pine/authorization`, `@pine/authorization-service`, `@pine/events`, `@pine/issues-service`, `@pine/pine-web`)
+- 9b1b2658: chore(web): rename erp-web to pine-web — Sourabh Singh Rawat (`@pine/api-gateway`, `@pine/attachment-service`, `@pine/authorization-service`, `@pine/data-gateway`, `@pine/identity-service`, `@pine/issues-service`, `@pine/pine-web`, `@pine/platform-service`)
+- 198f9306: refactor(platform): rename organization to workspace — Sourabh Singh Rawat (`@pine/api-gateway`, `@pine/attachment`, `@pine/attachment-scanner-service`, `@pine/attachment-service`, `@pine/authorization`, `@pine/authorization-service`, `@pine/events`, `@pine/identity`, `@pine/identity-service`, `@pine/issues-service`, `@pine/pine-web`, `@pine/platform-service`, `@pine/platform-web`, `@pine/server`)
+- 03c9cf5a: feat(spaces): add Space create and sidebar under workspace — Sourabh Singh Rawat (`@pine/authorization`, `@pine/authorization-service`, `@pine/events`, `@pine/issues-service`, `@pine/pine-web`)
+
+### Patch
+
+- 47e114e1: chore(dev): attach debug workflow and fix Fastify ajv-compiler — Sourabh Singh Rawat (`@pine/server`)
+- f272fa5a: feat(ui): add M3 foundation tokens for shape, color, type, motion — Sourabh Singh Rawat (`@pine/pine-web`, `@pine/platform-web`, `@pine/ui`)
+- a6165645: fix(pine-web): make nested space projects clickable in sidebar — Sourabh Singh Rawat (`@pine/pine-web`)
+
+### Packages
+
+- `@pine/api-gateway@0.4.1`
+- `@pine/attachment@0.3.0`
+- `@pine/attachment-processing-service@0.0.1`
+- `@pine/attachment-scanner-service@0.1.1`
+- `@pine/attachment-service@0.5.1`
+- `@pine/authorization@0.5.0`
+- `@pine/authorization-service@0.5.0`
+- `@pine/common@0.1.1`
+- `@pine/data-gateway@0.1.1`
+- `@pine/events@0.5.0`
+- `@pine/identity@0.3.0`
+- `@pine/identity-service@0.6.0`
+- `@pine/identity-web@0.6.0`
+- `@pine/issues-service@0.5.0`
+- `@pine/notification-service@0.4.1`
+- `@pine/outbox@0.1.2`
+- `@pine/pine-web@0.7.0`
+- `@pine/platform-service@0.5.0`
+- `@pine/platform-web@0.5.0`
+- `@pine/security@0.1.2`
+- `@pine/server@1.1.1`
+- `@pine/ui@0.1.1`
+
 ## v2026.08.30.1
 
 ### Minor
