@@ -29,46 +29,41 @@ export const SpaceList = () => {
   const isLoading = Boolean(workspaceId) && spacesQuery.isPending;
 
   return (
-    <List
-      subheader={
-        <>
-          <ListItem secondaryAction={<CreateSpaceModal disabled={!workspaceId} />}>
-            <ListItemText>Spaces</ListItemText>
-          </ListItem>
-          {!workspaceId ? (
-            <ListItem dense>
-              <ListItemText secondary="Select a workspace to manage spaces" />
-            </ListItem>
-          ) : null}
-          {isLoading ? (
-            <ListItem dense>
-              <ListItemText>
-                <Skeleton />
-              </ListItemText>
-            </ListItem>
-          ) : (
-            spaces
-              .filter(
-                (
-                  space,
-                ): space is typeof space & {
-                  id: string;
-                  name: string;
-                  workspaceId: string;
-                } => Boolean(space.id) && Boolean(space.name) && Boolean(space.workspaceId),
-              )
-              .map(({ id, name, workspaceId: spaceWorkspaceId }) => (
-                <SpaceListItem
-                  key={id}
-                  spaceId={id}
-                  name={name}
-                  workspaceId={spaceWorkspaceId}
-                />
-              ))
-          )}
-        </>
-      }
-      disablePadding
-    />
+    <List component="div" disablePadding>
+      <ListItem secondaryAction={<CreateSpaceModal disabled={!workspaceId} />}>
+        <ListItemText>Spaces</ListItemText>
+      </ListItem>
+      {!workspaceId ? (
+        <ListItem dense>
+          <ListItemText secondary="Select a workspace to manage spaces" />
+        </ListItem>
+      ) : null}
+      {isLoading ? (
+        <ListItem dense>
+          <ListItemText>
+            <Skeleton />
+          </ListItemText>
+        </ListItem>
+      ) : (
+        spaces
+          .filter(
+            (
+              space,
+            ): space is typeof space & {
+              id: string;
+              name: string;
+              workspaceId: string;
+            } => Boolean(space.id) && Boolean(space.name) && Boolean(space.workspaceId),
+          )
+          .map(({ id, name, workspaceId: spaceWorkspaceId }) => (
+            <SpaceListItem
+              key={id}
+              spaceId={id}
+              name={name}
+              workspaceId={spaceWorkspaceId}
+            />
+          ))
+      )}
+    </List>
   );
 };
