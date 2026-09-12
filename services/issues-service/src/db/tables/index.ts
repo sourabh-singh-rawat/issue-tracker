@@ -26,5 +26,6 @@ export {
   ProjectIssueActivities,
 } from "@/db/tables/ProjectIssueActivities";
 export { type Project, type NewProject, Projects } from "@/db/tables/Projects";
+export { type Space, type NewSpace, Spaces } from "@/db/tables/Spaces";
 export { type StatusOption, type NewStatusOption, StatusOptions } from "@/db/tables/StatusOptions";
 export { type Identity, type NewIdentity, Identities } from "@/db/tables/Identities";

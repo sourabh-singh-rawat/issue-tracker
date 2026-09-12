@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@pine/ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Shared React UI primitives for Pine web apps (forms, modals, buttons)",
   "keywords": [
@@ -23,7 +23,7 @@
     }
   },
   "scripts": {
-    "clean": "node ../../tools/scripts/rm-rf.mjs dist",
+    "clean": "node ../../tools/scripts/setup/rm-rf.mjs dist",
     "build": "pnpm clean && tsc"
   },
   "devDependencies": {
@@ -31,6 +31,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "6.1.9",
     "@mui/material": "6.1.9",
+    "@mui/system": "6.1.9",
     "@tanstack/react-form": "^1.33.2",
     "@tanstack/react-table": "^8.21.3",
     "@types/react": "^19.2.17",
@@ -44,6 +45,7 @@
     "@emotion/styled": "^11.0.0",
     "@mui/icons-material": ">=6.0.0",
     "@mui/material": ">=6.0.0",
+    "@mui/system": ">=6.0.0",
     "@tanstack/react-form": "^1.0.0",
     "@tanstack/react-table": "^8.0.0",
     "react": "^19.0.0",

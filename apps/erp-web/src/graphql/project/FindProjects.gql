@@ -1,9 +1,0 @@
-query FindProjects {
-  findProjects {
-    rows {
-      id
-      name
-    }
-    rowCount
-  }
-}

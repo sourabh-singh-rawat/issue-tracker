@@ -1,0 +1,13 @@
+query GetWorkspaces($tenantId: String!, $parentWorkspaceId: String) {
+  getWorkspaces(tenantId: $tenantId, parentWorkspaceId: $parentWorkspaceId) {
+    id
+    tenantId
+    parentWorkspaceId
+    name
+    slug
+    description
+    isActive
+    createdAt
+    updatedAt
+  }
+}

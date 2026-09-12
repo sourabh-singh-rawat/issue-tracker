@@ -1,7 +1,0 @@
-mutation SetMyOrganizationPreference($organizationId: String!) {
-  setMyOrganizationPreference(organizationId: $organizationId) {
-    organizationId
-    tenantId
-    updatedAt
-  }
-}

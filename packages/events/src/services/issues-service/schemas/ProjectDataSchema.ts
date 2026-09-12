@@ -3,6 +3,7 @@ import Type from "typebox";
 export const ProjectDataSchema = Type.Object(
   {
     id: Type.String(),
+    spaceId: Type.String(),
     name: Type.String(),
     status: Type.String(),
     ownerUserId: Type.String(),

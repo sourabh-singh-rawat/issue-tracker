@@ -1,5 +1,27 @@
 # @pine/issues-service
 
+## 0.5.0
+
+### Minor Changes
+
+- e5726cc: feat(spaces): nest projects under spaces with required spaceId
+- 03c9cf5: feat(spaces): add Space create and sidebar under workspace
+
+### Patch Changes
+
+- 9b1b265: chore(web): rename erp-web to pine-web
+- 198f930: refactor(platform): rename organization to workspace
+- Updated dependencies [47e114e]
+- Updated dependencies [44ebe40]
+- Updated dependencies [e5726cc]
+- Updated dependencies [198f930]
+- Updated dependencies [03c9cf5]
+  - @pine/server@1.1.1
+  - @pine/common@0.1.1
+  - @pine/authorization@0.5.0
+  - @pine/events@0.5.0
+  - @pine/identity@0.3.0
+
 ## 0.4.0
 
 ### Minor Changes

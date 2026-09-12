@@ -2,440 +2,100 @@
   "version": "0.2.0",
   "compounds": [
     {
-      "name": "dev",
-      "presentation": {
-        "group": "dev",
-        "order": 1
-      },
+      "name": "attach: all",
       "stopAll": true,
       "configurations": [
-        "schemas:watch",
-        "codegen: supergraph",
-        "erp-web",
-        "identity-web",
-        "platform-web",
-        "api-gateway",
-        "data-gateway",
-        "notification-service",
-        "attachment-service",
-        "attachment-scanner-service",
-        "issues-service",
-        "platform-service",
-        "authorization-service",
-        "identity-service"
-      ]
-    },
-    {
-      "name": "dev + browser",
-      "presentation": {
-        "group": "dev",
-        "order": 2
-      },
-      "stopAll": true,
-      "configurations": [
-        "schemas:watch",
-        "client (browser)",
-        "codegen: supergraph",
-        "erp-web",
-        "identity-web",
-        "platform-web",
-        "api-gateway",
-        "data-gateway",
-        "notification-service",
-        "attachment-service",
-        "attachment-scanner-service",
-        "issues-service",
-        "platform-service",
-        "authorization-service",
-        "identity-service"
-      ]
-    },
-    {
-      "name": "dev (linux + browser)",
-      "presentation": {
-        "group": "dev",
-        "order": 3
-      },
-      "stopAll": true,
-      "configurations": [
-        "schemas:watch",
-        "brave (debug)",
-        "codegen: supergraph",
-        "erp-web",
-        "identity-web",
-        "platform-web",
-        "api-gateway",
-        "data-gateway",
-        "notification-service",
-        "attachment-service",
-        "attachment-scanner-service",
-        "issues-service",
-        "platform-service",
-        "authorization-service",
-        "identity-service"
+        "attach: identity-service",
+        "attach: issues-service",
+        "attach: attachment-service",
+        "attach: attachment-scanner-service",
+        "attach: notification-service",
+        "attach: platform-service",
+        "attach: authorization-service",
+        "attach: api-gateway",
+        "attach: data-gateway"
       ]
     }
   ],
   "configurations": [
     {
-      "name": "identity-service",
+      "name": "attach",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["identity-service"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/services/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "1-services", "order": 1 }
+      "request": "attach",
+      "processId": "${command:PickProcess}",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
-      "name": "issues-service",
+      "name": "attach: identity-service",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["issues-service"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/services/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "1-services", "order": 2 }
+      "request": "attach",
+      "port": 9230,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
-      "name": "attachment-service",
+      "name": "attach: issues-service",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["attachment-service"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/services/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "1-services", "order": 3 }
+      "request": "attach",
+      "port": 9231,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
-      "name": "attachment-scanner-service",
+      "name": "attach: attachment-service",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["attachment-scanner-service"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/services/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "1-services", "order": 4 }
+      "request": "attach",
+      "port": 9232,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
-      "name": "notification-service",
+      "name": "attach: attachment-scanner-service",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["notification-service"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/services/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "1-services", "order": 5 }
+      "request": "attach",
+      "port": 9233,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
-      "name": "platform-service",
+      "name": "attach: notification-service",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["platform-service"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/services/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "1-services", "order": 6 }
+      "request": "attach",
+      "port": 9234,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
-      "name": "authorization-service",
+      "name": "attach: platform-service",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["authorization-service"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/services/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "1-services", "order": 7 }
+      "request": "attach",
+      "port": 9235,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
-      "name": "api-gateway",
+      "name": "attach: authorization-service",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["api-gateway"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/services/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "1-services", "order": 8 }
+      "request": "attach",
+      "port": 9236,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
-      "name": "data-gateway",
+      "name": "attach: api-gateway",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["data-gateway"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/services/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "1-services", "order": 9 }
+      "request": "attach",
+      "port": 9237,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
-      "name": "identity-web",
+      "name": "attach: data-gateway",
       "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["identity-web"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/apps/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "2-web", "order": 1 }
-    },
-    {
-      "name": "erp-web",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["erp-web"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/apps/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "2-web", "order": 2 }
-    },
-    {
-      "name": "platform-web",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["platform-web"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/apps/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "2-web", "order": 3 }
-    },
-    {
-      "name": "erp-web + browser",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["erp-web"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/apps/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "2-web", "order": 4 },
-      "serverReadyAction": {
-        "pattern": "Local:\\s+(https?://\\S+)",
-        "uriFormat": "%s",
-        "action": "debugWithChrome",
-        "killOnServerStop": true,
-        "webRoot": "${workspaceFolder}/apps/erp-web"
-      }
-    },
-    {
-      "name": "platform-web + browser",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["platform-web"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/apps/**",
-        "${workspaceFolder}/packages/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "2-web", "order": 5 },
-      "serverReadyAction": {
-        "pattern": "Local:\\s+(https?://\\S+)",
-        "uriFormat": "%s",
-        "action": "debugWithChrome",
-        "killOnServerStop": true,
-        "webRoot": "${workspaceFolder}/apps/platform-web"
-      }
-    },
-    {
-      "name": "codegen: supergraph",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["gen"],
-      "console": "integratedTerminal",
-      "outFiles": [],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/apps/**",
-        "${workspaceFolder}/packages/**",
-        "${workspaceFolder}/tools/**",
-        "!**/node_modules/**"
-      ],
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "presentation": { "group": "3-tools", "order": 1 }
-    },
-    {
-      "name": "schemas:watch",
-      "type": "node-terminal",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "command": "pnpm schemas:watch",
-      "presentation": { "group": "5-schemas", "order": 1 }
-    },
-
-    {
-      "name": "client (browser)",
-      "type": "chrome",
-      "request": "launch",
-      "url": "http://localhost:3001",
-      "webRoot": "${workspaceFolder}/apps/erp-web",
-      "sourceMaps": true,
-      "userDataDir": true,
-      "presentation": { "group": "4-browser", "order": 1 },
-      "pathMapping": {
-        "/@fs": ""
-      },
-      "sourceMapPathOverrides": {
-        "webpack:///./src/*": "${webRoot}/src/*",
-        "webpack:///./*": "${webRoot}/*",
-        "webpack:///src/*": "${webRoot}/src/*",
-        "webpack:///*": "*",
-        "/@fs/*": "/*",
-        "/src/*": "${webRoot}/src/*"
-      }
-    },
-    {
-      "name": "client (browser - edge)",
-      "type": "msedge",
-      "request": "launch",
-      "url": "http://localhost:3001",
-      "webRoot": "${workspaceFolder}/apps/erp-web",
-      "sourceMaps": true,
-      "userDataDir": true,
-      "presentation": { "group": "4-browser", "order": 2 },
-      "pathMapping": {
-        "/@fs": ""
-      },
-      "sourceMapPathOverrides": {
-        "webpack:///./src/*": "${webRoot}/src/*",
-        "webpack:///./*": "${webRoot}/*",
-        "webpack:///src/*": "${webRoot}/src/*",
-        "webpack:///*": "*",
-        "/@fs/*": "/*",
-        "/src/*": "${webRoot}/src/*"
-      }
-    },
-    {
-      "name": "brave (debug - scoop)",
-      "request": "launch",
-      "type": "chrome",
-      "runtimeExecutable": "C:\\Users\\Soura\\scoop\\apps\\brave\\current\\brave.exe",
-      "userDataDir": true,
-      "url": "http://localhost:3001",
-      "webRoot": "${workspaceFolder}/apps/erp-web",
-      "runtimeArgs": ["--remote-debugging-port=9222"],
-      "sourceMaps": true,
-      "presentation": { "group": "4-browser", "order": 3 }
-    },
-    {
-      "name": "brave (debug)",
-      "request": "launch",
-      "type": "chrome",
-      "runtimeExecutable": "/usr/bin/brave",
-      "userDataDir": true,
-      "url": "http://localhost:3001",
-      "webRoot": "${workspaceFolder}/apps/erp-web",
-      "runtimeArgs": ["--remote-debugging-port=9222"],
-      "sourceMaps": true,
-      "presentation": { "group": "4-browser", "order": 4 }
+      "request": "attach",
+      "port": 9238,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     }
   ]
 }

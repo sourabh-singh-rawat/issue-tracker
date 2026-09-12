@@ -28,9 +28,9 @@ export type IdentityRelationsGraphTenantRelation = {
   relation: string | null;
 };
 
-export type IdentityRelationsGraphOrganizationRelation = {
+export type IdentityRelationsGraphWorkspaceRelation = {
   id: string | null;
-  organizationId: string | null;
+  workspaceId: string | null;
   relation: string | null;
 };
 
@@ -39,11 +39,11 @@ export type IdentityRelationsGraphProps = {
   displayName?: string | null;
   platform: IdentityRelationsGraphPlatformRelation[];
   tenants: IdentityRelationsGraphTenantRelation[];
-  organizations: IdentityRelationsGraphOrganizationRelation[];
+  workspaces: IdentityRelationsGraphWorkspaceRelation[];
   height?: number;
 };
 
-type RelationKind = "identity" | "platform" | "tenant" | "organization";
+type RelationKind = "identity" | "platform" | "tenant" | "workspace";
 
 type RelationNodeData = {
   kind: RelationKind;
@@ -68,7 +68,7 @@ const KIND_LABEL: Record<RelationKind, string> = {
   identity: "Identity",
   platform: "Platform",
   tenant: "Tenant",
-  organization: "Organization",
+  workspace: "Workspace",
 };
 
 const truncateId = (value: string): string => {
@@ -86,7 +86,7 @@ const kindAccent = (theme: Theme, kind: RelationKind): string => {
       return theme.palette.info.main;
     case "tenant":
       return theme.palette.success.main;
-    case "organization":
+    case "workspace":
       return theme.palette.warning.main;
   }
 };
@@ -200,7 +200,7 @@ export const IdentityRelationsGraph = ({
   displayName,
   platform,
   tenants,
-  organizations,
+  workspaces,
   height = 360,
 }: IdentityRelationsGraphProps) => {
   const theme = useTheme();
@@ -240,17 +240,17 @@ export const IdentityRelationsGraph = ({
       );
     }
 
-    for (const item of organizations) {
-      if (!item.organizationId || !item.relation) {
+    for (const item of workspaces) {
+      if (!item.workspaceId || !item.relation) {
         continue;
       }
       addMembership(
         targets,
-        `organization:${item.organizationId}`,
+        `workspace:${item.workspaceId}`,
         {
-          kind: "organization",
-          title: truncateId(item.organizationId),
-          subtitle: item.organizationId,
+          kind: "workspace",
+          title: truncateId(item.workspaceId),
+          subtitle: item.workspaceId,
         },
         item.relation,
       );
@@ -357,7 +357,7 @@ export const IdentityRelationsGraph = ({
     });
 
     return { nodes, edges };
-  }, [displayName, identityId, organizations, platform, tenants, theme]);
+  }, [displayName, identityId, workspaces, platform, tenants, theme]);
 
   if (graph.edges.length === 0) {
     return null;

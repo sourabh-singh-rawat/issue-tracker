@@ -13,7 +13,7 @@ export type GatewayContext = {
   identityId?: string;
   authMethod?: string;
   tenantId?: string;
-  organizationId?: string;
+  workspaceId?: string;
 };
 
 class SubgraphDataSource extends RemoteGraphQLDataSource<GatewayContext> {
@@ -33,9 +33,9 @@ class SubgraphDataSource extends RemoteGraphQLDataSource<GatewayContext> {
       options.request.http?.headers.set("x-tenant-id", tenantId);
     }
 
-    const organizationId = options.context?.organizationId;
-    if (organizationId) {
-      options.request.http?.headers.set("x-organization-id", organizationId);
+    const workspaceId = options.context?.workspaceId;
+    if (workspaceId) {
+      options.request.http?.headers.set("x-workspace-id", workspaceId);
     }
   };
 }

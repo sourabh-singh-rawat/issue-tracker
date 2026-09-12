@@ -2,12 +2,13 @@ import type { DbClient, Profile } from "@/db";
 import type { ProfileGender } from "@/features/profiles/constants";
 
 export type CreateProfileOptions = {
-  tx: DbClient;
+  tx?: DbClient;
   identityId: string;
   firstName: string;
   middleName?: string;
   lastName?: string;
   description?: string;
+  gender?: ProfileGender;
 };
 
 export type UpdateNameOptions = {
@@ -51,7 +52,7 @@ export type UpdatePhotoOptions = {
 };
 
 export interface IProfileService {
-  create: (options: CreateProfileOptions) => Promise<void>;
+  create: (options: CreateProfileOptions) => Promise<Profile>;
   getByIdentityId: (identityId: string) => Promise<Profile>;
   updateName: (options: UpdateNameOptions) => Promise<Profile>;
   updateGender: (options: UpdateGenderOptions) => Promise<Profile>;

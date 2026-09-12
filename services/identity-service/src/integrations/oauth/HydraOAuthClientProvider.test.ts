@@ -55,8 +55,8 @@ describe("HydraOAuthClientProvider.updateClient", () => {
   it("updates the OAuth client via the admin API", async () => {
     const setOAuth2Client = vi.fn().mockResolvedValue({
       data: {
-        client_id: "erp-web",
-        client_name: "ERP Web",
+        client_id: "pine-web",
+        client_name: "Pine",
         redirect_uris: ["https://localhost:3001/callback"],
         grant_types: ["authorization_code", "refresh_token"],
         scope: "openid offline email",
@@ -66,26 +66,26 @@ describe("HydraOAuthClientProvider.updateClient", () => {
 
     await expect(
       provider.updateClient({
-        clientId: "erp-web",
-        name: "ERP Web",
+        clientId: "pine-web",
+        name: "Pine",
         redirectUris: ["https://localhost:3001/callback"],
         grantTypes: ["authorization_code", "refresh_token"],
         scopes: ["openid", "offline", "email"],
         tokenEndpointAuthMethod: "none",
       }),
     ).resolves.toEqual({
-      clientId: "erp-web",
-      name: "ERP Web",
+      clientId: "pine-web",
+      name: "Pine",
       redirectUris: ["https://localhost:3001/callback"],
       grantTypes: ["authorization_code", "refresh_token"],
       scopes: ["openid", "offline", "email"],
       clientSecret: undefined,
     });
     expect(setOAuth2Client).toHaveBeenCalledWith({
-      id: "erp-web",
+      id: "pine-web",
       oAuth2Client: {
-        client_id: "erp-web",
-        client_name: "ERP Web",
+        client_id: "pine-web",
+        client_name: "Pine",
         redirect_uris: ["https://localhost:3001/callback"],
         grant_types: ["authorization_code", "refresh_token"],
         response_types: ["code"],

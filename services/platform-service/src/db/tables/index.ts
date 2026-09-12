@@ -10,13 +10,13 @@ export {
   TenantsRelations,
 } from "@/db/tables/Tenants";
 export {
-  type Organization,
-  type NewOrganization,
-  Organizations,
-  OrganizationsRelations,
-} from "@/db/tables/Organizations";
+  type Workspace,
+  type NewWorkspace,
+  Workspaces,
+  WorkspacesRelations,
+} from "@/db/tables/Workspaces";
 export {
-  type IdentityOrganizationPreference,
-  type NewIdentityOrganizationPreference,
-  IdentityOrganizationPreferences,
-} from "@/db/tables/IdentityOrganizationPreferences";
+  type IdentityWorkspacePreference,
+  type NewIdentityWorkspacePreference,
+  IdentityWorkspacePreferences,
+} from "@/db/tables/IdentityWorkspacePreferences";

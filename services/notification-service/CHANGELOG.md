@@ -1,5 +1,18 @@
 # @pine/notification-service
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [47e114e]
+- Updated dependencies [44ebe40]
+- Updated dependencies [e5726cc]
+- Updated dependencies [198f930]
+- Updated dependencies [03c9cf5]
+  - @pine/server@1.1.1
+  - @pine/common@0.1.1
+  - @pine/events@0.5.0
+
 ## 0.4.0
 
 ### Minor Changes

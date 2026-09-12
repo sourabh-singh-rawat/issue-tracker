@@ -1,7 +1,7 @@
 import Add from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
-import { Modal, ModalBody, ModalHeader } from "@pine/ui";
+import { Modal, ModalBody, ModalHeader, pineShape } from "@pine/ui";
 import { useState, type MouseEvent } from "react";
 import { CreateTenantRelationForm } from "../CreateTenantRelationForm";
 
@@ -41,7 +41,7 @@ export const CreateTenantRelationModal = ({
         size="small"
         aria-label="Create tenant relation"
         sx={{
-          borderRadius: (theme.shape as { borderRadiusMedium?: string }).borderRadiusMedium,
+          borderRadius: pineShape.borderRadiusMedium,
           ":hover": { bgcolor: theme.palette.action.hover },
         }}
         disableRipple

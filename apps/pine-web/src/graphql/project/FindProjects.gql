@@ -1,0 +1,10 @@
+query FindProjects($spaceId: String!) {
+  findProjects(spaceId: $spaceId) {
+    rows {
+      id
+      spaceId
+      name
+    }
+    rowCount
+  }
+}

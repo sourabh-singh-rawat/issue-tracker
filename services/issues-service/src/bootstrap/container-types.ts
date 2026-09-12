@@ -16,7 +16,10 @@ export const TYPES = {
   IssueService: Symbol.for("IIssueService"),
   ProjectRepository: Symbol.for("IProjectRepository"),
   ProjectService: Symbol.for("IProjectService"),
+  SpaceRepository: Symbol.for("ISpaceRepository"),
+  SpaceService: Symbol.for("ISpaceService"),
   StatusRepository: Symbol.for("IStatusRepository"),
   StatusService: Symbol.for("IStatusService"),
+  AuthorizationClient: Symbol.for("IAuthorizationClient"),
   IssuesIdentitySyncConsumer: Symbol.for("IssuesIdentitySyncConsumer"),
 } as const;

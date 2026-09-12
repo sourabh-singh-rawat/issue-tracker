@@ -21,7 +21,7 @@ const services = [
   "platform-service",
   "authorization-service",
   "identity-web",
-  "erp-web",
+  "pine-web",
   "platform-web",
 ];
 

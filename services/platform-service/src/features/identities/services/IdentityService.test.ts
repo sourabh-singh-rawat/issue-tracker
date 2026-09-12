@@ -29,6 +29,7 @@ const denyAuth = () => ({
 
 const emptyRepo = (): IIdentityRepository => ({
   save: vi.fn(),
+  upsert: vi.fn(),
   update: vi.fn(),
   existsById: vi.fn(),
   findById: vi.fn(),

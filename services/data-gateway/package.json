@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@pine/data-gateway",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Data Gateway",
   "keywords": [
     "data-gateway"
@@ -18,9 +18,9 @@
   },
   "main": "./src/main.ts",
   "scripts": {
-    "clean": "node ../../tools/scripts/rm-rf.mjs dist",
+    "clean": "node ../../tools/scripts/setup/rm-rf.mjs dist",
     "start": "tsx --env-file=../../.env src/main.ts",
-    "dev": "tsx watch --env-file=../../.env src/main.ts",
+    "dev": "tsx watch --inspect=9238 --env-file=../../.env src/main.ts",
     "build": "pnpm clean && tsc"
   },
   "dependencies": {

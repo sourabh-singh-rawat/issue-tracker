@@ -3,7 +3,7 @@ import type { GraphRelationship } from "../types/GraphRelationship";
 import {
   ADMIN,
   MEMBER,
-  ORGANIZATION_TENANT,
+  WORKSPACE_TENANT,
   OWNER,
   PLATFORM_OBJECT_ID,
   PLATFORM_TENANT,
@@ -49,29 +49,29 @@ export const tenantMemberRelationship = (
   subject: { namespace: IDENTITY, id: identityId },
 });
 
-export const organizationOwnerRelationship = (
-  organizationId: string,
+export const workspaceOwnerRelationship = (
+  workspaceId: string,
   identityId: string,
 ): GraphRelationship => ({
-  object: { namespace: "organization", id: organizationId },
+  object: { namespace: "workspace", id: workspaceId },
   relation: OWNER,
   subject: { namespace: IDENTITY, id: identityId },
 });
 
-export const organizationAdminRelationship = (
-  organizationId: string,
+export const workspaceAdminRelationship = (
+  workspaceId: string,
   identityId: string,
 ): GraphRelationship => ({
-  object: { namespace: "organization", id: organizationId },
+  object: { namespace: "workspace", id: workspaceId },
   relation: ADMIN,
   subject: { namespace: IDENTITY, id: identityId },
 });
 
-export const organizationMemberRelationship = (
-  organizationId: string,
+export const workspaceMemberRelationship = (
+  workspaceId: string,
   identityId: string,
 ): GraphRelationship => ({
-  object: { namespace: "organization", id: organizationId },
+  object: { namespace: "workspace", id: workspaceId },
   relation: MEMBER,
   subject: { namespace: IDENTITY, id: identityId },
 });
@@ -88,12 +88,12 @@ export const tenantPlatformRelationship = (tenantId: string): GraphRelationship 
   subject: { namespace: "platform", id: PLATFORM_OBJECT_ID },
 });
 
-export const organizationTenantRelationship = (
-  organizationId: string,
+export const workspaceTenantRelationship = (
+  workspaceId: string,
   tenantId: string,
 ): GraphRelationship => ({
-  object: { namespace: "organization", id: organizationId },
-  relation: ORGANIZATION_TENANT,
+  object: { namespace: "workspace", id: workspaceId },
+  relation: WORKSPACE_TENANT,
   subject: { namespace: "tenant", id: tenantId },
 });
 

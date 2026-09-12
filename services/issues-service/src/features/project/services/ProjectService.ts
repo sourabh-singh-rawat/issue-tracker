@@ -1,12 +1,18 @@
+import {
+  requirePermission,
+  type IAuthorizationClient,
+} from "@pine/authorization";
 import { STATUS_TYPE, UserNotFoundError } from "@pine/common";
 import { createCloudEvent, ProjectCreatedEvent, ProjectUpdatedEvent } from "@pine/events";
 import type { IOutboxService } from "@pine/outbox";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@/bootstrap/container-types";
 import type { Database, Project } from "@/db";
-import type { IProjectRepository } from "@/features/project/repositories";
-import type { IStatusService } from "@/features/status/services/IStatusService";
 import type { IIdentityRepository } from "@/features/identities/repositories";
+import type { IProjectRepository } from "@/features/project/repositories";
+import { SpaceNotFoundError } from "@/features/spaces/errors";
+import type { ISpaceRepository } from "@/features/spaces/repositories";
+import type { IStatusService } from "@/features/status/services/IStatusService";
 import type {
   CreateProjectOptions,
   FindProjectOptions,
@@ -22,27 +28,32 @@ export class ProjectService implements IProjectService {
     private readonly db: Database,
     @inject(TYPES.ProjectRepository)
     private readonly projectRepository: IProjectRepository,
+    @inject(TYPES.SpaceRepository)
+    private readonly spaceRepository: ISpaceRepository,
     @inject(TYPES.IdentityRepository)
     private readonly identityRepository: IIdentityRepository,
     @inject(TYPES.StatusService)
     private readonly statusService: IStatusService,
+    @inject(TYPES.AuthorizationClient)
+    private readonly authorizationClient: IAuthorizationClient,
     @inject(TYPES.OutboxService)
     private readonly outboxService: IOutboxService,
   ) {}
 
-  private toProjectEventData(project: Project) {
-    return {
-      id: project.id,
-      name: project.name,
-      status: "active",
-      ownerUserId: project.createdById,
-      createdAt: project.createdAt.toISOString(),
-      ...(project.updatedAt != null ? { updatedAt: project.updatedAt.toISOString() } : {}),
-    };
-  }
-
   async createProject(options: CreateProjectOptions) {
-    const { name, userId } = options;
+    const { name, userId, spaceId } = options;
+
+    const space = await this.spaceRepository.findById(spaceId);
+    if (!space) {
+      throw new SpaceNotFoundError();
+    }
+
+    await requirePermission(
+      this.authorizationClient,
+      userId,
+      "create_project",
+      `workspace:${space.workspaceId}`,
+    );
 
     return this.db.transaction(async (tx) => {
       const identity = await this.identityRepository.findById(userId, { tx });
@@ -50,6 +61,7 @@ export class ProjectService implements IProjectService {
 
       const savedProject = await this.projectRepository.save(
         {
+          spaceId,
           name,
           createdById: userId,
         },
@@ -93,16 +105,42 @@ export class ProjectService implements IProjectService {
   }
 
   async findProjects(options: FindProjectsOptions) {
-    const { page, pageSize, userId } = options;
-    return this.projectRepository.findByCreatedById(userId, page, pageSize);
+    const { page, pageSize, userId, spaceId } = options;
+
+    const space = await this.spaceRepository.findById(spaceId);
+    if (!space) {
+      throw new SpaceNotFoundError();
+    }
+
+    await requirePermission(
+      this.authorizationClient,
+      userId,
+      "read",
+      `workspace:${space.workspaceId}`,
+    );
+
+    return this.projectRepository.findBySpaceId(spaceId, page, pageSize);
   }
 
   async findProject(options: FindProjectOptions) {
     const { id, userId } = options;
-    const project = await this.projectRepository.findByIdForUser(id, userId);
+    const project = await this.projectRepository.findById(id);
     if (!project) {
       throw new Error("Project not found");
     }
+
+    const space = await this.spaceRepository.findById(project.spaceId);
+    if (!space) {
+      throw new SpaceNotFoundError();
+    }
+
+    await requirePermission(
+      this.authorizationClient,
+      userId,
+      "read",
+      `workspace:${space.workspaceId}`,
+    );
+
     return project;
   }
 
@@ -133,5 +171,17 @@ export class ProjectService implements IProjectService {
         { tx },
       );
     });
+  }
+
+  private toProjectEventData(project: Project) {
+    return {
+      id: project.id,
+      spaceId: project.spaceId,
+      name: project.name,
+      status: "active",
+      ownerUserId: project.createdById,
+      createdAt: project.createdAt.toISOString(),
+      ...(project.updatedAt != null ? { updatedAt: project.updatedAt.toISOString() } : {}),
+    };
   }
 }

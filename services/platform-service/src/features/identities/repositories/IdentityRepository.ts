@@ -32,6 +32,40 @@ export class IdentityRepository implements IIdentityRepository {
     return created;
   };
 
+  upsert = async (
+    entity: CreateIdentityEntity,
+    options?: IdentityRepositoryOptions,
+  ): Promise<Identity> => {
+    const client = this.client(options);
+    const now = new Date();
+
+    const [inserted] = await client
+      .insert(Identities)
+      .values({
+        id: entity.id,
+        displayName: entity.displayName ?? null,
+        createdAt: now,
+        version: 1,
+      })
+      .onConflictDoNothing({ target: Identities.id })
+      .returning();
+
+    if (inserted) {
+      return inserted;
+    }
+
+    const existing = await this.findById(entity.id, options);
+    if (!existing) {
+      throw new Error(`Identity not found after conflict: ${entity.id}`);
+    }
+
+    if (entity.displayName !== undefined && entity.displayName !== existing.displayName) {
+      return this.update(entity.id, { displayName: entity.displayName }, options);
+    }
+
+    return existing;
+  };
+
   update = async (
     id: string,
     entity: Partial<Pick<Identity, "displayName" | "deletedAt">>,
@@ -63,10 +97,7 @@ export class IdentityRepository implements IIdentityRepository {
     return identity != null;
   };
 
-  findById = async (
-    id: string,
-    options?: IdentityRepositoryOptions,
-  ): Promise<Identity | null> => {
+  findById = async (id: string, options?: IdentityRepositoryOptions): Promise<Identity | null> => {
     const client = this.client(options);
     const [row] = await client
       .select()

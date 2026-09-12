@@ -1,5 +1,5 @@
 import { builder } from "@pine/server";
-import { OrganizationRelationObject } from "@/features/organizations/graphql/objects/OrganizationRelationObject";
+import { WorkspaceRelationObject } from "@/features/workspaces/graphql/objects/WorkspaceRelationObject";
 import type { IdentityRelations } from "@/features/platform/services/IIdentityRelationService";
 import { PlatformRelationObject } from "@/features/platform/graphql/objects/PlatformRelationObject";
 import { TenantRelationObject } from "@/features/tenants/graphql/objects/TenantRelationObject";
@@ -19,9 +19,9 @@ IdentityRelationsObject.implement({
       type: [TenantRelationObject],
       resolve: (parent) => parent.tenants,
     }),
-    organizations: t.field({
-      type: [OrganizationRelationObject],
-      resolve: (parent) => parent.organizations,
+    workspaces: t.field({
+      type: [WorkspaceRelationObject],
+      resolve: (parent) => parent.workspaces,
     }),
   }),
 });

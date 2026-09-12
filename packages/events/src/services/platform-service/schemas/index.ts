@@ -23,13 +23,13 @@ export {
   type TenantRolePermissionsUpdatedData,
 } from "./TenantRolePermissionsUpdatedDataSchema";
 export {
-  OrganizationCreatedDataSchema,
-  type OrganizationCreatedData,
-} from "./OrganizationCreatedDataSchema";
+  WorkspaceCreatedDataSchema,
+  type WorkspaceCreatedData,
+} from "./WorkspaceCreatedDataSchema";
 export {
-  OrganizationRelationCreatedDataSchema,
-  type OrganizationRelationCreatedData,
-} from "./OrganizationRelationCreatedDataSchema";
+  WorkspaceRelationCreatedDataSchema,
+  type WorkspaceRelationCreatedData,
+} from "./WorkspaceRelationCreatedDataSchema";
 export {
   TenantRelationCreatedDataSchema,
   type TenantRelationCreatedData,

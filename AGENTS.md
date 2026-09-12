@@ -1,7 +1,7 @@
 # Pine agent rules
 
 Canonical project instructions for coding agents (Grok, Claude Code, Cursor, Copilot, etc.).
-Skills with deeper recipes live under `tools/ai/*/SKILL.md` (loaded via `.grok/config.toml`).
+Skills with deeper recipes live under `.grok/skills/*/SKILL.md`.
 
 ## Database migrations — do not generate
 
@@ -31,8 +31,8 @@ When finishing work that should land as a PR:
 
 1. **Base off `development`** (or the branch the user names). Create a **new branch** for the work; do not commit on `development` / `main` unless asked.
 2. **One logical commit** on that branch for the change set (prefer a single clean commit over a noisy trail of fixups).
-3. **Add a Changeset** under `.changeset/` in the **same commit**. CI requires one on non-draft PRs into `development` (skip only with label `skip-changeset`).
-4. **Commit message and Changeset summary must match** and stay **concise** (same short line in both places).
+3. **Add a Changeset** under `.changeset/` in the **same commit** when the change should bump a package or need release notes. CI allows **0 or 1** new changeset on non-draft PRs into `dev` (fail if more than one). `release/*` branches must have **zero**. Skip the check entirely with label `skip-changeset`.
+4. **Commit message and Changeset summary must match** and stay **concise** (same short line in both places). When there is no changeset, the commit subject alone is enough.
 
 Changeset file shape:
 
@@ -69,30 +69,35 @@ EOF
 - Never hand-edit `**/__generated__/**` or `api-gateway/dist/*`.
 - Do not search or edit `infra/data/` or `node_modules/` for product work.
 - Use current packages only: `@pine/server`, `@pine/events` — not `server-core` / `event-bus`.
-- Load the matching skill under `tools/ai/` for orientation, features, events, GraphQL, web, release, docker, k8s, or observability.
+- Load the matching skill under `.grok/skills/` (`orientation`, `service-feature`, `repository`, `service`, `graphql`, `http-route`, `events`, `web-feature`, `material-design-3`, `changeset-release`, `docker-infra`, `k8s`, `observability`, `dev-loop`). Skill folders have no `pine-` prefix.
 - **No comments in code.** Do not add `//`, `/* */`, or JSDoc unless the user explicitly asks. Prefer clear names and structure over explanatory comments.
 - **Standalone functions are arrows; class methods are not.** Module-level and other standalone functions use `const name = (…) => { … }` / `const name = async (…) => { … }` — never `function` declarations. Inside classes, use normal methods (`method(…) { … }` / `async method(…) { … }`), not arrow property methods. Constructors stay as `constructor`. Interfaces/types express callables as properties (`name: (arg: T) => R`), not method syntax.
 - **Public members first.** In classes and modules, put the constructor and public methods/functions above private/protected helpers. Keep the public surface at the top of the type or file.
 - **Never use `as` or `any`.** Ban TypeScript type assertions (`value as Foo`, `as const`, `as unknown as T`, etc.) and the `any` type (`: any`, `as any`, `<any>`, `Array<any>`, etc.). Fix types properly with generics, narrowing, unions, `unknown` + type guards, `satisfies`, or correct library typings. Do not silence type errors with casts.
 
-## Service method names — drop the repeated noun
+## Naming — features, repositories, services, routes/resolvers
 
-When the type, class, or module already names the subject, methods are verbs. Do not repeat the noun.
+One **feature folder** is one **problem**. Name it after the resource (plural kebab-case: `workspaces`, `identities`) or the use-case (`signin`, `oauth`, `attachment-upload`). Keep `X` + `XRelation` (and similar) in that folder. Split only when the lifecycle or transport is a different problem (stored attachment vs upload pipeline; a foreign `identities` projection). Do not dump two aggregates into one feature, and do not create a feature per field.
 
-| Do (on `IPlatformRoleService`) | Don't |
-| --- | --- |
-| `create` | `createPlatformRole` |
-| `getById` | `getPlatformRoleById` |
-| `list` | `listPlatformRoles` |
-| `getPermissions` | `getPermissionsForPlatformRole` |
-| `update` | `updatePlatformRole` |
-| `delete` | `deletePlatformRole` |
+**Drop the repeated noun** on repositories and services — the type already names the subject. **Keep the noun** where names share a flat namespace: GraphQL fields, HTTP `operationId`s, event types, error classes, table names.
 
-Call sites already read as `platformRoleService.create(...)`. Keep a qualifier when there is more than one get/list (`getById` vs `get`, `getPermissions` vs `permissions`).
+| Layer | One | Many | Create | Update | Delete |
+| --- | --- | --- | --- | --- | --- |
+| `IWorkspaceRepository` | `findById` (null if missing) | `findMany` | `save` | `update` | `softDelete` |
+| `IWorkspaceService` | `getById` (throws if missing) | `list` | `create` | `update` | `delete` |
+| GraphQL field / HTTP `operationId` | `getWorkspace` | `getWorkspaces` | `createWorkspace` | `updateWorkspace` | `deleteWorkspace` |
 
-**Keep the noun** where there is no receiver and names share a flat namespace: GraphQL fields, event types, error classes, table names, public HTTP routes. `createPlatformRole` on the schema stays; only the service method shortens.
+Call sites read `workspaceService.create(...)`. The GraphQL field stays `createWorkspace`.
 
-When editing a service that still uses the long form, rename that service’s methods and update its callers in the same change. Do not rename sibling services unless you are already in those files. Never rename GraphQL operations or event payloads as part of a service cleanup.
+Same public identifier everywhere it is visible:
+
+- GraphQL: filename = field (`queries/getWorkspace.ts` → `getWorkspace`)
+- HTTP: filename = exported route = `operationId` (`verifyEmail.ts` → `export const verifyEmail` → `operationId: "verifyEmail"`)
+- Client `.gql`: PascalCase of that identifier (`GetWorkspace`)
+
+New GraphQL reads use `get*`, not `find*`. Qualifiers stay when needed (`getMyWorkspaces`, `getById` vs `list`). When the type is **not** the resource, keep the resource (`IAdminService.createIdentity`).
+
+When editing a service that still uses the long form (`createIssue`, `getTenantById`), rename **that** service’s methods and its internal callers in the same change. Do not rename sibling services unless you are already in those files. Never rename GraphQL fields, HTTP `operationId`s, or event payloads as part of a service cleanup. Recipes: `.grok/skills/service-feature/SKILL.md` (slice), `repository`, `service`, `graphql`, `http-route`.
 
 ## Generated React Query hooks (web apps)
 

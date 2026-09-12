@@ -1,5 +1,13 @@
 # @pine/authorization
 
+## 0.5.0
+
+### Minor Changes
+
+- e5726cc: feat(spaces): nest projects under spaces with required spaceId
+- 198f930: refactor(platform): rename organization to workspace
+- 03c9cf5: feat(spaces): add Space create and sidebar under workspace
+
 ## 0.4.0
 
 ### Minor Changes

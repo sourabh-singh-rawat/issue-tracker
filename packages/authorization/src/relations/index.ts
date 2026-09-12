@@ -1,7 +1,7 @@
 export {
   ADMIN,
   MEMBER,
-  ORGANIZATION_TENANT,
+  WORKSPACE_TENANT,
   OWNER,
   PERMISSION_HAS,
   PLATFORM_OBJECT_ID,
@@ -10,10 +10,10 @@ export {
   TENANT_PLATFORM,
 } from "./names";
 export {
-  organizationAdminRelationship,
-  organizationMemberRelationship,
-  organizationOwnerRelationship,
-  organizationTenantRelationship,
+  workspaceAdminRelationship,
+  workspaceMemberRelationship,
+  workspaceOwnerRelationship,
+  workspaceTenantRelationship,
   platformAdminRelationship,
   platformMemberRelationship,
   platformTenantRelationship,

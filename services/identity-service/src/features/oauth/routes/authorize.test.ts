@@ -279,7 +279,7 @@ describe("token route", () => {
         body: {
           grant_type: "authorization_code",
           code: "auth-code-1",
-          client_id: "erp-web",
+          client_id: "pine-web",
           redirect_uri: "http://localhost:3001/callback",
           code_verifier: "verifier-1",
         },
@@ -290,7 +290,7 @@ describe("token route", () => {
     expect(exchangeToken).toHaveBeenCalledWith({
       grantType: "authorization_code",
       code: "auth-code-1",
-      clientId: "erp-web",
+      clientId: "pine-web",
       redirectUri: "http://localhost:3001/callback",
       codeVerifier: "verifier-1",
     });
@@ -342,7 +342,7 @@ describe("token route", () => {
           body: {
             grant_type: "authorization_code",
             code: "bad-code",
-            client_id: "erp-web",
+            client_id: "pine-web",
             redirect_uri: "http://localhost:3001/callback",
             code_verifier: "verifier-1",
           },

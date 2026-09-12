@@ -5,9 +5,9 @@ export type OAuthClientSeedConfig = RegisterOAuthClientInput;
 
 export const oauthClients: OAuthClientSeedConfig[] = [
   {
-    clientId: "erp-web",
-    name: "ERP Web",
-    redirectUris: [`${env.ERP_WEB_URL}/callback`],
+    clientId: "pine-web",
+    name: "Pine",
+    redirectUris: [`${env.PINE_WEB_URL}/callback`],
     grantTypes: ["authorization_code", "refresh_token"],
     scopes: ["openid", "offline", "email"],
     tokenEndpointAuthMethod: "none",

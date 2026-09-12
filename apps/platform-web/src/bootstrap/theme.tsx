@@ -6,18 +6,6 @@ import { SnackbarProvider } from "notistack";
 import type { PropsWithChildren } from "react";
 import { SnackbarContent } from "@shared/ui/snackbar";
 
-declare module "@mui/material/styles" {
-  interface Shape {
-    borderRadiusNone: string;
-    borderRadiusSmall: string;
-    borderRadiusMedium: string;
-    borderRadiusLarge: string;
-    borderRadiusExtraLarge: string;
-    borderRadiusExtraExtraLarge: string;
-    borderRadiusRounded: string;
-  }
-}
-
 const NOTO_SANS_URL = "/noto-sans-regular.ttf";
 
 const APP_FONT_SIZE = "14px";

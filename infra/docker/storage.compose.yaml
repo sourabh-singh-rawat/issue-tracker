@@ -17,6 +17,20 @@ services:
       - "9333:9333"
     volumes:
       - ../data/docker/seaweedfs-data:/data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "-q",
+          "-O",
+          "/dev/null",
+          "http://127.0.0.1:8333/",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
     deploy:
       resources:
         limits:
@@ -25,3 +39,29 @@ services:
         reservations:
           cpus: "0.10"
           memory: 128M
+
+  seaweedfs-init:
+    image: curlimages/curl:8.12.1
+    restart: "no"
+    depends_on:
+      seaweedfs:
+        condition: service_healthy
+    environment:
+      S3_BUCKET: ${S3_BUCKET:-attachments}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -eu
+        bucket="$${S3_BUCKET}"
+        echo "ensuring S3 bucket '$${bucket}'"
+        status="$$(curl -s -o /tmp/create-bucket.xml -w "%{http_code}" -X PUT "http://seaweedfs:8333/$${bucket}")"
+        echo "CreateBucket HTTP $${status}"
+        if [ "$${status}" != "200" ] && [ "$${status}" != "409" ]; then
+          cat /tmp/create-bucket.xml
+          exit 1
+        fi
+        head_status="$$(curl -s -o /dev/null -w "%{http_code}" -I "http://seaweedfs:8333/$${bucket}")"
+        echo "HeadBucket HTTP $${head_status}"
+        if [ "$${head_status}" != "200" ]; then
+          exit 1
+        fi

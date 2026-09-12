@@ -3,11 +3,13 @@ import type { Project } from "@/db";
 
 export interface CreateProjectOptions {
   userId: string;
+  spaceId: string;
   name: string;
 }
 
 export interface FindProjectsOptions extends PagingOptions {
   userId: string;
+  spaceId: string;
 }
 
 export interface UpdateProjectOptions {

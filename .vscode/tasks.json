@@ -11,224 +11,33 @@
   "tasks": [
     {
       "label": "infra: up",
-      "detail": "Start Postgres (Single Instance), Redis, NATS, pgAdmin (Docker Compose Minimal). Run once; keep running while debugging apps.",
+      "detail": "Start Docker infra. Run once; keep running while developing.",
       "type": "shell",
       "command": "pnpm dev:infra",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "group": "infra",
-        "clear": true
-      }
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
     },
     {
       "label": "infra: down",
-      "detail": "Stop and remove minimal infra containers (Docker Compose Minimal down).",
       "type": "shell",
       "command": "pnpm dev:infra:down",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "group": "infra",
-        "clear": true
-      }
-    },
-    {
-      "label": "infra: up:multi-db",
-      "detail": "Start Postgres (Multiple Instances), Redis, NATS, pgAdmin (Docker Compose Multi-db). Run once; keep running while debugging apps.",
-      "type": "shell",
-      "command": "pnpm dev:infra:multi-db",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "group": "infra",
-        "clear": true
-      }
-    },
-    {
-      "label": "infra: down:multi-db",
-      "detail": "Stop and remove multi-db infra containers (Docker Compose Multi-db down).",
-      "type": "shell",
-      "command": "pnpm dev:infra:multi-db:down",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "group": "infra",
-        "clear": true
-      }
-    },
-    {
-      "label": "infra: status",
-      "detail": "Show Docker Compose service status.",
-      "type": "shell",
-      "command": "docker compose -f infra/docker/compose.yaml ps",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "group": "infra"
-      }
-    },
-    {
-      "label": "infra: logs",
-      "detail": "Follow Docker Compose logs (all infra services).",
-      "type": "shell",
-      "command": "docker compose -f infra/docker/compose.yaml logs -f --tail=100",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "isBackground": true,
-      "problemMatcher": [],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "group": "infra"
-      }
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
     },
     {
       "label": "schemas:compose",
-      "detail": "One-shot compose of GraphQL supergraph + platform OpenAPI for the API Gateway.",
       "type": "shell",
       "command": "pnpm schemas:compose",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "group": "none"
-    },
-    {
-      "label": "schemas:watch",
-      "detail": "Watch microservice schema artifacts and re-compose supergraph + OpenAPI on change.",
-      "type": "shell",
-      "command": "pnpm schemas:watch",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "isBackground": true,
-      "problemMatcher": [],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "group": "schemas"
-      }
-    },
-    {
-      "label": "gql:compose",
-      "detail": "Compose Apollo supergraph SDL only (alias of schemas:compose --graphql).",
-      "type": "shell",
-      "command": "pnpm gql:compose",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "group": "none"
-    },
-    {
-      "label": "openapi:compose",
-      "detail": "Compose platform OpenAPI JSON only.",
-      "type": "shell",
-      "command": "pnpm openapi:compose",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "group": "none"
-    },
-    {
-      "label": "dev:apps",
-      "detail": "Turbo run dev for erp-web, identity-web, platform-web, and backend services (no debugger, no Docker).",
-      "type": "shell",
-      "command": "pnpm dev:apps",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "isBackground": true,
-      "problemMatcher": [],
-      "group": "none"
-    },
-    {
-      "label": "erp-web",
-      "detail": "Start ERP web only (issues UI on :3001).",
-      "type": "shell",
-      "command": "pnpm erp-web",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "isBackground": true,
-      "problemMatcher": [],
-      "group": "none"
-    },
-    {
-      "label": "identity-web",
-      "detail": "Start identity-web only (login/signup/consent on :3000).",
-      "type": "shell",
-      "command": "pnpm identity-web",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "isBackground": true,
-      "problemMatcher": [],
-      "group": "none"
-    },
-    {
-      "label": "platform-web",
-      "detail": "Start platform-web only (platform admin UI on :3002).",
-      "type": "shell",
-      "command": "pnpm platform-web",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "isBackground": true,
-      "problemMatcher": [],
-      "group": "none"
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
     },
     {
       "label": "gen",
-      "detail": "Regenerate erp-web GraphQL + OpenAPI clients.",
+      "detail": "Regenerate pine-web GraphQL + OpenAPI clients.",
       "type": "shell",
       "command": "pnpm gen",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "group": "none"
-    },
-    {
-      "type": "shell",
-      "label": "supergraph",
-      "detail": "Long-running rover dev (optional alternate to local API Gateway).",
-      "command": "rover dev --supergraph-config supergraph-config-dev.yaml --router-config router-config-dev.yaml",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "isBackground": true
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
     }
   ]
 }

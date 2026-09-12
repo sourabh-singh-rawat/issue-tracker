@@ -55,7 +55,7 @@ export class tenant implements Namespace { // NOSONAR typescript:S101
       this.related.admin.includes(ctx.subject) ||
       this.related.owner.includes(ctx.subject) ||
       this.related.platform.traverse((item) => item.related.admin.includes(ctx.subject)),
-    create_organization: (ctx: Context): boolean =>
+    create_workspace: (ctx: Context): boolean =>
       this.related.admin.includes(ctx.subject) || this.related.owner.includes(ctx.subject),
     administer: (ctx: Context): boolean =>
       this.related.admin.includes(ctx.subject) || this.related.owner.includes(ctx.subject),
@@ -74,7 +74,7 @@ export class tenant implements Namespace { // NOSONAR typescript:S101
   };
 }
 
-export class organization implements Namespace { // NOSONAR typescript:S101
+export class workspace implements Namespace { // NOSONAR typescript:S101
   related: {
     owner: identity[];
     admin: identity[];
@@ -93,6 +93,16 @@ export class organization implements Namespace { // NOSONAR typescript:S101
       this.related.owner.includes(ctx.subject) ||
       this.related.tenant.traverse((item) => item.permits.administer(ctx)),
     manage_members: (ctx: Context): boolean =>
+      this.related.admin.includes(ctx.subject) ||
+      this.related.owner.includes(ctx.subject) ||
+      this.related.tenant.traverse((item) => item.permits.administer(ctx)),
+    create_space: (ctx: Context): boolean =>
+      this.related.member.includes(ctx.subject) ||
+      this.related.admin.includes(ctx.subject) ||
+      this.related.owner.includes(ctx.subject) ||
+      this.related.tenant.traverse((item) => item.permits.administer(ctx)),
+    create_project: (ctx: Context): boolean =>
+      this.related.member.includes(ctx.subject) ||
       this.related.admin.includes(ctx.subject) ||
       this.related.owner.includes(ctx.subject) ||
       this.related.tenant.traverse((item) => item.permits.administer(ctx)),

@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@pine/platform-service",
-  "version": "0.4.0",
-  "description": "Platform service — tenants, organizations, and memberships",
+  "version": "0.5.0",
+  "description": "Platform service — tenants, workspaces, and memberships",
   "keywords": [
     "membership",
-    "organization",
+    "workspace",
     "platform",
     "tenant"
   ],
@@ -21,9 +21,9 @@
   },
   "main": "./src/main.ts",
   "scripts": {
-    "clean": "node ../../tools/scripts/rm-rf.mjs dist",
+    "clean": "node ../../tools/scripts/setup/rm-rf.mjs dist",
     "start": "tsx --env-file=../../.env src/main.ts",
-    "dev": "tsx watch --env-file=../../.env src/main.ts",
+    "dev": "tsx watch --inspect=9235 --env-file=../../.env src/main.ts",
     "build": "pnpm clean && tsc -p tsconfig.build.json",
     "test": "vitest run --config vitest.config.ts",
     "test:watch": "vitest --config vitest.config.ts",
