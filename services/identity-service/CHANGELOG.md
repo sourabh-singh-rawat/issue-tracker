@@ -1,5 +1,27 @@
 # @pine/identity-service
 
+## 0.6.0
+
+### Minor Changes
+
+- 44ebe40: feat(identity): allow creating a profile from Personal info
+
+### Patch Changes
+
+- 9b1b265: chore(web): rename erp-web to pine-web
+- 198f930: refactor(platform): rename organization to workspace
+- Updated dependencies [47e114e]
+- Updated dependencies [44ebe40]
+- Updated dependencies [e5726cc]
+- Updated dependencies [198f930]
+- Updated dependencies [03c9cf5]
+  - @pine/server@1.1.1
+  - @pine/common@0.1.1
+  - @pine/authorization@0.5.0
+  - @pine/events@0.5.0
+  - @pine/identity@0.3.0
+  - @pine/attachment@0.3.0
+
 ## 0.5.0
 
 ### Minor Changes

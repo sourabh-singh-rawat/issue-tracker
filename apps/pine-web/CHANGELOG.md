@@ -1,5 +1,23 @@
 # @pine/pine-web
 
+## 0.7.0
+
+### Minor Changes
+
+- e5726cc: feat(spaces): nest projects under spaces with required spaceId
+- 9b1b265: chore(web): rename erp-web to pine-web
+- 198f930: refactor(platform): rename organization to workspace
+- 03c9cf5: feat(spaces): add Space create and sidebar under workspace
+
+### Patch Changes
+
+- f272fa5: feat(ui): add M3 foundation tokens for shape, color, type, motion
+- a616564: fix(pine-web): make nested space projects clickable in sidebar
+- Updated dependencies [44ebe40]
+- Updated dependencies [f272fa5]
+  - @pine/common@0.1.1
+  - @pine/ui@0.1.1
+
 ## 0.6.0
 
 ### Minor Changes

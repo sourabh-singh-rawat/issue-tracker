@@ -1,5 +1,12 @@
 # @pine/identity-web
 
+## 0.6.0
+
+### Minor Changes
+
+- 44ebe40: feat(identity): allow creating a profile from Personal info
+- e1f5abf: feat(identity-web): show email and verification status on Personal info
+
 ## 0.5.0
 
 ### Minor Changes

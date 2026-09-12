@@ -1,5 +1,21 @@
 # @pine/events
 
+## 0.5.0
+
+### Minor Changes
+
+- e5726cc: feat(spaces): nest projects under spaces with required spaceId
+- 198f930: refactor(platform): rename organization to workspace
+- 03c9cf5: feat(spaces): add Space create and sidebar under workspace
+
+### Patch Changes
+
+- Updated dependencies [47e114e]
+- Updated dependencies [44ebe40]
+- Updated dependencies [198f930]
+  - @pine/server@1.1.1
+  - @pine/common@0.1.1
+
 ## 0.4.0
 
 ### Minor Changes
