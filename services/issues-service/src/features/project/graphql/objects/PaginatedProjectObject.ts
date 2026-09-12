@@ -5,6 +5,7 @@ export const PaginatedProjectObject = builder
   .objectRef<{
     rows: {
       id: string;
+      spaceId: string;
       name: string;
     }[];
     rowCount: number;

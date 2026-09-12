@@ -6,22 +6,23 @@ import ModalBody from "../../../../shared/components/ModalBody";
 import ModalHeader from "../../../../shared/components/ModalHeader";
 import { ProjectForm } from "../ProjectForm";
 
-interface CreateProjectModalProps {
-  open?: boolean;
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-}
+type CreateProjectModalProps = {
+  spaceId: string;
+  disabled?: boolean;
+};
 
 export const CreateProjectModal = ({
-  open: controlledOpen,
-  setOpen: controlledSetOpen,
+  spaceId,
+  disabled = false,
 }: CreateProjectModalProps) => {
   const theme = useTheme();
-  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(false);
-  const open = controlledOpen ?? uncontrolledOpen;
-  const setOpen = controlledSetOpen ?? setUncontrolledOpen;
+  const [open, setOpen] = React.useState(false);
 
   const handleOpen = (e?: MouseEvent) => {
     e?.stopPropagation();
+    if (disabled) {
+      return;
+    }
     setOpen(true);
   };
   const handleClose = (e?: MouseEvent | object) => {
@@ -36,6 +37,7 @@ export const CreateProjectModal = ({
       <IconButton
         onClick={handleOpen}
         size="small"
+        disabled={disabled}
         sx={{
           borderRadius: theme.shape.borderRadiusLarge,
           ":hover": { bgcolor: theme.palette.action.hover },
@@ -51,7 +53,7 @@ export const CreateProjectModal = ({
           handleClose={handleClose}
         />
         <ModalBody>
-          <ProjectForm />
+          <ProjectForm spaceId={spaceId} onSuccess={() => setOpen(false)} />
         </ModalBody>
       </Modal>
     </>

@@ -1,17 +1,22 @@
 import { List, ListItem, ListItemText, Skeleton } from "@mui/material";
-import { useProjectStore } from "../../store";
+import { useFindProjectsQuery } from "@generated/gql";
 import { CreateProjectModal } from "../CreateProjectModal";
 import { ProjectListItem } from "../ProjectListItem";
 
-export const ProjectList = () => {
-  const projects = useProjectStore((s) => s.projects);
-  const isLoading = useProjectStore((s) => s.isLoading);
+type ProjectListProps = {
+  spaceId: string;
+};
+
+export const ProjectList = ({ spaceId }: ProjectListProps) => {
+  const projectsQuery = useFindProjectsQuery({ spaceId });
+  const projects = projectsQuery.data?.findProjects?.rows ?? [];
+  const isLoading = projectsQuery.isPending;
 
   return (
     <List
       subheader={
         <>
-          <ListItem secondaryAction={<CreateProjectModal />}>
+          <ListItem secondaryAction={<CreateProjectModal spaceId={spaceId} />}>
             <ListItemText>Projects</ListItemText>
           </ListItem>
           {isLoading ? (
@@ -23,10 +28,25 @@ export const ProjectList = () => {
           ) : (
             projects
               .filter(
-                (project): project is typeof project & { id: string; name: string } =>
-                  Boolean(project.id) && Boolean(project.name),
+                (
+                  project,
+                ): project is typeof project & {
+                  id: string;
+                  name: string;
+                  spaceId: string;
+                } =>
+                  Boolean(project?.id) &&
+                  Boolean(project?.name) &&
+                  Boolean(project?.spaceId),
               )
-              .map(({ id, name }) => <ProjectListItem key={id} projectId={id} name={name} />)
+              .map((project) => (
+                <ProjectListItem
+                  key={project.id}
+                  projectId={project.id}
+                  name={project.name}
+                  spaceId={project.spaceId}
+                />
+              ))
           )}
         </>
       }

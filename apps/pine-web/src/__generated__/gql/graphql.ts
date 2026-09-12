@@ -77,6 +77,7 @@ export type CreateProfileInput = {
 
 export type CreateProjectInput = {
   name: Scalars['String']['input'];
+  spaceId: Scalars['String']['input'];
 };
 
 export type CreateSpaceInput = {
@@ -382,6 +383,7 @@ export type ProjectObject = {
   __typename?: 'ProjectObject';
   id?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  spaceId?: Maybe<Scalars['String']['output']>;
 };
 
 export type Query = {
@@ -429,6 +431,11 @@ export type QueryFindProjectArgs = {
 
 export type QueryFindProjectIssuesArgs = {
   projectId: Scalars['String']['input'];
+};
+
+
+export type QueryFindProjectsArgs = {
+  spaceId: Scalars['String']['input'];
 };
 
 
